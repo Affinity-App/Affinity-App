@@ -49,7 +49,7 @@ class HomePage extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFF0080D5), Colors.white], // gradient color
+            colors: [Color(0xFFA7C2F7), Colors.white], // gradient color
             stops: [0.0, 0.5], // manipulate gradient position
           ),
         ),
