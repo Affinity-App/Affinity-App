@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'createAccountPage.dart'; // Import the createAccountPage.dart
 import 'homePage.dart'; // Import the homePage.dart
 
-
 class loginPage extends StatefulWidget {
   @override
   _loginPageState createState() => _loginPageState();
@@ -20,7 +19,7 @@ class _loginPageState extends State<loginPage> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.lightBlueAccent, Colors.white],
+            colors: [Color.fromARGB(255, 167, 194, 247), Colors.white],
           ),
         ),
         child: Padding(
@@ -31,7 +30,7 @@ class _loginPageState extends State<loginPage> {
             children: [
               SizedBox(height: 50.0),
               Image.asset(
-                'assets/images/logo.png',
+                '/Users/dartagnancalitz/EGR302-f/CardiacEngineering-App/lib/assets/images/logo.png',
                 height: 100.0,
               ),
               SizedBox(height: 20.0),
@@ -94,7 +93,8 @@ class _loginPageState extends State<loginPage> {
                   // Navigate to createAccountPage.dart
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => CreateAccountPage()),
+                    MaterialPageRoute(
+                        builder: (context) => CreateAccountPage()),
                   );
                 },
                 child: Text('Create Account'),
