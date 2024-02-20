@@ -30,7 +30,7 @@ class _loginPageState extends State<loginPage> {
             children: [
               SizedBox(height: 50.0),
               Image.asset(
-                '/Users/dartagnancalitz/EGR302-f/CardiacEngineering-App/lib/assets/images/logo.png',
+                'assets/images/logo.png',
                 height: 100.0,
               ),
               SizedBox(height: 20.0),

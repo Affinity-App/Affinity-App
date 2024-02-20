@@ -6,14 +6,15 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true, // Extend the body behind the app bar
-      appBar: AppBar( // basically the header
+      appBar: AppBar(
+        // basically the header
         backgroundColor: Colors.transparent, // Make app bar transparent
         elevation: 0, // Remove app bar elevation
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              '/Users/dustie1/Documents/CBU/JrDesign/Affinity-App/CardiacEngineering-App/lib/assets/images/logo.png',
+              'assets/images/logo.png',
               height: 30.0,
             ),
             SizedBox(width: 10.0), // Add some space between the logo and text
@@ -27,7 +28,8 @@ class HomePage extends StatelessWidget {
         ),
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 15.0), // Adjust the left padding as needed
+            padding: EdgeInsets.only(
+                right: 15.0), // Adjust the left padding as needed
             child: IconButton(
               icon: Icon(Icons.account_circle),
               iconSize: 50.0, // Adjust the size as needed
@@ -40,7 +42,6 @@ class HomePage extends StatelessWidget {
               },
             ),
           ),
-
         ],
       ),
       body: Container(
@@ -85,8 +86,7 @@ class HomePage extends StatelessWidget {
                     SizedBox(height: 20.0),
                     // Dropdown placeholder
                     DropdownButton<String>(
-                      items: ['Data 1', 'Data 2', 'Data 3']
-                          .map((String value) {
+                      items: ['Data 1', 'Data 2', 'Data 3'].map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -117,7 +117,8 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildDataBox(BuildContext context, {required String label, required String value}) {
+  Widget _buildDataBox(BuildContext context,
+      {required String label, required String value}) {
     return Expanded(
       child: Container(
         width: MediaQuery.of(context).size.width / 4,
