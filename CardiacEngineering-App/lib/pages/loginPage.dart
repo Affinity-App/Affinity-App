@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'createAccountPage.dart'; // Import the createAccountPage.dart
 import 'homePage.dart'; // Import the homePage.dart
 
-
 class loginPage extends StatefulWidget {
   @override
   _loginPageState createState() => _loginPageState();
@@ -20,7 +19,8 @@ class _loginPageState extends State<loginPage> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.lightBlueAccent, Colors.white],
+            colors: [Color(0xFFA7C2F7), Colors.white],
+            stops: [0.0, 0.5], // manipulate gradient position
           ),
         ),
         child: Padding(
@@ -94,7 +94,8 @@ class _loginPageState extends State<loginPage> {
                   // Navigate to createAccountPage.dart
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => CreateAccountPage()),
+                    MaterialPageRoute(
+                        builder: (context) => CreateAccountPage()),
                   );
                 },
                 child: Text('Create Account'),
