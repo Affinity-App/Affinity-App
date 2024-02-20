@@ -6,14 +6,14 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true, // Extend the body behind the app bar
-      appBar: AppBar(
+      appBar: AppBar( // basically the header
         backgroundColor: Colors.transparent, // Make app bar transparent
         elevation: 0, // Remove app bar elevation
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/logo.png',
+              '/Users/dustie1/Documents/CBU/JrDesign/Affinity-App/CardiacEngineering-App/lib/assets/images/logo.png',
               height: 30.0,
             ),
             SizedBox(width: 10.0), // Add some space between the logo and text
@@ -48,7 +48,8 @@ class HomePage extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.lightBlueAccent, Colors.white],
+            colors: [Color(0xFF0080D5), Colors.white], // gradient color
+            stops: [0.0, 0.5], // manipulate gradient position
           ),
         ),
         child: Column(
