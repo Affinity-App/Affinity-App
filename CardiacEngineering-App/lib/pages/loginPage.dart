@@ -18,15 +18,7 @@ class _loginPageState extends State<loginPage> {
     Color gradientColor = Color(0xFFA7C2F7);
 
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [gradientColor, Colors.white],
-            stops: [0.0, 0.5], // manipulate gradient position
-          ),
-        ),
+      body: BackgroundGradientContainer(
         child: Padding(
           padding: EdgeInsets.all(20.0),
           child: Column(

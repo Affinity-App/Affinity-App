@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jr_design_app/pages/BackgroundGradientContainer.dart';
 import 'homePage.dart'; // Import the homePage.dart
 
 class CreateAccountPage extends StatefulWidget {
@@ -20,14 +21,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
         elevation: 0,
         //title: Text('Create Account'),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.lightBlueAccent, Colors.white],
-          ),
-        ),
+      body: BackgroundGradientContainer(
         child: Padding(
           padding: EdgeInsets.all(20.0),
           child: Column(
