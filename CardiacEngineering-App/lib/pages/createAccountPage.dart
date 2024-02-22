@@ -96,7 +96,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   String retypePassword = _retypePasswordController.text;
                   // Here you can perform account creation logic
                   // For simplicity, let's just print the email and password for now.
-                  print('Email: $email, Password: $password, Re-type Password: $retypePassword');
+                  print(
+                      'Email: $email, Password: $password, Re-type Password: $retypePassword');
                   // Navigate to the home page
                   Navigator.push(
                     context,
