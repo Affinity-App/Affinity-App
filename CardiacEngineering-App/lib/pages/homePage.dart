@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:jr_design_app/pages/testChart.dart';
 import 'settingsPage.dart'; // Import the settingsPage.dart
+import 'testChart.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -101,9 +103,16 @@ class HomePage extends StatelessWidget {
                     // Graph placeholder
                     Expanded(
                       child: Center(
-                        child: Text(
-                          'Graph Widget',
-                          style: TextStyle(fontSize: 16.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => testChart()
+                                ),
+                            );
+                          },
+                          child: Text('Go to testChart'),
                         ),
                       ),
                     ),
