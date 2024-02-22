@@ -28,6 +28,7 @@ def generate_data_csv():
   full_filename = os.path.join(target_directory, filename)
 
   # Write the data to the CSV file
+  # temporarily hard coded
   data = [{"firstName": "Caleb", "lastName" : "Aragones"},
           {"firstName": "Dart", "lastName" : "Calitz"},
           {"firstName": "Tim", "lastName" : "Allec"},
