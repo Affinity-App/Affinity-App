@@ -23,7 +23,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       ),
       body: BackgroundGradientContainer(
         child: Padding(
-          padding: EdgeInsets.all(20.0),
+          padding: EdgeInsets.all(10.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
