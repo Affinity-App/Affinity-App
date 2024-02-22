@@ -11,7 +11,8 @@ def generate_data_csv():
   """
 
   # Get existing data files
-  data_files = [f for f in os.listdir() if f.startswith("data")]
+  target_directory = "CardiacEngineering-App/python/csv"
+  data_files = [f for f in os.listdir(target_directory) if f.startswith("data")]
 
   # Extract existing indices (if any)
   # loops through each file f in the list data_files
@@ -23,7 +24,7 @@ def generate_data_csv():
   next_index = 1 if not indices else max(indices) + 1
 
   # Generate the filename
-  target_directory = "CardiacEngineering-App/python/csv"
+  
   filename = f"data_{next_index}.csv"
   full_filename = os.path.join(target_directory, filename)
 
