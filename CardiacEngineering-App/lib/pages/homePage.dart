@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jr_design_app/pages/testChart.dart';
 import 'settingsPage.dart'; // Import the settingsPage.dart
-import 'testChart.dart';
 
 class HomePage extends StatelessWidget {
   @override
