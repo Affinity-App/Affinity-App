@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'createAccountPage.dart'; // Import the createAccountPage.dart
 import 'homePage.dart'; // Import the homePage.dart
-import 'backgroundGradient.dart';
+import 'BackgroundGradientContainer.dart';
 
 class loginPage extends StatefulWidget {
   @override

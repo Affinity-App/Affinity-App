@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jr_design_app/pages/testChart.dart';
 import 'settingsPage.dart'; // Import the settingsPage.dart
+import 'BackgroundGradientContainer.dart';
+
 
 class HomePage extends StatelessWidget {
   @override
@@ -45,15 +47,7 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xFFA7C2F7), Colors.white], // gradient color
-            stops: [0.0, 0.5], // manipulate gradient position
-          ),
-        ),
+      body: BackgroundGradientContainer( // custom class to have gradient already
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -120,8 +114,9 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ],
+        ), 
         ),
-      ),
+      
     );
   }
 

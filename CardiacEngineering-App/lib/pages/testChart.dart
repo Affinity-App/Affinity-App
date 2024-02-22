@@ -18,7 +18,7 @@ class testChart extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.transparent,
         ),
-        child: backgroundGradient()
+        child: backgroundGradient() // add children here for button to link to what chart looks like?
       ),
     );
   }
