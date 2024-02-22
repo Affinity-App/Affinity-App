@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'createAccountPage.dart'; // Import the createAccountPage.dart
 import 'homePage.dart'; // Import the homePage.dart
+import 'backgroundGradient.dart';
 
 class loginPage extends StatefulWidget {
   @override
   _loginPageState createState() => _loginPageState();
+
 }
 
 class _loginPageState extends State<loginPage> {
@@ -13,13 +15,15 @@ class _loginPageState extends State<loginPage> {
 
   @override
   Widget build(BuildContext context) {
+    Color gradientColor = Color(0xFFA7C2F7);
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFA7C2F7), Colors.white],
+            colors: [gradientColor, Colors.white],
             stops: [0.0, 0.5], // manipulate gradient position
           ),
         ),

@@ -14,7 +14,7 @@ class testChart extends StatelessWidget {
         title: Text('Test Line Chart'),
         backgroundColor: Colors.transparent,
       ),
-      body: Container(
+      body: Container( // add chart without covering 
         decoration: BoxDecoration(
           color: Colors.transparent,
         ),
