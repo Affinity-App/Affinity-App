@@ -95,18 +95,18 @@ class HomePage extends StatelessWidget {
                     SizedBox(height: 20.0),
                     // Graph placeholder
                     Expanded(
-                      child: Center(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => testChart()
-                                ),
-                            );
-                          },
-                          child: Text('Go to testChart'),
-                        ),
+                      child: Center( // uncomment for test chart link
+                        // child: ElevatedButton(
+                        //   onPressed: () {
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) => testChart()
+                        //         ),
+                        //     );
+                        //   },
+                        //   child: Text('Go to testChart'),
+                        // ),
                       ),
                     ),
                   ],

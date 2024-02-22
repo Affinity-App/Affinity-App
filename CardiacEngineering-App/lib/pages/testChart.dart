@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'backgroundGradient.dart';
+import 'BackgroundGradientContainer.dart';
 
 class testChart extends StatelessWidget {
   final darkBlueColor = Color.fromARGB(255, 29, 35, 53); 
@@ -14,11 +14,13 @@ class testChart extends StatelessWidget {
         title: Text('Test Line Chart'),
         backgroundColor: Colors.transparent,
       ),
-      body: Container( // add chart without covering 
-        decoration: BoxDecoration(
-          color: Colors.transparent,
-        ),
-        child: backgroundGradient() // add children here for button to link to what chart looks like?
+      body: BackgroundGradientContainer(
+        child: Column(
+          children: [
+            SizedBox(height: 150.0), // Move down to below the app bar
+            LineChartSample2(),
+            ],
+          ),
       ),
     );
   }
@@ -33,7 +35,7 @@ class LineChartSample2 extends StatefulWidget {
 
 class _LineChartSample2State extends State<LineChartSample2> {
   List<Color> gradientColors = [
-    Color(0xFFA7C2F7), Color(0xFFA7C2F7)
+    Color(0xFFA7C2F7), Color.fromARGB(255, 167, 247, 190)
   ];
 
   bool showAvg = false;
@@ -181,7 +183,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
       ),
       borderData: FlBorderData(
         show: true,
-        border: Border.all(color: const Color(0xff37434d)),
+        border: Border.all(color: Color.fromARGB(255, 77, 55, 73)), // chart border outline color
       ),
       minX: 0,
       maxX: 11,

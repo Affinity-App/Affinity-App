@@ -8,7 +8,7 @@ class BackgroundGradientContainer extends StatelessWidget {
   const BackgroundGradientContainer({
     Key? key,
     required this.child,
-    this.padding = const EdgeInsets.all(20.0),
+    this.padding = const EdgeInsets.all(10.0),
     this.gradientColor = const Color(0xFFA7C2F7),
   }) : super(key: key);
 
