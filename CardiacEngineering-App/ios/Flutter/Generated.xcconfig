@@ -1,15 +1,15 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=/Users/dustie1/development/flutter
-FLUTTER_APPLICATION_PATH=/Users/dustie1/Affinity-App/CardiacEngineering-App
+FLUTTER_ROOT=/Users/dartagnancalitz/development/flutter
+FLUTTER_APPLICATION_PATH=/Users/dartagnancalitz/EGR302-f/CardiacEngineering-App
 COCOAPODS_PARALLEL_CODE_SIGN=true
-FLUTTER_TARGET=/Users/dustie1/Affinity-App/CardiacEngineering-App/lib/main.dart
+FLUTTER_TARGET=/Users/dartagnancalitz/EGR302-f/CardiacEngineering-App/lib/main.dart
 FLUTTER_BUILD_DIR=build
 FLUTTER_BUILD_NAME=1.0.0
 FLUTTER_BUILD_NUMBER=1
 EXCLUDED_ARCHS[sdk=iphonesimulator*]=i386
 EXCLUDED_ARCHS[sdk=iphoneos*]=armv7
-DART_DEFINES=RkxVVFRFUl9XRUJfQVVUT19ERVRFQ1Q9dHJ1ZQ==,RkxVVFRFUl9XRUJfQ0FOVkFTS0lUX1VSTD1odHRwczovL3d3dy5nc3RhdGljLmNvbS9mbHV0dGVyLWNhbnZhc2tpdC8wNDgxN2M5OWM5ZmQ0OTU2ZjI3NTA1MjA0ZjdlMzQ0MzM1ODEwYWVkLw==
+DART_DEFINES=RkxVVFRFUl9XRUJfQVVUT19ERVRFQ1Q9dHJ1ZQ==,RkxVVFRFUl9XRUJfQ0FOVkFTS0lUX1VSTD1odHRwczovL3d3dy5nc3RhdGljLmNvbS9mbHV0dGVyLWNhbnZhc2tpdC9mNDBlOTc2YmVkZmY1N2U2OWUxYjNkODlhN2MyYTNjNjE3YTAzZGFkLw==
 DART_OBFUSCATION=false
 TRACK_WIDGET_CREATION=true
 TREE_SHAKE_ICONS=false
-PACKAGE_CONFIG=/Users/dustie1/Affinity-App/CardiacEngineering-App/.dart_tool/package_config.json
+PACKAGE_CONFIG=/Users/dartagnancalitz/EGR302-f/CardiacEngineering-App/.dart_tool/package_config.json

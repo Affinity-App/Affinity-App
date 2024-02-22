@@ -6,7 +6,6 @@ import 'BackgroundGradientContainer.dart';
 class loginPage extends StatefulWidget {
   @override
   _loginPageState createState() => _loginPageState();
-
 }
 
 class _loginPageState extends State<loginPage> {
@@ -91,8 +90,7 @@ class _loginPageState extends State<loginPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => CreateAccountPage()
-                        ),
+                        builder: (context) => CreateAccountPage()),
                   );
                 },
                 child: Text('Create Account'),
