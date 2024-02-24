@@ -54,7 +54,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 child: TextField(
                   controller: _emailController,
                   decoration: const InputDecoration(
-                    hintText: 'Email',
+                    labelText: 'Email',
                     border: InputBorder.none,
                   ),
                 ),
@@ -69,7 +69,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 child: TextField(
                   controller: _passwordController,
                   decoration: const InputDecoration(
-                    hintText: 'Password',
+                    labelText: 'Password',
                     border: InputBorder.none,
                   ),
                   obscureText: true,
@@ -85,7 +85,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 child: TextField(
                   controller: _retypePasswordController,
                   decoration: const InputDecoration(
-                    hintText: 'Retype Password',
+                    labelText: 'Retype Password',
                     border: InputBorder.none,
                   ),
                   obscureText: true,
