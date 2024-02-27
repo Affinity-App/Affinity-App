@@ -54,7 +54,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 child: TextField(
                   controller: _emailController,
                   decoration: const InputDecoration(
-                    hintText: 'Email',
+                    labelText: 'Email',
                     border: InputBorder.none,
                   ),
                 ),
@@ -69,7 +69,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 child: TextField(
                   controller: _passwordController,
                   decoration: const InputDecoration(
-                    hintText: 'Password',
+                    labelText: 'Password',
                     border: InputBorder.none,
                   ),
                   obscureText: true,
@@ -85,7 +85,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 child: TextField(
                   controller: _retypePasswordController,
                   decoration: const InputDecoration(
-                    hintText: 'Retype Password',
+                    labelText: 'Retype Password',
                     border: InputBorder.none,
                   ),
                   obscureText: true,
@@ -125,6 +125,30 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     print('Passwords do not match');
                   }
                 },
+                style: ButtonStyle(
+                // Add the animation controller
+                animationDuration: const Duration(milliseconds: 200),
+                // Shrink on press
+                overlayColor: MaterialStateProperty.resolveWith<Color>(
+                  (states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return Colors.white10; // Shrink and visually indicate press
+                    }
+                    return Colors.transparent; // Use default overlay color
+                  },
+                ),
+                // Scale the button down slightly on press
+                padding: MaterialStateProperty.resolveWith<EdgeInsets>(
+                  (states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8.0);
+                    }
+                    return const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 12.0);
+                  },
+                ),
+              ),
                 child: const Text('Create Account'),
               ),
             ],

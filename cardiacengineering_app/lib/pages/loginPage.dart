@@ -57,7 +57,7 @@ class _loginPageState extends State<loginPage> {
                 child: TextField(
                   controller: _emailController,
                   decoration: const InputDecoration(
-                    hintText: 'Email',
+                    labelText: 'Email',
                     border: InputBorder.none,
                   ),
                 ),
@@ -73,7 +73,7 @@ class _loginPageState extends State<loginPage> {
                 child: TextField(
                   controller: _passwordController,
                   decoration: const InputDecoration(
-                    hintText: 'Password',
+                    labelText: 'Password',
                     border: InputBorder.none,
                   ),
                   obscureText: true,
@@ -119,6 +119,30 @@ class _loginPageState extends State<loginPage> {
                   );
                   print('Email: $email, Password: $password');
                 },
+                style: ButtonStyle(
+                // Add the animation controller
+                animationDuration: const Duration(milliseconds: 200),
+                // Shrink on press
+                overlayColor: MaterialStateProperty.resolveWith<Color>(
+                  (states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return Colors.white10; // Shrink and visually indicate press
+                    }
+                    return Colors.transparent; // Use default overlay color
+                  },
+                ),
+                // Scale the button down slightly on press
+                padding: MaterialStateProperty.resolveWith<EdgeInsets>(
+                  (states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8.0);
+                    }
+                    return const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 12.0);
+                  },
+                ),
+              ),
                 child: const Text('Login'),
               ),
               const SizedBox(height: 10.0), // Add some space between buttons
@@ -131,6 +155,30 @@ class _loginPageState extends State<loginPage> {
                         builder: (context) => const CreateAccountPage()),
                   );
                 },
+                style: ButtonStyle(
+                // Add the animation controller
+                animationDuration: const Duration(milliseconds: 200),
+                // Shrink on press
+                overlayColor: MaterialStateProperty.resolveWith<Color>(
+                  (states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return Colors.white10; // Shrink and visually indicate press
+                    }
+                    return Colors.transparent; // Use default overlay color
+                  },
+                ),
+                // Scale the button down slightly on press
+                padding: MaterialStateProperty.resolveWith<EdgeInsets>(
+                  (states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8.0);
+                    }
+                    return const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 12.0);
+                  },
+                ),
+              ),
                 child: const Text('Create Account'),
               ),
             ],
