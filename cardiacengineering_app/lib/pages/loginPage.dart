@@ -83,7 +83,6 @@ class _loginPageState extends State<loginPage> {
               const SizedBox(height: 20.0),
 
               //create google sign in button
-              //this is the code that does not work.
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
