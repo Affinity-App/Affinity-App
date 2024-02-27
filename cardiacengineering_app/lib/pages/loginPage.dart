@@ -1,6 +1,10 @@
 // ignore_for_file: file_names, camel_case_types, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:jr_design_app/pages/square_tile.dart';
+
+//import square tile class to make the tiles for the google auth button
+
 import 'createAccountPage.dart'; // Import the createAccountPage.dart
 import 'homePage.dart'; // Import the homePage.dart
 import 'BackgroundGradientContainer.dart';
@@ -19,7 +23,6 @@ class _loginPageState extends State<loginPage> {
   @override
   Widget build(BuildContext context) {
     Color gradientColor = const Color(0xFFA7C2F7);
-
     return Scaffold(
       body: BackgroundGradientContainer(
         child: Padding(
@@ -33,6 +36,7 @@ class _loginPageState extends State<loginPage> {
                 'assets/images/logo.png',
                 height: 100.0,
               ),
+
               const SizedBox(height: 20.0),
               const Text(
                 'Affinity',
@@ -41,6 +45,7 @@ class _loginPageState extends State<loginPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+
               const SizedBox(height: 20.0),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -56,6 +61,7 @@ class _loginPageState extends State<loginPage> {
                   ),
                 ),
               ),
+
               const SizedBox(height: 20.0),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -72,6 +78,34 @@ class _loginPageState extends State<loginPage> {
                   obscureText: true,
                 ),
               ),
+
+              const SizedBox(height: 20.0),
+
+              //create google sign in button
+              //this is the code that does not work.
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  //google button
+                  SquareTile(
+                    onTap: () => AuthService().signInWithGoogle(),
+                    imagePath: 'assets/images/google.png',
+                  ),
+                ],
+              ),
+
+              //tried to implement the image without the auth functionality
+              //but nothing was working
+              Row(
+                children: [
+                  //google button
+                  Image.asset(
+                    'assets/images/google.png',
+                    height: 72,
+                  ),
+                ],
+              ),
+
               const SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () {
