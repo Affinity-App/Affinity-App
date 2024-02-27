@@ -5,6 +5,7 @@ class SquareTile extends StatelessWidget {
   const SquareTile({
     super.key,
     required this.imagePath,
+    required Function() onTap,
   });
 
   @override

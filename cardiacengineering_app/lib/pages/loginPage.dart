@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:jr_design_app/pages/square_tile.dart';
+import 'package:jr_design_app/services/auth_service.dart';
 
 //import square tile class to make the tiles for the google auth button
 
