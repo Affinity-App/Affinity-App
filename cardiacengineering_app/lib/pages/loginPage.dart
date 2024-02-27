@@ -94,18 +94,6 @@ class _loginPageState extends State<loginPage> {
                 ],
               ),
 
-              //tried to implement the image without the auth functionality
-              //but nothing was working
-              Row(
-                children: [
-                  //google button
-                  Image.asset(
-                    'assets/images/google.png',
-                    height: 72,
-                  ),
-                ],
-              ),
-
               const SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () {
