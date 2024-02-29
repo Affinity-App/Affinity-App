@@ -20,24 +20,27 @@ class HomePage extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(
+                width: 86.0), // Add some space between the logo and text
             Image.asset(
               'assets/images/logo.png',
-              height: 30.0,
+              height: 50.0,
             ),
             const SizedBox(
-                width: 10.0), // Add some space between the logo and text
+                width: 5.0), // Add some space between the logo and text
             const Text(
               'Affinity',
               style: TextStyle(
                 fontSize: 30.0,
               ),
+// Add some space between the logo and text
             ),
           ],
         ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(
-                right: 15.0), // Adjust the left padding as needed
+                right: 30.0), // Adjust the left padding as needed
             child: IconButton(
               icon: const Icon(Icons.account_circle),
               iconSize: 50.0, // Adjust the size as needed
@@ -62,9 +65,9 @@ class HomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 _buildDataBox(context, label: 'RPM', value: '1000'),
-                _buildDataBox(context, label: 'Pressure', value: '50 PSI'),
-                _buildDataBox(context, label: 'Battery', value: '90%'),
-                _buildDataBox(context, label: 'Flow', value: '20 GPM'),
+                _buildDataBox(context, label: 'PSI', value: '50'),
+                _buildDataBox(context, label: 'Batt', value: '90%'),
+                _buildDataBox(context, label: 'GPM', value: '20'),
               ],
             ),
             const SizedBox(height: 20.0), // Add some space
@@ -112,31 +115,35 @@ class HomePage extends StatelessWidget {
                             );
                           },
                           style: ButtonStyle(
-                // Add the animation controller
-                animationDuration: const Duration(milliseconds: 200),
-                // Shrink on press
-                overlayColor: MaterialStateProperty.resolveWith<Color>(
-                  (states) {
-                    if (states.contains(MaterialState.pressed)) {
-                      return Colors.white10; // Shrink and visually indicate press
-                    }
-                    return Colors.transparent; // Use default overlay color
-                  },
-                ),
-                // Scale the button down slightly on press
-                padding: MaterialStateProperty.resolveWith<EdgeInsets>(
-                  (states) {
-                    if (states.contains(MaterialState.pressed)) {
-                      return const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 8.0);
-                    }
-                    return const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 12.0);
-                  },
-                ),
-              ),
+                            // Add the animation controller
+                            animationDuration:
+                                const Duration(milliseconds: 200),
+                            // Shrink on press
+                            overlayColor:
+                                MaterialStateProperty.resolveWith<Color>(
+                              (states) {
+                                if (states.contains(MaterialState.pressed)) {
+                                  return Colors
+                                      .white10; // Shrink and visually indicate press
+                                }
+                                return Colors
+                                    .transparent; // Use default overlay color
+                              },
+                            ),
+                            // Scale the button down slightly on press
+                            padding:
+                                MaterialStateProperty.resolveWith<EdgeInsets>(
+                              (states) {
+                                if (states.contains(MaterialState.pressed)) {
+                                  return const EdgeInsets.symmetric(
+                                      horizontal: 16.0, vertical: 8.0);
+                                }
+                                return const EdgeInsets.symmetric(
+                                    horizontal: 20.0, vertical: 12.0);
+                              },
+                            ),
+                          ),
                           child: const Text('Go to testChart'),
-                          
                         ),
                       ),
                     ),
