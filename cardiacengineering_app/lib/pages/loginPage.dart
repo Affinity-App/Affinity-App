@@ -101,15 +101,15 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 20.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SquareTile(
-                    onTap: () => AuthService().signInWithGoogle(),
-                    imagePath: 'assets/images/google.png',
-                  ),
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     SquareTile(
+              //       onTap: () => AuthService().signInWithGoogle(),
+              //       imagePath: 'assets/images/google.png',
+              //     ),
+              //   ],
+              // ),
               const SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: _signInWithEmailAndPassword,
