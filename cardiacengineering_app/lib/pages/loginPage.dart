@@ -49,6 +49,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     Color gradientColor = const Color(0xFFA7C2F7);
     return Scaffold(
+      resizeToAvoidBottomInset: false, // Prevents bottom overflow
       body: BackgroundGradientContainer(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
