@@ -1,26 +1,54 @@
-// ignore_for_file: file_names, camel_case_types, library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
-import 'createAccountPage.dart'; // Import the createAccountPage.dart
-import 'homePage.dart'; // Import the homePage.dart
+import 'package:jr_design_app/pages/square_tile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:jr_design_app/services/auth_service.dart';
+
+import 'createAccountPage.dart';
+import 'homePage.dart';
 import 'BackgroundGradientContainer.dart';
 
-class loginPage extends StatefulWidget {
-  const loginPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  _loginPageState createState() => _loginPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _loginPageState extends State<loginPage> {
+class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  Future<void> _signInWithEmailAndPassword() async {
+    try {
+      final String email = _emailController.text;
+      final String password = _passwordController.text;
+      // Sign in with email and password
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      // Navigate to home page if login is successful
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    } catch (e) {
+      // Handle login errors here
+      print('Login failed: $e');
+      // Show a snackbar or dialog to inform the user about the login failure
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Login failed: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    Color gradientColor = const Color(0xFFA7C2F7);
-
     return Scaffold(
+      resizeToAvoidBottomInset: false, // Prevents bottom overflow
       body: BackgroundGradientContainer(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -51,7 +79,7 @@ class _loginPageState extends State<loginPage> {
                 child: TextField(
                   controller: _emailController,
                   decoration: const InputDecoration(
-                    hintText: 'Email',
+                    labelText: 'Email',
                     border: InputBorder.none,
                   ),
                 ),
@@ -66,31 +94,30 @@ class _loginPageState extends State<loginPage> {
                 child: TextField(
                   controller: _passwordController,
                   decoration: const InputDecoration(
-                    hintText: 'Password',
+                    labelText: 'Password',
                     border: InputBorder.none,
                   ),
                   obscureText: true,
                 ),
               ),
               const SizedBox(height: 20.0),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     SquareTile(
+              //       onTap: () => AuthService().signInWithGoogle(),
+              //       imagePath: 'assets/images/google.png',
+              //     ),
+              //   ],
+              // ),
+              const SizedBox(height: 20.0),
               ElevatedButton(
-                onPressed: () {
-                  // Perform login logic here
-                  String email = _emailController.text;
-                  String password = _passwordController.text;
-                  // Navigate to homePage.dart
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomePage()),
-                  );
-                  print('Email: $email, Password: $password');
-                },
+                onPressed: _signInWithEmailAndPassword,
                 child: const Text('Login'),
               ),
-              const SizedBox(height: 10.0), // Add some space between buttons
+              const SizedBox(height: 10.0),
               ElevatedButton(
                 onPressed: () {
-                  // Navigate to createAccountPage.dart
                   Navigator.push(
                     context,
                     MaterialPageRoute(
