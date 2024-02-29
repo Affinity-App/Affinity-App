@@ -1,6 +1,11 @@
 // ignore_for_file: file_names, camel_case_types, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:jr_design_app/pages/square_tile.dart';
+import 'package:jr_design_app/services/auth_service.dart';
+
+//import square tile class to make the tiles for the google auth button
+
 import 'createAccountPage.dart'; // Import the createAccountPage.dart
 import 'homePage.dart'; // Import the homePage.dart
 import 'BackgroundGradientContainer.dart';
@@ -19,7 +24,6 @@ class _loginPageState extends State<loginPage> {
   @override
   Widget build(BuildContext context) {
     Color gradientColor = const Color(0xFFA7C2F7);
-
     return Scaffold(
       body: BackgroundGradientContainer(
         child: Padding(
@@ -33,6 +37,7 @@ class _loginPageState extends State<loginPage> {
                 'assets/images/logo.png',
                 height: 100.0,
               ),
+
               const SizedBox(height: 20.0),
               const Text(
                 'Affinity',
@@ -41,6 +46,7 @@ class _loginPageState extends State<loginPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+
               const SizedBox(height: 20.0),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -51,11 +57,12 @@ class _loginPageState extends State<loginPage> {
                 child: TextField(
                   controller: _emailController,
                   decoration: const InputDecoration(
-                    hintText: 'Email',
+                    labelText: 'Email',
                     border: InputBorder.none,
                   ),
                 ),
               ),
+
               const SizedBox(height: 20.0),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -66,12 +73,27 @@ class _loginPageState extends State<loginPage> {
                 child: TextField(
                   controller: _passwordController,
                   decoration: const InputDecoration(
-                    hintText: 'Password',
+                    labelText: 'Password',
                     border: InputBorder.none,
                   ),
                   obscureText: true,
                 ),
               ),
+
+              const SizedBox(height: 20.0),
+
+              //create google sign in button
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  //google button
+                  SquareTile(
+                    onTap: () => AuthService().signInWithGoogle(),
+                    imagePath: 'assets/images/google.png',
+                  ),
+                ],
+              ),
+
               const SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () {
@@ -85,6 +107,31 @@ class _loginPageState extends State<loginPage> {
                   );
                   print('Email: $email, Password: $password');
                 },
+                style: ButtonStyle(
+                  // Add the animation controller
+                  animationDuration: const Duration(milliseconds: 200),
+                  // Shrink on press
+                  overlayColor: MaterialStateProperty.resolveWith<Color>(
+                    (states) {
+                      if (states.contains(MaterialState.pressed)) {
+                        return Colors
+                            .white10; // Shrink and visually indicate press
+                      }
+                      return Colors.transparent; // Use default overlay color
+                    },
+                  ),
+                  // Scale the button down slightly on press
+                  padding: MaterialStateProperty.resolveWith<EdgeInsets>(
+                    (states) {
+                      if (states.contains(MaterialState.pressed)) {
+                        return const EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 8.0);
+                      }
+                      return const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 12.0);
+                    },
+                  ),
+                ),
                 child: const Text('Login'),
               ),
               const SizedBox(height: 10.0), // Add some space between buttons
@@ -97,6 +144,31 @@ class _loginPageState extends State<loginPage> {
                         builder: (context) => const CreateAccountPage()),
                   );
                 },
+                style: ButtonStyle(
+                  // Add the animation controller
+                  animationDuration: const Duration(milliseconds: 200),
+                  // Shrink on press
+                  overlayColor: MaterialStateProperty.resolveWith<Color>(
+                    (states) {
+                      if (states.contains(MaterialState.pressed)) {
+                        return Colors
+                            .white10; // Shrink and visually indicate press
+                      }
+                      return Colors.transparent; // Use default overlay color
+                    },
+                  ),
+                  // Scale the button down slightly on press
+                  padding: MaterialStateProperty.resolveWith<EdgeInsets>(
+                    (states) {
+                      if (states.contains(MaterialState.pressed)) {
+                        return const EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 8.0);
+                      }
+                      return const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 12.0);
+                    },
+                  ),
+                ),
                 child: const Text('Create Account'),
               ),
             ],
