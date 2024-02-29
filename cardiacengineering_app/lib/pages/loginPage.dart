@@ -18,9 +18,8 @@ class _loginPageState extends State<loginPage> {
 
   @override
   Widget build(BuildContext context) {
-    Color gradientColor = const Color(0xFFA7C2F7);
-
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: BackgroundGradientContainer(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
