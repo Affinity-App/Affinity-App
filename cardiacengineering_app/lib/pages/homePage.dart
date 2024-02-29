@@ -11,6 +11,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false, // Prevents bottom overflow
       extendBodyBehindAppBar: true, // Extend the body behind the app bar
       appBar: AppBar(
         // basically the header
