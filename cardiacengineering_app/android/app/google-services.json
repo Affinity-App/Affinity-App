@@ -12,7 +12,12 @@
           "package_name": "com.example.cardiacengineering_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1054441551330-djdlls85tld2p0d5e8qphmhp5blqpqto.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyC-8Hg62gQ-weU1unj2cc2uEAgawaCrfYo"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1054441551330-djdlls85tld2p0d5e8qphmhp5blqpqto.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1054441551330-n1evu7lj47saumu0rc6r3inl8g87v0fp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.untitled1"
+              }
+            }
+          ]
         }
       }
     }

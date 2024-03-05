@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:jr_design_app/pages/testChart.dart';
 import 'settingsPage.dart'; // Import the settingsPage.dart
+import 'RPMpage.dart'; // Import the RPMpage.dart
 import 'BackgroundGradientContainer.dart';
 
 class HomePage extends StatelessWidget {
@@ -64,7 +65,21 @@ class HomePage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildDataBox(context, label: 'RPM', value: '1000'),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width /
+                      4, // or specify a fixed width
+                  child: GestureDetector(
+                    onTap: () {
+                      // Navigate to the settings page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const RPMpage()),
+                      );
+                    },
+                    child: _buildDataBox(context, label: 'RPM', value: '1000'),
+                  ),
+                ),
                 _buildDataBox(context, label: 'PSI', value: '50'),
                 _buildDataBox(context, label: 'Batt', value: '90%'),
                 _buildDataBox(context, label: 'GPM', value: '20'),
