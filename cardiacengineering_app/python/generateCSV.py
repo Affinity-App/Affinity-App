@@ -12,7 +12,7 @@ def generate_data_csv():
   """
 
   # Get existing data files
-  target_directory = "CardiacEngineering-App/python/csv"
+  target_directory = "cardiacengineering_app/python/csv"
   data_files = [f for f in os.listdir(target_directory) if f.startswith("data")]
 
   # Extract existing indices (if any)
