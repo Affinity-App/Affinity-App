@@ -56,16 +56,23 @@ class HomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 150.0), // Move down to below the app bar
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildDataBox(context, label: 'RPM', value: '1000'),
-                _buildDataBox(context, label: 'Pressure', value: '50 PSI'),
-                _buildDataBox(context, label: 'Battery', value: '90%'),
-                _buildDataBox(context, label: 'Flow', value: '20 GPM'),
-              ],
-            ),
+                 const SizedBox(height: 150.0), // Move down to below the app bar
+                 Row( 
+                  children: [
+                    Image.asset (
+                      'assets/images/logo.png',
+                    ),
+                    
+                    _buildDataBox(context, label: 'Blood Pressure', value: '15.6', 
+                      //height: 30.0,
+                    ),
+                  ],
+                 ),
+                
+                _buildDataBox(context, label: 'Heart Rate', value: '60.2'),
+                _buildDataBox(context, label: 'Flow Rate', value: '15.6'),
+                _buildDataBox(context, label: 'Battery Life', value: '90 %'),
+                _buildDataBox(context, label: 'Record Now', value: '#1'),
             const SizedBox(height: 20.0), // Add some space
             Expanded(
               child: Container(
@@ -150,7 +157,7 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildDataBox(BuildContext context,
-      {required String label, required String value}) {
+      {required String label, required String value,}) {
     return Expanded(
       child: Container(
         width: MediaQuery.of(context).size.width / 4,
