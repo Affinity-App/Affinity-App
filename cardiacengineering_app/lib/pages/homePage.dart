@@ -4,7 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:jr_design_app/pages/testChart.dart';
 import 'settingsPage.dart'; // Import the settingsPage.dart
 import 'RPMpage.dart'; // Import the RPMpage.dart
+import 'PSIpage.dart'; // Import the RPMpage.dart
+import 'BatteryPage.dart'; // Import the RPMpage.dart
+import 'GPMpage.dart'; // Import the RPMpage.dart
+
 import 'BackgroundGradientContainer.dart';
+
+typedef void OnDataBoxPressedCallback(BuildContext context);
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -62,28 +68,64 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 150.0), // Move down to below the app bar
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width /
-                      4, // or specify a fixed width
-                  child: GestureDetector(
-                    onTap: () {
-                      // Navigate to the settings page
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const RPMpage()),
-                      );
+            Container(
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  // SizedBox(
+                  //   width: MediaQuery.of(context).size.width /
+                  //       4, // or specify a fixed width
+                  //   child: GestureDetector(
+                  //     onTap: () {
+                  //       // Navigate to the settings page
+                  //       Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //             builder: (context) => const RPMpage()),
+                  //       );
+                  //     },
+                  //     child:
+                  //         _buildDataBox(context, label: 'RPM', value: '1000'),
+                  //   ),
+                  // ),
+                  _buildDataBox(
+                    context,
+                    label: 'RPM',
+                    value: '1000',
+                    onPressed: (context) {
+                      Navigator.pushNamed(context, '/RPMpage');
                     },
-                    child: _buildDataBox(context, label: 'RPM', value: '1000'),
                   ),
-                ),
-                _buildDataBox(context, label: 'PSI', value: '50'),
-                _buildDataBox(context, label: 'Batt', value: '90%'),
-                _buildDataBox(context, label: 'GPM', value: '20'),
-              ],
+                  _buildDataBox(
+                    context,
+                    label: 'PSI',
+                    value: '50',
+                    onPressed: (context) {
+                      Navigator.pushNamed(context, '/PSIpage');
+                    },
+                  ),
+                  _buildDataBox(
+                    context,
+                    label: 'Battery',
+                    value: '96%',
+                    onPressed: (context) {
+                      Navigator.pushNamed(context, '/BatteryPage');
+                    },
+                  ),
+                  _buildDataBox(
+                    context,
+                    label: 'GPM',
+                    value: '100',
+                    onPressed: (context) {
+                      Navigator.pushNamed(context, '/GPMpage');
+                    },
+                  ),
+                  // _buildDataBox(context, label: 'RPM', value: '1000'),
+                  // _buildDataBox(context, label: 'RPM', value: '1000'),
+                  // _buildDataBox(context, label: 'RPM', value: '1000'),
+                ],
+              ),
             ),
             const SizedBox(height: 20.0), // Add some space
             Expanded(
@@ -173,36 +215,44 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildDataBox(BuildContext context,
-      {required String label, required String value}) {
+      {required String label,
+      required String value,
+      required OnDataBoxPressedCallback onPressed}) {
     return Expanded(
-      child: Container(
-        width: MediaQuery.of(context).size.width / 4,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.0),
-          color: Colors.grey[200],
-        ),
-        margin: const EdgeInsets.all(10.0),
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              label,
-              style: const TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
+      child: GestureDetector(
+        onTap: () {
+          // Navigate to the desired page using the provided callback
+          onPressed(context);
+        },
+        child: Container(
+          //width: MediaQuery.of(context).size.width / 4,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20.0),
+            color: Colors.grey[200],
+          ),
+          margin: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 5.0),
-            Text(
-              value,
-              style: const TextStyle(
-                fontSize: 16.0,
+              const SizedBox(height: 5.0),
+              Text(
+                value,
+                style: const TextStyle(
+                  fontSize: 16.0,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
