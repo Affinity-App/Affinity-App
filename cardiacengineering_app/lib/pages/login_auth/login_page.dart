@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:jr_design_app/pages/square_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:jr_design_app/services/auth_service.dart';
 
-import 'createAccountPage.dart';
-import 'homePage.dart';
-import 'BackgroundGradientContainer.dart';
+import 'create_account_page.dart';
+import '../home_data/home_page.dart';
+import '../../components/background_gradient_container.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -30,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
       // Navigate to home page if login is successful
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => const HomePage()),
       );
     } catch (e) {
       // Handle login errors here

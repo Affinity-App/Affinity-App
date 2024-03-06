@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'loginPage.dart';
+import '../login_auth/login_page.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -41,7 +41,7 @@ class SettingsPage extends StatelessWidget {
       // Navigate back to the login page
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
+        MaterialPageRoute(builder: (context) => const LoginPage()),
       );
     } catch (e) {
       print('Error logging out: $e');

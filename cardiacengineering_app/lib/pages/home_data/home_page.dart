@@ -1,16 +1,16 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:jr_design_app/pages/testChart.dart';
-import 'settingsPage.dart'; // Import the settingsPage.dart
-import 'RPMpage.dart'; // Import the RPMpage.dart
-import 'PSIpage.dart'; // Import the RPMpage.dart
-import 'BatteryPage.dart'; // Import the RPMpage.dart
-import 'GPMpage.dart'; // Import the RPMpage.dart
+import 'package:jr_design_app/pages/dev_settings/test_chart.dart';
+import '../dev_settings/settings_page.dart'; // Import the settingsPage.dart
+// Import the RPMpage.dart
+// Import the RPMpage.dart
+// Import the RPMpage.dart
+// Import the RPMpage.dart
 
-import 'BackgroundGradientContainer.dart';
+import '../../components/background_gradient_container.dart';
 
-typedef void OnDataBoxPressedCallback(BuildContext context);
+typedef OnDataBoxPressedCallback = void Function(BuildContext context);
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -68,7 +68,7 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 150.0), // Move down to below the app bar
-            Container(
+            SizedBox(
               width: double.infinity,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

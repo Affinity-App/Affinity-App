@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jr_design_app/pages/BackgroundGradientContainer.dart';
-import 'homePage.dart'; // Import the homePage.dart
+import 'package:jr_design_app/components/background_gradient_container.dart';
+import '../home_data/home_page.dart'; // Import the homePage.dart
 import 'package:firebase_auth/firebase_auth.dart';
 
 class CreateAccountPage extends StatefulWidget {

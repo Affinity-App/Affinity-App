@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'firebase_options.dart';
+import 'services/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-import 'pages/loginPage.dart'; // Import the loginPage.dart file
-import 'pages/RPMpage.dart'; // Import the RPMpage.dart file
-import 'pages/PSIpage.dart'; // Import the RPMpage.dart file
-import 'pages/BatteryPage.dart'; // Import the RPMpage.dart file
-import 'pages/GPMpage.dart'; // Import the RPMpage.dart file
+import 'pages/login_auth/login_page.dart'; // Import the loginPage.dart file
+import 'pages/home_data/rpm_page.dart'; // Import the RPMpage.dart file
+import 'pages/home_data/psi_page.dart'; // Import the RPMpage.dart file
+import 'pages/home_data/battery_page.dart'; // Import the RPMpage.dart file
+import 'pages/home_data/gpm_page.dart'; // Import the RPMpage.dart file
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,10 +23,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       // Define routes
       routes: {
-        '/RPMpage': (context) => RPMpage(),
-        '/PSIpage': (context) => PSIpage(),
-        '/BatteryPage': (context) => BatteryPage(),
-        '/GPMpage': (context) => GPMpage(),
+        '/RPMpage': (context) => const RPMpage(),
+        '/PSIpage': (context) => const PSIpage(),
+        '/BatteryPage': (context) => const BatteryPage(),
+        '/GPMpage': (context) => const GPMpage(),
 
         // Add other routes here
       },

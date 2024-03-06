@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'loginPage.dart';
 
-class BatteryPage extends StatelessWidget {
-  const BatteryPage({Key? key}) : super(key: key);
+class RPMpage extends StatelessWidget {
+  const RPMpage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Battery Life Data'),
+        title: const Text('RPM Data'),
       ),
       body: Center(
         child: Column(

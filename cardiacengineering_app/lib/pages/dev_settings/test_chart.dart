@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'BackgroundGradientContainer.dart';
+import '../../components/background_gradient_container.dart';
 
 class testChart extends StatelessWidget {
   final darkBlueColor = const Color.fromARGB(255, 29, 35, 53);
