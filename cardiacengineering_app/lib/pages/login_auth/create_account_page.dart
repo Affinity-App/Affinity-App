@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jr_design_app/components/background_gradient_container.dart';
 import '../home_data/home_page.dart'; // Import the homePage.dart
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({Key? key}) : super(key: key);
@@ -120,7 +121,40 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   String password = _passwordController.text;
                   if (_isEmailValid(email) && _isPasswordValid(password)) {
                     // Email and password are valid, proceed with account creation
-                    // Your account creation logic here
+                    try {
+                      // Create user in Firebase Authentication
+                      UserCredential userCredential = await FirebaseAuth
+                          .instance
+                          .createUserWithEmailAndPassword(
+                        email: email,
+                        password: password,
+                      );
+
+                      // Store user data in Firestore
+                      // await FirebaseFirestore.instance
+                      //     .collection('users')
+                      //     .doc(userCredential.user!.uid)
+                      //     .set({
+                      //   'email': email,
+                      //   // Add more user data if needed
+                      // });
+
+                      // Account creation successful, navigate to home page
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomePage()),
+                      );
+                    } catch (e) {
+                      // Handle errors during account creation
+                      print('Error creating account: $e');
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Error creating account: $e'),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
                   } else {
                     // Show error message for invalid email or password
                     ScaffoldMessenger.of(context).showSnackBar(

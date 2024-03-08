@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'create_account_page.dart';
+import 'reset_password_page.dart'; // Import the reset password page
 import '../home_data/home_page.dart';
 import '../../components/background_gradient_container.dart';
 
@@ -41,6 +42,14 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
     }
+  }
+
+  // Function to navigate to the password reset page
+  void _navigateToResetPasswordPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ResetPasswordPage()),
+    );
   }
 
   @override
@@ -123,6 +132,11 @@ class _LoginPageState extends State<LoginPage> {
                   );
                 },
                 child: const Text('Create Account'),
+              ),
+              // Button for navigating to the reset password page
+              TextButton(
+                onPressed: _navigateToResetPasswordPage,
+                child: Text('Forgot Password?'),
               ),
             ],
           ),
