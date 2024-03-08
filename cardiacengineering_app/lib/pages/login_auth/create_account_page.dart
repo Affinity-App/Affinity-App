@@ -14,8 +14,6 @@ class CreateAccountPage extends StatefulWidget {
 class _CreateAccountPageState extends State<CreateAccountPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _retypePasswordController =
-      TextEditingController();
 
   bool _passwordVisible = false;
   bool _showPasswordRequirements = false;
@@ -28,7 +26,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        //title: Text('Create Account'),
       ),
       body: BackgroundGradientContainer(
         child: Padding(
@@ -131,13 +128,13 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       );
 
                       // Store user data in Firestore
-                      // await FirebaseFirestore.instance
-                      //     .collection('users')
-                      //     .doc(userCredential.user!.uid)
-                      //     .set({
-                      //   'email': email,
-                      //   // Add more user data if needed
-                      // });
+                      await FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(userCredential.user!.uid)
+                          .set({
+                        'email': email,
+                        // Add more user data if needed
+                      });
 
                       // Account creation successful, navigate to home page
                       Navigator.pushReplacement(
