@@ -4,7 +4,7 @@ import '../home_data/home_page.dart'; // Import the homePage.dart
 import 'package:firebase_auth/firebase_auth.dart';
 
 class CreateAccountPage extends StatefulWidget {
-  const CreateAccountPage({super.key});
+  const CreateAccountPage({Key? key}) : super(key: key);
 
   @override
   _CreateAccountPageState createState() => _CreateAccountPageState();
@@ -15,6 +15,9 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _retypePasswordController =
       TextEditingController();
+
+  bool _passwordVisible = false;
+  bool _showPasswordRequirements = false;
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +61,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     labelText: 'Email',
                     border: InputBorder.none,
                   ),
+                  keyboardType: TextInputType.emailAddress,
                 ),
               ),
               const SizedBox(height: 20.0),
@@ -69,88 +73,64 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 ),
                 child: TextField(
                   controller: _passwordController,
-                  decoration: const InputDecoration(
+                  onChanged: (value) {
+                    setState(() {
+                      _showPasswordRequirements = value.isNotEmpty;
+                    });
+                  },
+                  decoration: InputDecoration(
                     labelText: 'Password',
                     border: InputBorder.none,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _passwordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _passwordVisible = !_passwordVisible;
+                        });
+                      },
+                    ),
                   ),
-                  obscureText: true,
+                  obscureText: !_passwordVisible,
                 ),
               ),
-              const SizedBox(height: 20.0),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.0),
-                  color: Colors.grey[200],
-                ),
-                child: TextField(
-                  controller: _retypePasswordController,
-                  decoration: const InputDecoration(
-                    labelText: 'Retype Password',
-                    border: InputBorder.none,
-                  ),
-                  obscureText: true,
-                ),
+              SizedBox(
+                height: 10,
               ),
+              if (_showPasswordRequirements)
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    getPasswordRequirements(),
+                    style: TextStyle(
+                      color: getPasswordRequirements().isEmpty
+                          ? Colors.transparent
+                          : Colors.red,
+                    ),
+                  ),
+                ),
               const SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () async {
                   String email = _emailController.text;
                   String password = _passwordController.text;
-                  String retypePassword = _retypePasswordController.text;
-
-                  if (password == retypePassword) {
-                    try {
-                      UserCredential userCredential = await FirebaseAuth
-                          .instance
-                          .createUserWithEmailAndPassword(
-                        email: email,
-                        password: password,
-                      );
-
-                      // User creation successful
-                      print('User created: ${userCredential.user!.uid}');
-
-                      // Navigate to the home page
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const HomePage()),
-                      );
-                    } catch (e) {
-                      // Handle errors here
-                      print('Error creating user: $e');
-                    }
+                  if (_isEmailValid(email) && _isPasswordValid(password)) {
+                    // Email and password are valid, proceed with account creation
+                    // Your account creation logic here
                   } else {
-                    // Handle password mismatch error
-                    print('Passwords do not match');
+                    // Show error message for invalid email or password
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Invalid email or password'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
                   }
                 },
-                style: ButtonStyle(
-                  // Add the animation controller
-                  animationDuration: const Duration(milliseconds: 200),
-                  // Shrink on press
-                  overlayColor: MaterialStateProperty.resolveWith<Color>(
-                    (states) {
-                      if (states.contains(MaterialState.pressed)) {
-                        return Colors
-                            .white10; // Shrink and visually indicate press
-                      }
-                      return Colors.transparent; // Use default overlay color
-                    },
-                  ),
-                  // Scale the button down slightly on press
-                  padding: MaterialStateProperty.resolveWith<EdgeInsets>(
-                    (states) {
-                      if (states.contains(MaterialState.pressed)) {
-                        return const EdgeInsets.symmetric(
-                            horizontal: 16.0, vertical: 8.0);
-                      }
-                      return const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 12.0);
-                    },
-                  ),
-                ),
                 child: const Text('Create Account'),
               ),
             ],
@@ -158,5 +138,30 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
         ),
       ),
     );
+  }
+
+  bool _isEmailValid(String email) {
+    // Basic email validation
+    if (email.isEmpty) return false;
+    final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return emailRegex.hasMatch(email);
+  }
+
+  bool _isPasswordValid(String password) {
+    // Password validation
+    if (password.length < 6) return false;
+    // You can add more criteria for password validation (uppercase, lowercase, symbols, etc.)
+    return true;
+  }
+
+  String getPasswordRequirements() {
+    String requirements = '';
+    if (_passwordController.text.length < 6) {
+      requirements += '- At least 6 characters\n';
+    }
+    // Add more criteria (uppercase, lowercase, numbers, symbols) as needed
+    return requirements.isNotEmpty
+        ? 'Password must contain:\n$requirements'
+        : '';
   }
 }
