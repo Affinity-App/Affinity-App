@@ -3,10 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:jr_design_app/pages/dev_settings/test_chart.dart';
 import '../dev_settings/settings_page.dart'; // Import the settingsPage.dart
-// Import the RPMpage.dart
-// Import the RPMpage.dart
-// Import the RPMpage.dart
-// Import the RPMpage.dart
+import 'rpm_page.dart';
+import 'psi_page.dart';
+
+import 'battery_page.dart';
+
+import 'gpm_page.dart';
 
 import '../../components/background_gradient_container.dart';
 

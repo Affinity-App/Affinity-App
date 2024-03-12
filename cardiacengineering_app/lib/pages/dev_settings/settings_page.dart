@@ -9,7 +9,24 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/logo.png',
+              height: 50.0,
+            ),
+            const SizedBox(
+                width: 5.0), // Add some space between the logo and text
+            const Text(
+              'Settings',
+              style: TextStyle(
+                fontSize: 30.0,
+              ),
+// Add some space between the logo and text
+            ),
+          ],
+        ),
       ),
       body: Center(
         child: Column(
@@ -22,13 +39,6 @@ class SettingsPage extends StatelessWidget {
               child: const Text('Logout'),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Navigate back to the previous page (Home page)
-                Navigator.pop(context);
-              },
-              child: const Text('Back to Home'),
-            ),
           ],
         ),
       ),
