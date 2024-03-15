@@ -64,161 +64,29 @@ class HomePage extends StatelessWidget {
       ),
       body: BackgroundGradientContainer(
         // custom class to have gradient already
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: Center(
+          child: Column(
+          //mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(height: 150.0), // Move down to below the app bar
-            Container(
-              width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  // SizedBox(
-                  //   width: MediaQuery.of(context).size.width /
-                  //       4, // or specify a fixed width
-                  //   child: GestureDetector(
-                  //     onTap: () {
-                  //       // Navigate to the settings page
-                  //       Navigator.push(
-                  //         context,
-                  //         MaterialPageRoute(
-                  //             builder: (context) => const RPMpage()),
-                  //       );
-                  //     },
-                  //     child:
-                  //         _buildDataBox(context, label: 'RPM', value: '1000'),
-                  //   ),
-                  // ),
-                  _buildDataBox(
-                    context,
-                    label: 'RPM',
-                    value: '1000',
-                    onPressed: (context) {
-                      Navigator.pushNamed(context, '/RPMpage');
-                    },
-                  ),
-                  _buildDataBox(
-                    context,
-                    label: 'PSI',
-                    value: '50',
-                    onPressed: (context) {
-                      Navigator.pushNamed(context, '/PSIpage');
-                    },
-                  ),
-                  _buildDataBox(
-                    context,
-                    label: 'Battery',
-                    value: '96%',
-                    onPressed: (context) {
-                      Navigator.pushNamed(context, '/BatteryPage');
-                    },
-                  ),
-                  _buildDataBox(
-                    context,
-                    label: 'GPM',
-                    value: '100',
-                    onPressed: (context) {
-                      Navigator.pushNamed(context, '/GPMpage');
-                    },
-                  ),
-                  // _buildDataBox(context, label: 'RPM', value: '1000'),
-                  // _buildDataBox(context, label: 'RPM', value: '1000'),
-                  // _buildDataBox(context, label: 'RPM', value: '1000'),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20.0), // Add some space
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.0),
-                  color: Colors.grey[200],
-                ),
-                margin: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    // Placeholder for graph with dropdown
-                    // Replace this with your actual graph widget
-                    const SizedBox(height: 20.0),
-                    const Text(
-                      'Graph with Dropdown',
-                      style: TextStyle(fontSize: 18.0),
-                    ),
-                    const SizedBox(height: 20.0),
-                    // Dropdown placeholder
-                    DropdownButton<String>(
-                      items: ['Data 1', 'Data 2', 'Data 3'].map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        // Handle dropdown value change
-                      },
-                      hint: const Text('Select Data'),
-                    ),
-                    const SizedBox(height: 20.0),
-                    // Graph placeholder
-                    Expanded(
-                      child: Center(
-                        // uncomment for test chart link
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const testChart()),
-                            );
-                          },
-                          style: ButtonStyle(
-                            // Add the animation controller
-                            animationDuration:
-                                const Duration(milliseconds: 200),
-                            // Shrink on press
-                            overlayColor:
-                                MaterialStateProperty.resolveWith<Color>(
-                              (states) {
-                                if (states.contains(MaterialState.pressed)) {
-                                  return Colors
-                                      .white10; // Shrink and visually indicate press
-                                }
-                                return Colors
-                                    .transparent; // Use default overlay color
-                              },
-                            ),
-                            // Scale the button down slightly on press
-                            padding:
-                                MaterialStateProperty.resolveWith<EdgeInsets>(
-                              (states) {
-                                if (states.contains(MaterialState.pressed)) {
-                                  return const EdgeInsets.symmetric(
-                                      horizontal: 16.0, vertical: 8.0);
-                                }
-                                return const EdgeInsets.symmetric(
-                                    horizontal: 20.0, vertical: 12.0);
-                              },
-                            ),
-                          ),
-                          child: const Text('Go to testChart'),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            SizedBox(height: MediaQuery.of(context).padding.top + kToolbarHeight),
+            _buildDataBox(context, label: 'RPM', value: '100',iconPath: 'assets/images/Blood.png', onPressed: (context) { Navigator.pushNamed(context, '/RPMpage');}),
+            _buildDataBox(context, label: 'PSI', value: '50',iconPath: 'assets/images/Heart.png', onPressed: (context) { Navigator.pushNamed(context, '/PSIpage');}),
+            _buildDataBox(context, label: 'Battery', value: '97%',iconPath: 'assets/images/Battery.png', onPressed: (context) { Navigator.pushNamed(context, '/BatteryPage');}),
+            _buildDataBox(context, label: 'GPM', value: '100',iconPath: 'assets/images/Flow.png', onPressed: (context) { Navigator.pushNamed(context, '/GPMpage');}),
           ],
+          ),
         ),
-      ),
+        ),
     );
   }
 
   Widget _buildDataBox(BuildContext context,
       {required String label,
       required String value,
+      required String iconPath,
       required OnDataBoxPressedCallback onPressed}) {
-    return Expanded(
+    return Container(
+      width: MediaQuery.of(context).size.width / 1.5, // size of the box determined by number at the back
       child: GestureDetector(
         onTap: () {
           // Navigate to the desired page using the provided callback
@@ -232,24 +100,37 @@ class HomePage extends StatelessWidget {
           ),
           margin: const EdgeInsets.all(10.0),
           padding: const EdgeInsets.all(10.0),
-          child: Column(
+          child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                label,
-                style: const TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
+              Image.asset(
+                iconPath,
+                height: 100.0,
+                width: 100.0,
               ),
-              const SizedBox(height: 5.0),
-              Text(
-                value,
-                style: const TextStyle(
-                  fontSize: 16.0,
-                ),
-                textAlign: TextAlign.center,
+              //const SizedBox(width: 10.0), // Add some space between the icon and text
+              Column( 
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    label,
+                    style: const TextStyle(
+                      fontSize: 32.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 5.0),
+                  Text(
+                    value,
+                    style: const TextStyle(
+                      fontSize: 32.0,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 70, 163, 205),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
             ],
           ),
