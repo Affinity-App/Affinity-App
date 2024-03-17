@@ -19,6 +19,6 @@ def update_flow_rate():
         print(f"Flow Rate: {flow_rate} liters per minute")
         doc_ref = db.collection("flow_rate").document("generated")
         doc_ref.set({"rate": flow_rate})  # Update the document with flow rate data
-        time.sleep(5)  # Wait for 5 seconds
+        time.sleep(1)  # Wait for 1 seconds
 
 update_flow_rate()
