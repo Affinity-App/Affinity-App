@@ -31,7 +31,7 @@ def upload_data():
         db.collection("sensor_data").document("flow_rate").set({"value": data["flow_rate"]})
         db.collection("sensor_data").document("rpm").set({"value": data["rpm"]})
         print("Data uploaded successfully.")
-        time.sleep(5)  # Adjust the time interval as needed
+        time.sleep(1)  # Adjust the time interval as needed
 
 if __name__ == "__main__":
     upload_data()
