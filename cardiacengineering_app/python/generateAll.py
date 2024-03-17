@@ -11,16 +11,16 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 # Initialize blood pressure with a random value in the range 80-120
-blood_pressure = random.randint(80, 120)
+blood_pressure = random.randint(800, 1200) / 10  # To have one decimal place
 
 # Function to generate random data for each sensor
 def generate_data():
     return {
         "battery": random.randint(0, 100),
         "blood_pressure": {
-            "pressure": blood_pressure
+            "pressure": format(blood_pressure, '.1f')  # Format to one decimal place
         },
-        "flow_rate": random.uniform(0.5, 2.0),
+        "flow_rate": round(random.uniform(0.5, 2.0), 1),  # Round flow rate to one decimal place
         "rpm": random.randint(500, 1000)
     }
 
@@ -29,7 +29,7 @@ def update_blood_pressure():
     global blood_pressure
     change = random.uniform(-2.0, 2.0)  # Generate random change between -2.0 and 2.0
     blood_pressure += change
-    blood_pressure = max(min(blood_pressure, 120), 80)  # Ensure blood pressure stays within range
+    blood_pressure = max(min(blood_pressure, 120.0), 80.0)  # Ensure blood pressure stays within range
 
 # Upload data to Firebase
 def upload_data():
