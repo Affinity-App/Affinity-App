@@ -15,8 +15,11 @@ blood_pressure = random.randint(800, 1200) / 10  # To have one decimal place
 
 # Function to generate random data for each sensor
 def generate_data():
+    # Calculate power consumption in watts/h (assuming random battery level represents power consumption)
+    power_consumption = random.randint(0, 100) * random.uniform(0.5, 2.0)
+    
     return {
-        "battery": random.randint(0, 100),
+        "power_consumption": round(power_consumption, 1),  # Round power consumption to one decimal place
         "blood_pressure": {
             "pressure": format(blood_pressure, '.1f')  # Format to one decimal place
         },
@@ -39,8 +42,8 @@ def upload_data():
         if not first_upload:
             update_blood_pressure()  # Update blood pressure after the first upload
         data = generate_data()
-        db.collection("sensor_data").document("battery").set({"value": data["battery"]})
-        db.collection("sensor_data").document("blood_pressure").set(data["blood_pressure"])
+        db.collection("sensor_data").document("power_consumption").set({"value": data["power_consumption"]})
+        db.collection("sensor_data").document("blood_pressure").set({"pressure": data["blood_pressure"]})
         db.collection("sensor_data").document("flow_rate").set({"value": data["flow_rate"]})
         db.collection("sensor_data").document("rpm").set({"value": data["rpm"]})
         print("Data uploaded successfully.")
