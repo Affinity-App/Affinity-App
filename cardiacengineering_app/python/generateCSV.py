@@ -31,11 +31,11 @@ def generate_data_csv():
   # Write the data to the CSV file
   heartData = generate_data()
   
-  with open(full_filename, "w") as csvfile:
-    fieldnames = heartData[0].keys()
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-    writer.writeheader()
-    writer.writerows(heartData)
+  with open(full_filename, "w", newline='') as csvfile:
+        fieldnames = heartData[0].keys()
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter=',')
+        writer.writeheader()
+        writer.writerows(heartData)
 
   print(f"Data saved to: {full_filename}")
 
