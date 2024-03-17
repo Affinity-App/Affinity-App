@@ -17,11 +17,9 @@ blood_pressure = random.randint(900, 1100) / 10  # To have one decimal place
 def generate_data():
     return {
         "power_consumption": round(random.uniform(45,50), 1),  # Power consumption between 40-60 watts/h
-        "blood_pressure": {
-            "pressure": format(blood_pressure, '.1f')  # Format blood pressure to one decimal place
-        },
+        "pressure": format(blood_pressure, '.1f'),  # Format blood pressure to one decimal place
         "flow_rate": round(random.uniform(4.5, 5.5), 1 ),  # Round flow rate to one decimal place
-        "rpm": round(random.uniform(75,77), 1)
+        "bpm": round(random.uniform(75,77), 1)
     }
 
 # Function to update blood pressure within range and increment by random value less than 1
@@ -39,10 +37,10 @@ def upload_data():
         if not first_upload:
             update_blood_pressure()  # Update blood pressure after the first upload
         data = generate_data()
-        db.collection("sensor_data").document("power_consumption").set({"value": data["power_consumption"]})
-        db.collection("sensor_data").document("blood_pressure").set({"pressure": data["blood_pressure"]})
-        db.collection("sensor_data").document("flow_rate").set({"value": data["flow_rate"]})
-        db.collection("sensor_data").document("rpm").set({"value": data["rpm"]})
+        db.collection("sensor_data").document("power_consumption").set({"watts per hour": data["power_consumption"]}) 
+        db.collection("sensor_data").document("blood_pressure").set({"mmHg": data["pressure"]})             #mmHg
+        db.collection("sensor_data").document("flow_rate").set({"liters per minute": data["flow_rate"]})                #watts/hour
+        db.collection("sensor_data").document("bpm").set({"beats per minute": data["bpm"]})                                  #bpm
         print("Data uploaded successfully.")
         time.sleep(1)  # Adjust the time interval as needed
         first_upload = False  # Update the flag after the first upload
