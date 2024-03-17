@@ -17,6 +17,6 @@ def update_blood_pressure():
         print(f"Blood Pressure: {pressure} mmHg")
         doc_ref = db.collection("pressure_data").document("generated")
         doc_ref.set({"Pressure": pressure})  # Update the document with blood pressure data
-        time.sleep(5)  # Wait for 5 seconds
+        time.sleep(1)  # Wait for 5 seconds
 
 update_blood_pressure()
