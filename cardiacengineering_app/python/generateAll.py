@@ -20,7 +20,7 @@ def generate_data():
         "blood_pressure": {
             "pressure": format(blood_pressure, '.1f')  # Format blood pressure to one decimal place
         },
-        "flow_rate": round(random.uniform(0.5, 2.0), 1),  # Round flow rate to one decimal place
+        "flow_rate": round(random.uniform(4.5, 5.5), 1 ),  # Round flow rate to one decimal place
         "rpm": random.randint(500, 1000)
     }
 
