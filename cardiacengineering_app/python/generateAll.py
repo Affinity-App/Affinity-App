@@ -10,11 +10,11 @@ firebase_admin.initialize_app(cred)
 
 db = firestore.client()
 
+# Initialize blood pressure with a random value in the range 80-120
+blood_pressure = random.randint(80, 120)
+
 # Function to generate random data for each sensor
 def generate_data():
-    blood_pressure = random.randint(80, 120)  # Generate blood pressure in the range 80-120
-    blood_pressure += random.choice([-2, 0, 2])  # Add a random increment or decrement of ±2
-    
     return {
         "battery": random.randint(0, 100),
         "blood_pressure": {
@@ -24,9 +24,20 @@ def generate_data():
         "rpm": random.randint(500, 1000)
     }
 
+# Function to update blood pressure within range and increment by random value less than 2.0
+def update_blood_pressure():
+    global blood_pressure
+    change = random.uniform(-2.0, 2.0)  # Generate random change between -2.0 and 2.0
+    blood_pressure += change
+    blood_pressure = max(min(blood_pressure, 120), 80)  # Ensure blood pressure stays within range
+
 # Upload data to Firebase
 def upload_data():
+    global blood_pressure  # Access the global blood pressure variable
+    first_upload = True  # Flag to indicate the first upload
     while True:
+        if not first_upload:
+            update_blood_pressure()  # Update blood pressure after the first upload
         data = generate_data()
         db.collection("sensor_data").document("battery").set({"value": data["battery"]})
         db.collection("sensor_data").document("blood_pressure").set(data["blood_pressure"])
@@ -34,6 +45,7 @@ def upload_data():
         db.collection("sensor_data").document("rpm").set({"value": data["rpm"]})
         print("Data uploaded successfully.")
         time.sleep(1)  # Adjust the time interval as needed
+        first_upload = False  # Update the flag after the first upload
 
 if __name__ == "__main__":
     upload_data()
