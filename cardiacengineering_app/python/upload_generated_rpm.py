@@ -22,20 +22,6 @@ def generate_rpm():
         yield rpm
         time.sleep(1)  # Adjust sleep duration as needed
 
-# def upload_rpm_data():
-#     rpm_generator = generate_rpm()
-#     doc_ref = db.collection('rpm_data').document()
-
-#     while True:
-#         rpm_value = next(rpm_generator)
-#         # Upload RPM data to Firestore
-#         doc_ref.set({
-#             'timestamp': firestore.SERVER_TIMESTAMP,
-#             'rpm_value': rpm_value
-#         })
-#         print(f"RPM data uploaded: {rpm_value}")
-#         time.sleep(1)  # Adjust sleep duration as needed
-        
 def upload_rpm_data():
     rpm_generator = generate_rpm()
     doc_ref = db.collection('rpm_data').document("generated")
@@ -47,7 +33,7 @@ def upload_rpm_data():
             'rpm': rpm_value
         })
         print(f"RPM data updated: {rpm_value}")
-        time.sleep(1)  # Adjust sleep duration as needed
+        time.sleep(1)  # Adjust sleep duration as needed (every 1 second)
 
 # Run the function to continuously upload RPM data
 upload_rpm_data()
