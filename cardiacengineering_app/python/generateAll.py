@@ -3,6 +3,7 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 import random
 import time
+from threading import Thread
 
 # Initialize Firebase Admin SDK
 cred = credentials.Certificate("cardiacengineering_app/python/affinity-app-1018-firebase-adminsdk-uto31-4574cd060c.json")  # Update with your service account key file
@@ -16,7 +17,7 @@ def update_battery_data():
     while battery_consumption > 0:
         print(f"Battery consumption: {battery_consumption}%")
         doc_ref = db.collection("battery_data").document("generated")
-        doc_ref.set({"percent%": battery_consumption})  # Update the document with current battery consumption
+        doc_ref.set({"percent": battery_consumption})  # Update the document with current battery consumption
         time.sleep(5)  # Wait for 5 seconds
         battery_consumption -= 1
 
@@ -26,7 +27,7 @@ def update_flow_rate():
         deviation = round(random.uniform(-0.150, 0.150), 3)
         flow_rate = round(normal_flow_rate + deviation, 3)  # Add deviation and round to 3 decimal places
         print(f"Flow Rate: {flow_rate} liters per minute")
-        doc_ref = db.collection("flow_rate").document("generated")
+        doc_ref = db.collection("flow_rate_data").document("generated")
         doc_ref.set({"rate": flow_rate})  # Update the document with flow rate data
         time.sleep(1)  # Wait for 1 second
 
@@ -63,15 +64,8 @@ def upload_rpm_data():
         print(f"RPM data updated: {rpm_value}")
         time.sleep(1)  # Adjust sleep duration as needed (every 1 second)
 
-# Run each function in a separate thread to execute simultaneously
-import threading
-
-battery_thread = threading.Thread(target=update_battery_data)
-flow_rate_thread = threading.Thread(target=update_flow_rate)
-blood_pressure_thread = threading.Thread(target=update_blood_pressure)
-rpm_thread = threading.Thread(target=upload_rpm_data)
-
-battery_thread.start()
-flow_rate_thread.start()
-blood_pressure_thread.start()
-rpm_thread.start()
+# Start each data generator in a separate thread
+Thread(target=update_battery_data).start()
+Thread(target=update_flow_rate).start()
+Thread(target=update_blood_pressure).start()
+Thread(target=upload_rpm_data).start()
