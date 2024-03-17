@@ -12,11 +12,13 @@ db = firestore.client()
 
 # Function to generate random data for each sensor
 def generate_data():
+    blood_pressure = random.randint(80, 120)  # Generate blood pressure in the range 80-120
+    blood_pressure += random.choice([-2, 0, 2])  # Add a random increment or decrement of ±2
+    
     return {
         "battery": random.randint(0, 100),
         "blood_pressure": {
-            "systolic": random.randint(100, 150),
-            "diastolic": random.randint(60, 90)
+            "pressure": blood_pressure
         },
         "flow_rate": random.uniform(0.5, 2.0),
         "rpm": random.randint(500, 1000)
