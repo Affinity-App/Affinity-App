@@ -12,7 +12,7 @@ def generate_data_csv():
   """
 
   # Get existing data files
-  target_directory = "cardiacengineering_app\python\csv"
+  target_directory = "cardiacengineering_app/python/csv"
   data_files = [f for f in os.listdir(target_directory) if f.startswith("data")]
 
   # Extract existing indices (if any)
@@ -110,18 +110,38 @@ def generate_data(): # Time (seconds), RPM, Pressure (psi), Battery (number), Fl
       return val + gpmStep  # Increase
     else:
       return val  # Stay the same
+    
+  # Blood pressure will be in the healthy range of 80-120 with a variation of ±2
+  bp = random.randint(78, 122)  # Initial blood pressure
+  print(f"Initial Blood Pressure: {bp}")
+
+  def generate_BP(val):
+    bpStep = 1  # Variation of ±1
+    bpMin = 80
+    bpMax = 120
+
+    dice = random.randint(0, 21)
+
+    # 33% chance each
+    if dice <= 7 and val >= bpMin + bpStep:
+      return val - bpStep  # Decrease
+    elif dice > 14 and val <= bpMax - bpStep:
+      return val + bpStep  # Increase
+    else:
+      return val  # Stay the same
 
   data = []
 
   # only iterate for each second
   for i in range(seconds):
-    input = {"Second": i, "RPM": rpm, "Battery": battery, "Flow": gpm}
+    input = {"time(s)": i, "RPM": rpm, "Battery": battery, "Flow Rate": gpm,  "Blood Pressure": bp}
     data.append(input)
 
     rpm = generate_RPM(rpm)
     psi = generate_PSI(psi)
     battery = generate_battery(battery, i)
     gpm = generate_GPM(gpm)
+    bp = generate_BP(bp)
   
   return data 
 
