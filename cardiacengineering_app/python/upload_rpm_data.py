@@ -20,5 +20,5 @@ def upload_rpm_data(rpm_data):
         })
 
 # Assuming you have a list of RPM values generated
-rpm_values = [79, 80, 81]  # Replace with your generated RPM values
+rpm_values = [90, 80, 81]  # Replace with your generated RPM values
 upload_rpm_data(rpm_values)
