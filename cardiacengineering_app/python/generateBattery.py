@@ -15,7 +15,7 @@ def update_battery_data():
     while battery_consumption > 0:
         print(f"Battery consumption: {battery_consumption}%")
         doc_ref = db.collection("battery_data").document("generated")
-        doc_ref.set({"%": battery_consumption})  # Update the document with current battery consumption
+        doc_ref.set({"percent%": battery_consumption})  # Update the document with current battery consumption
         time.sleep(5)  # Wait for 5 seconds
         battery_consumption -= 1
 
