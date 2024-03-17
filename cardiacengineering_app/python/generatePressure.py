@@ -16,7 +16,7 @@ def update_blood_pressure():
         pressure = random.randint(80, 120)  # Random blood pressure between 80 and 120
         print(f"Blood Pressure: {pressure} mmHg")
         doc_ref = db.collection("pressure_data").document("generated")
-        doc_ref.set({"Pressure": pressure})  # Update the document with blood pressure data
+        doc_ref.set({"pressure": pressure})  # Update the document with blood pressure data
         time.sleep(1)  # Wait for 5 seconds
 
 update_blood_pressure()
