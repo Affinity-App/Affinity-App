@@ -21,7 +21,7 @@ def generate_data():
             "pressure": format(blood_pressure, '.1f')  # Format blood pressure to one decimal place
         },
         "flow_rate": round(random.uniform(4.5, 5.5), 1 ),  # Round flow rate to one decimal place
-        "rpm": random.randint(500, 1000)
+        "rpm": random.randint(75,77, 1)
     }
 
 # Function to update blood pressure within range and increment by random value less than 1
