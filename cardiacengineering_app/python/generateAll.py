@@ -10,37 +10,34 @@ firebase_admin.initialize_app(cred)
 
 db = firestore.client()
 
-# Initialize blood pressure with a random value in the range 80-120
-blood_pressure = random.randint(800, 1200) / 10  # To have one decimal place
+# Initialize power consumption with 50 watts/h
+power_consumption = 50
 
 # Function to generate random data for each sensor
 def generate_data():
-    # Calculate power consumption in watts/h (assuming random battery level represents power consumption)
-    power_consumption = random.randint(0, 100) * random.uniform(0.5, 2.0)
-    
     return {
         "power_consumption": round(power_consumption, 1),  # Round power consumption to one decimal place
         "blood_pressure": {
-            "pressure": format(blood_pressure, '.1f')  # Format to one decimal place
+            "pressure": format(random.randint(800, 1200) / 10, '.1f')  # Format blood pressure to one decimal place
         },
         "flow_rate": round(random.uniform(0.5, 2.0), 1),  # Round flow rate to one decimal place
         "rpm": random.randint(500, 1000)
     }
 
-# Function to update blood pressure within range and increment by random value less than 2.0
-def update_blood_pressure():
-    global blood_pressure
-    change = random.uniform(-2.0, 2.0)  # Generate random change between -2.0 and 2.0
-    blood_pressure += change
-    blood_pressure = max(min(blood_pressure, 120.0), 80.0)  # Ensure blood pressure stays within range
+# Function to update power consumption within range and increment by random value less than 2.0
+def update_power_consumption():
+    global power_consumption
+    change = random.uniform(-1.0, 1.0)  # Generate random change between -1.0 and 1.0
+    power_consumption += change
+    power_consumption = max(0, power_consumption)  # Ensure power consumption is non-negative
 
 # Upload data to Firebase
 def upload_data():
-    global blood_pressure  # Access the global blood pressure variable
+    global power_consumption  # Access the global power consumption variable
     first_upload = True  # Flag to indicate the first upload
     while True:
         if not first_upload:
-            update_blood_pressure()  # Update blood pressure after the first upload
+            update_power_consumption()  # Update power consumption after the first upload
         data = generate_data()
         db.collection("sensor_data").document("power_consumption").set({"value": data["power_consumption"]})
         db.collection("sensor_data").document("blood_pressure").set({"pressure": data["blood_pressure"]})
