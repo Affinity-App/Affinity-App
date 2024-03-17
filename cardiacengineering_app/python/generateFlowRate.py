@@ -14,7 +14,7 @@ db = firestore.client()
 def update_flow_rate():
     while True:
         normal_flow_rate = 5.000
-        deviation = random.uniform(-0.150, 0.150)
+        deviation = round(random.uniform(-0.150, 0.150),3)
         flow_rate = round(normal_flow_rate + deviation, 3)  # Add deviation and round to 3 decimal places
         print(f"Flow Rate: {flow_rate} liters per minute")
         doc_ref = db.collection("flow_rate").document("generated")
