@@ -1,14 +1,12 @@
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
-import 'package:jr_design_app/pages/testChart.dart';
-import 'settingsPage.dart'; // Import the settingsPage.dart
-import 'RPMpage.dart'; // Import the RPMpage.dart
-import 'PSIpage.dart'; // Import the RPMpage.dart
-import 'BatteryPage.dart'; // Import the RPMpage.dart
-import 'GPMpage.dart'; // Import the RPMpage.dart
 
-import 'BackgroundGradientContainer.dart';
+import '../../pages/dev_settings/settings_page.dart'; // Import the settingsPage.dart
+import 'rpm_page.dart'; // Import the RPMpage.dart
+import 'psi_page.dart'; // Import the RPMpage.dart
+import 'battery_page.dart'; // Import the RPMpage.dart
+import 'gpm_page.dart'; // Import the RPMpage.dart
+
+import '../../components/background_gradient_container.dart';
 
 typedef void OnDataBoxPressedCallback(BuildContext context);
 
@@ -66,17 +64,38 @@ class HomePage extends StatelessWidget {
         // custom class to have gradient already
         child: Center(
           child: Column(
-          //mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(height: MediaQuery.of(context).padding.top + kToolbarHeight),
-            _buildDataBox(context, label: 'RPM', value: '100',iconPath: 'assets/images/Blood.png', onPressed: (context) { Navigator.pushNamed(context, '/RPMpage');}),
-            _buildDataBox(context, label: 'PSI', value: '50',iconPath: 'assets/images/Heart.png', onPressed: (context) { Navigator.pushNamed(context, '/PSIpage');}),
-            _buildDataBox(context, label: 'Battery', value: '97%',iconPath: 'assets/images/Battery.png', onPressed: (context) { Navigator.pushNamed(context, '/BatteryPage');}),
-            _buildDataBox(context, label: 'GPM', value: '100',iconPath: 'assets/images/Flow.png', onPressed: (context) { Navigator.pushNamed(context, '/GPMpage');}),
-          ],
+            //mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                  height: MediaQuery.of(context).padding.top + kToolbarHeight),
+              _buildDataBox(context,
+                  label: 'RPM',
+                  value: '100',
+                  iconPath: 'images/Blood.png', onPressed: (context) {
+                Navigator.pushNamed(context, '/RPMpage');
+              }),
+              _buildDataBox(context,
+                  label: 'PSI',
+                  value: '50',
+                  iconPath: 'assets/images/Heart.png', onPressed: (context) {
+                Navigator.pushNamed(context, '/PSIpage');
+              }),
+              _buildDataBox(context,
+                  label: 'Battery',
+                  value: '97%',
+                  iconPath: 'assets/images/Battery.png', onPressed: (context) {
+                Navigator.pushNamed(context, '/BatteryPage');
+              }),
+              _buildDataBox(context,
+                  label: 'GPM',
+                  value: '100',
+                  iconPath: 'assets/images/Flow.png', onPressed: (context) {
+                Navigator.pushNamed(context, '/GPMpage');
+              }),
+            ],
           ),
         ),
-        ),
+      ),
     );
   }
 
@@ -86,7 +105,8 @@ class HomePage extends StatelessWidget {
       required String iconPath,
       required OnDataBoxPressedCallback onPressed}) {
     return Container(
-      width: MediaQuery.of(context).size.width / 1.5, // size of the box determined by number at the back
+      width: MediaQuery.of(context).size.width /
+          1.5, // size of the box determined by number at the back
       child: GestureDetector(
         onTap: () {
           // Navigate to the desired page using the provided callback
@@ -109,7 +129,7 @@ class HomePage extends StatelessWidget {
                 width: 100.0,
               ),
               //const SizedBox(width: 10.0), // Add some space between the icon and text
-              Column( 
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
