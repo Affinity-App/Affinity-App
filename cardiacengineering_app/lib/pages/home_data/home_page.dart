@@ -105,7 +105,7 @@ class HomePage extends StatelessWidget {
               ),
               _buildDataBox(
                 context,
-                label: 'Battery Life',
+                label: 'Power Consumption',
                 value: '100',
                 iconPath: 'assets/images/Battery.png',
                 iconSize: 50.0,

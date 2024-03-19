@@ -18,7 +18,7 @@ class BatteryPage extends StatelessWidget {
         title: const Row(
           children: [
             Text(
-              'Battery Life',
+              'Power Consumption',
               style: TextStyle(
                 fontSize: 30.0,
               ),
