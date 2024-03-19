@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:jr_design_app/pages/square_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:jr_design_app/services/auth_service.dart';
 
-import 'createAccountPage.dart';
-import 'homePage.dart';
-import 'BackgroundGradientContainer.dart';
+import 'create_account_page.dart';
+import 'reset_password_page.dart'; // Import the reset password page
+import '../home_data/home_page.dart';
+import '../../components/background_gradient_container.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -30,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
       // Navigate to home page if login is successful
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => const HomePage()),
       );
     } catch (e) {
       // Handle login errors here
@@ -43,6 +42,14 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
     }
+  }
+
+  // Function to navigate to the password reset page
+  void _navigateToResetPasswordPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ResetPasswordPage()),
+    );
   }
 
   @override
@@ -80,6 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                   controller: _emailController,
                   decoration: const InputDecoration(
                     labelText: 'Email',
+                    labelStyle: TextStyle(color: Color.fromARGB(255, 70, 163, 205)),
                     border: InputBorder.none,
                   ),
                 ),
@@ -95,6 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                   controller: _passwordController,
                   decoration: const InputDecoration(
                     labelText: 'Password',
+                    labelStyle: TextStyle(color: Color.fromARGB(255, 70, 163, 205)), // Set text color to blue
                     border: InputBorder.none,
                   ),
                   obscureText: true,
@@ -111,11 +120,45 @@ class _LoginPageState extends State<LoginPage> {
               //   ],
               // ),
               const SizedBox(height: 20.0),
-              ElevatedButton(
+              Row (
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox (
+                    width: 140.0,
+                    child: ElevatedButton(
                 onPressed: _signInWithEmailAndPassword,
+                style: ButtonStyle(
+                  // backgroundColor
+                  backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(247, 169, 186, 1.0)), // set background color to pink
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.black), // Set text color to white
+                // Add the animation controller
+                animationDuration: const Duration(milliseconds: 200),
+                // Shrink on press
+                overlayColor: MaterialStateProperty.resolveWith<Color>(
+                  (states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return Colors.white10; // Shrink and visually indicate press
+                    }
+                    return Colors.transparent; // Use default overlay color
+                  },
+                ),
+                // Scale the button down slightly on press
+                padding: MaterialStateProperty.resolveWith<EdgeInsets>(
+                  (states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8.0);
+                    }
+                    return const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 12.0);
+                  },
+                ),
+              ),
                 child: const Text('Login'),
               ),
+                  ),
               const SizedBox(height: 10.0),
+              const SizedBox(width: 10.0), // Add some space between the login and create account buttons
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -124,7 +167,42 @@ class _LoginPageState extends State<LoginPage> {
                         builder: (context) => const CreateAccountPage()),
                   );
                 },
+                style: ButtonStyle(
+                  // backgroundColor
+                  backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(247, 169, 186, 1.0)), // set background color to pink
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.black), // Set text color to white
+                // Add the animation controller
+                animationDuration: const Duration(milliseconds: 200),
+                // Shrink on press
+                overlayColor: MaterialStateProperty.resolveWith<Color>(
+                  (states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return Colors.white10; // Shrink and visually indicate press
+                    }
+                    return Colors.transparent; // Use default overlay color
+                  },
+                ),
+                // Scale the button down slightly on press
+                padding: MaterialStateProperty.resolveWith<EdgeInsets>(
+                  (states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8.0);
+                    }
+                    return const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 12.0);
+                  },
+                ),
+              ),
                 child: const Text('Create Account'),
+              ),
+              // Button for navigating to the reset password page
+              
+            ],
+          ),
+            TextButton(
+                onPressed: _navigateToResetPasswordPage,
+                child: const Text('Forgot Password?'),
               ),
             ],
           ),
