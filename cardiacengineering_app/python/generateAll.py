@@ -3,11 +3,29 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 import random
 import time
+import os
 
-# Replace the path with the path to your service account key JSON file
-cred = credentials.Certificate("cardiacengineering_app/python/affinity-app-1018-firebase-adminsdk-uto31-4574cd060c.json")
-firebase_admin.initialize_app(cred)
+# Set the environment variable to specify the path to your service account key JSON file
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"C:/Users/User/Downloads/affinity-app-1018-firebase-adminsdk-uto31-4574cd060c.json"
 
+# Function to initialize Firebase app with credentials
+def initialize_firebase():
+    # Fetch the value of the environment variable
+    key_file_path = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
+
+    if key_file_path is None:
+        raise ValueError("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set")
+
+    # Create credentials object using the specified path
+    cred = credentials.Certificate(key_file_path)
+
+    # Initialize Firebase app with the credentials
+    firebase_admin.initialize_app(cred)
+
+# Initialize Firebase app with credentials
+initialize_firebase()
+
+# Get Firestore client
 db = firestore.client()
 
 # Initialize blood pressure with a random value between 90-110
@@ -16,10 +34,10 @@ blood_pressure = random.randint(900, 1100) / 10  # To have one decimal place
 # Function to generate random data for each sensor
 def generate_data():
     return {
-        "power_consumption": round(random.uniform(45,50), 1),  # Power consumption between 40-60 watts/h
+        "power_consumption": round(random.uniform(45, 50), 1),  # Power consumption between 40-60 watts/h
         "pressure": format(blood_pressure, '.1f'),  # Format blood pressure to one decimal place
-        "flow_rate": round(random.uniform(4.5, 5.5), 1 ),  # Round flow rate to one decimal place
-        "bpm": round(random.uniform(75,77), 1)
+        "flow_rate": round(random.uniform(4.5, 5.5), 1),  # Round flow rate to one decimal place
+        "bpm": round(random.uniform(75, 77), 1)
     }
 
 # Function to update blood pressure within range and increment by random value less than 1
