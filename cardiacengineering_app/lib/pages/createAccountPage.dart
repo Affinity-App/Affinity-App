@@ -127,6 +127,9 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   }
                 },
                 style: ButtonStyle(
+                   // backgroundColor
+                  backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(247, 169, 186, 1.0)),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.black), // Set text color to white
                   // Add the animation controller
                   animationDuration: const Duration(milliseconds: 200),
                   // Shrink on press

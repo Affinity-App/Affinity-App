@@ -15,11 +15,40 @@ class SettingsPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
+            SizedBox(width: 150.0,
+            child: ElevatedButton(
               onPressed: () {
                 _logout(context);
               },
+              style: ButtonStyle(
+                 // backgroundColor
+                  backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 70, 163, 205)), // Set background color to blue
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.black), // Set text color to white
+                // Add the animation controller
+                animationDuration: const Duration(milliseconds: 200),
+                // Shrink on press
+                overlayColor: MaterialStateProperty.resolveWith<Color>(
+                  (states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return Colors.white10; // Shrink and visually indicate press
+                    }
+                    return Colors.transparent; // Use default overlay color
+                  },
+                ),
+                // Scale the button down slightly on press
+                padding: MaterialStateProperty.resolveWith<EdgeInsets>(
+                  (states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8.0);
+                    }
+                    return const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 12.0);
+                  },
+                ),
+              ),
               child: const Text('Logout'),
+            ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
@@ -27,6 +56,30 @@ class SettingsPage extends StatelessWidget {
                 // Navigate back to the previous page (Home page)
                 Navigator.pop(context);
               },
+              style: ButtonStyle(
+                // Add the animation controller
+                animationDuration: const Duration(milliseconds: 200),
+                // Shrink on press
+                overlayColor: MaterialStateProperty.resolveWith<Color>(
+                  (states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return Colors.white10; // Shrink and visually indicate press
+                    }
+                    return Colors.transparent; // Use default overlay color
+                  },
+                ),
+                // Scale the button down slightly on press
+                padding: MaterialStateProperty.resolveWith<EdgeInsets>(
+                  (states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8.0);
+                    }
+                    return const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 12.0);
+                  },
+                ),
+              ),
               child: const Text('Back to Home'),
             ),
           ],
