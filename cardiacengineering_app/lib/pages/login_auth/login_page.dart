@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:jr_design_app/pages/square_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:jr_design_app/services/auth_service.dart';
 
-import 'createAccountPage.dart';
-import 'homePage.dart';
-import 'BackgroundGradientContainer.dart';
+import 'create_account_page.dart';
+import 'reset_password_page.dart'; // Import the reset password page
+import '../home_data/home_page.dart';
+import '../../components/background_gradient_container.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -30,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
       // Navigate to home page if login is successful
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => const HomePage()),
       );
     } catch (e) {
       // Handle login errors here
@@ -43,6 +42,14 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
     }
+  }
+
+  // Function to navigate to the password reset page
+  void _navigateToResetPasswordPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ResetPasswordPage()),
+    );
   }
 
   @override
@@ -125,6 +132,11 @@ class _LoginPageState extends State<LoginPage> {
                   );
                 },
                 child: const Text('Create Account'),
+              ),
+              // Button for navigating to the reset password page
+              TextButton(
+                onPressed: _navigateToResetPasswordPage,
+                child: const Text('Forgot Password?'),
               ),
             ],
           ),
