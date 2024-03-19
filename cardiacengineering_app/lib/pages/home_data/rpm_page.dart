@@ -5,7 +5,7 @@ import '../login_auth/login_page.dart';
 import '../../components/background_gradient_container.dart';
 
 class RPMpage extends StatelessWidget {
-  const RPMpage({Key? key}) : super(key: key);
+  const RPMpage({Key? key}) : super(key: key); //Heart Rate
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class RPMpage extends StatelessWidget {
         title: const Row(
           children: [
             Text(
-              'RPM',
+              'Heart Rate',
               style: TextStyle(
                 fontSize: 30.0,
               ),

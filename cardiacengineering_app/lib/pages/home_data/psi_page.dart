@@ -5,7 +5,7 @@ import '../login_auth/login_page.dart';
 import '../../components/background_gradient_container.dart';
 
 class PSIpage extends StatelessWidget {
-  const PSIpage({Key? key}) : super(key: key);
+  const PSIpage({Key? key}) : super(key: key); //Blood Pressure
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class PSIpage extends StatelessWidget {
         title: const Row(
           children: [
             Text(
-              'PSI',
+              'Blood Pressure',
               style: TextStyle(
                 fontSize: 30.0,
               ),

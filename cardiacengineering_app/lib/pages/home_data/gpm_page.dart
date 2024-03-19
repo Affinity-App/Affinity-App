@@ -5,7 +5,7 @@ import '../login_auth/login_page.dart';
 import '../../components/background_gradient_container.dart';
 
 class GPMpage extends StatelessWidget {
-  const GPMpage({Key? key}) : super(key: key);
+  const GPMpage({Key? key}) : super(key: key); //Flow Rate
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class GPMpage extends StatelessWidget {
         title: const Row(
           children: [
             Text(
-              'GPM',
+              'Flow Rate',
               style: TextStyle(
                 fontSize: 30.0,
               ),
