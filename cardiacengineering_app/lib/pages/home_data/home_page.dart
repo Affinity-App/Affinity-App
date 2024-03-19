@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: unused_import
 
-import '../../pages/dev_settings/settings_page.dart'; // Import the settingsPage.dart
-// Import the RPMpage.dart
-// Import the RPMpage.dart
-// Import the RPMpage.dart
-// Import the RPMpage.dart
+import 'package:flutter/material.dart';
+import '../../pages/dev_settings/settings_page.dart';
+import 'rpm_page.dart';
+import 'psi_page.dart';
+import 'battery_page.dart';
+import 'gpm_page.dart';
 
 import '../../components/background_gradient_container.dart';
 
@@ -16,41 +17,35 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false, // Prevents bottom overflow
-      extendBodyBehindAppBar: true, // Extend the body behind the app bar
+      resizeToAvoidBottomInset: false,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        // basically the header
-        backgroundColor: Colors.transparent, // Make app bar transparent
-        elevation: 0, // Remove app bar elevation
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(
-                width: 86.0), // Add some space between the logo and text
+            const SizedBox(width: 86.0),
             Image.asset(
               'assets/images/logo.png',
               height: 50.0,
             ),
-            const SizedBox(
-                width: 5.0), // Add some space between the logo and text
+            const SizedBox(width: 5.0),
             const Text(
               'Affinity',
               style: TextStyle(
                 fontSize: 30.0,
               ),
-// Add some space between the logo and text
             ),
           ],
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(
-                right: 30.0), // Adjust the left padding as needed
+            padding: const EdgeInsets.only(right: 30.0),
             child: IconButton(
               icon: const Icon(Icons.account_circle),
-              iconSize: 50.0, // Adjust the size as needed
+              iconSize: 50.0,
               onPressed: () {
-                // Navigate to the settings page
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const SettingsPage()),
@@ -61,37 +56,78 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: BackgroundGradientContainer(
-        // custom class to have gradient already
         child: Center(
           child: Column(
-            //mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
-                  height: MediaQuery.of(context).padding.top + kToolbarHeight),
-              _buildDataBox(context,
-                  label: 'RPM',
-                  value: '100',
-                  iconPath: 'assets/images/Blood.png', onPressed: (context) {
-                Navigator.pushNamed(context, '/RPMpage');
-              }),
-              _buildDataBox(context,
-                  label: 'PSI',
-                  value: '50',
-                  iconPath: 'assets/images/Heart.png', onPressed: (context) {
-                Navigator.pushNamed(context, '/PSIpage');
-              }),
-              _buildDataBox(context,
-                  label: 'Battery',
-                  value: '97%',
-                  iconPath: 'assets/images/Battery.png', onPressed: (context) {
-                Navigator.pushNamed(context, '/BatteryPage');
-              }),
-              _buildDataBox(context,
-                  label: 'GPM',
-                  value: '100',
-                  iconPath: 'assets/images/Flow.png', onPressed: (context) {
-                Navigator.pushNamed(context, '/GPMpage');
-              }),
+                  height: MediaQuery.of(context).padding.top +
+                      kToolbarHeight +
+                      20), // Added space
+              _buildDataBox(
+                context,
+                label: 'Blood Pressure',
+                value: '15.6',
+                iconPath: 'assets/images/Blood.png',
+                iconSize: 50.0,
+                labelFontSize: 20.0,
+                valueFontSize: 20.0,
+                borderRadius: 20.0,
+                onPressed: (context) {
+                  Navigator.pushNamed(context, '/PSIpage');
+                },
+              ),
+              _buildDataBox(
+                context,
+                label: 'Heart Rate',
+                value: '60.2',
+                iconPath: 'assets/images/Heart.png',
+                iconSize: 50.0,
+                labelFontSize: 20.0,
+                valueFontSize: 20.0,
+                borderRadius: 20.0,
+                onPressed: (context) {
+                  Navigator.pushNamed(context, '/RPMpage');
+                },
+              ),
+              _buildDataBox(
+                context,
+                label: 'Flow Rate',
+                value: '97%',
+                iconPath: 'assets/images/Flow.png',
+                iconSize: 50.0,
+                labelFontSize: 20.0,
+                valueFontSize: 20.0,
+                borderRadius: 20.0,
+                onPressed: (context) {
+                  Navigator.pushNamed(context, '/GPMpage');
+                },
+              ),
+              _buildDataBox(
+                context,
+                label: 'Battery Life',
+                value: '100',
+                iconPath: 'assets/images/Battery.png',
+                iconSize: 50.0,
+                labelFontSize: 20.0,
+                valueFontSize: 20.0,
+                borderRadius: 20.0,
+                onPressed: (context) {
+                  Navigator.pushNamed(context, '/BatteryPage');
+                },
+              ),
+              _buildDataBox(
+                context,
+                label: 'Record Now',
+                value: '',
+                iconPath: 'assets/images/logo.png',
+                iconSize: 50.0,
+                labelFontSize: 20.0,
+                valueFontSize: 0,
+                borderRadius: 20.0,
+                onPressed: (context) {
+                  // Add navigation logic for the Record Now box
+                },
+              ),
             ],
           ),
         ),
@@ -99,58 +135,68 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildDataBox(BuildContext context,
-      {required String label,
-      required String value,
-      required String iconPath,
-      required OnDataBoxPressedCallback onPressed}) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width /
-          1.5, // size of the box determined by number at the back
+  Widget _buildDataBox(
+    BuildContext context, {
+    required String label,
+    required String value,
+    required String iconPath,
+    required double iconSize,
+    required double labelFontSize,
+    required double valueFontSize,
+    required double borderRadius,
+    required OnDataBoxPressedCallback onPressed,
+  }) {
+    return Container(
+      width: MediaQuery.of(context).size.width / 1.2,
       child: GestureDetector(
         onTap: () {
-          // Navigate to the desired page using the provided callback
           onPressed(context);
         },
         child: Container(
-          //width: MediaQuery.of(context).size.width / 4,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.0),
-            color: Colors.grey[200],
+            borderRadius: BorderRadius.circular(borderRadius),
+            border: Border.all(color: Colors.black, width: 1.0),
           ),
           margin: const EdgeInsets.all(10.0),
           padding: const EdgeInsets.all(10.0),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center, // Adjusted to center
             children: [
               Image.asset(
                 iconPath,
-                height: 100.0,
-                width: 100.0,
+                height: iconSize,
+                width: iconSize,
               ),
-              //const SizedBox(width: 10.0), // Add some space between the icon and text
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    label,
-                    style: const TextStyle(
-                      fontSize: 32.0,
-                      fontWeight: FontWeight.bold,
+              const SizedBox(width: 10.0),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment:
+                      CrossAxisAlignment.center, // Adjusted to center
+                  children: [
+                    Text(
+                      label,
+                      style: TextStyle(
+                        fontSize: labelFontSize,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center, // Adjusted to center
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 5.0),
-                  Text(
-                    value,
-                    style: const TextStyle(
-                      fontSize: 32.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 70, 163, 205),
+                    const SizedBox(height: 5.0),
+                    Text(
+                      value,
+                      style: TextStyle(
+                        fontSize: valueFontSize,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 86, 140, 234),
+                      ),
+                      textAlign: TextAlign.center, // Adjusted to center
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+                  ],
+                ),
+              ),
+              Icon(
+                Icons.add,
+                color: Colors.black,
               ),
             ],
           ),
