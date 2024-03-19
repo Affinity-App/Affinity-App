@@ -1,43 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import '../login_auth/login_page.dart';
-
-import '../../components/background_gradient_container.dart';
+import 'package:jr_design_app/components/background_gradient_container.dart';
+import 'package:jr_design_app/pages/dev_settings/test_chart.dart';
 
 class RPMpage extends StatelessWidget {
-  const RPMpage({Key? key}) : super(key: key); //Heart Rate
+  const RPMpage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false, // Prevents bottom overflow
-      extendBodyBehindAppBar: true, // Extend the body behind the app bar
+      extendBodyBehindAppBar: true, //
       appBar: AppBar(
         backgroundColor: Colors.transparent, // Make app bar transparent
         elevation: 0, // Remove app bar elevation
-        title: const Row(
-          children: [
-            Text(
-              'Heart Rate',
-              style: TextStyle(
-                fontSize: 30.0,
-              ),
-// Add some space between the logo and text
-            ),
-          ],
-        ),
+        title: const Text('RPM Data'),
       ),
       body: BackgroundGradientContainer(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              width: double.infinity,
-              'assets/images/logo.png',
-              height: 100.0,
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(18.0),
+                color: Colors.green,
+              ),
+              child: LineChartSample2(),
             ),
-            const SizedBox(height: 100.0),
             const SizedBox(height: 30.0),
             ElevatedButton(
               onPressed: () {

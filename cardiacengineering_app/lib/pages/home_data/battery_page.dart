@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../login_auth/login_page.dart';
-
+import 'package:jr_design_app/pages/dev_settings/test_chart.dart';
 import '../../components/background_gradient_container.dart';
 
 class BatteryPage extends StatelessWidget {
-  const BatteryPage({Key? key}) : super(key: key);
+  const BatteryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +32,13 @@ class BatteryPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              width: double.infinity,
-              'assets/images/logo.png',
-              height: 100.0,
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(18.0),
+                color: Colors.green,
+              ),
+              child: LineChartSample2(),
             ),
-            const SizedBox(height: 100.0),
             const SizedBox(height: 30.0),
             ElevatedButton(
               onPressed: () {

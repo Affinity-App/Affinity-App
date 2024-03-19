@@ -7,7 +7,7 @@ import '../home_data/home_page.dart';
 import '../../components/background_gradient_container.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -136,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
               // Button for navigating to the reset password page
               TextButton(
                 onPressed: _navigateToResetPasswordPage,
-                child: Text('Forgot Password?'),
+                child: const Text('Forgot Password?'),
               ),
             ],
           ),
