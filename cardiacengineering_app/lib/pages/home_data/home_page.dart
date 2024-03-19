@@ -1,6 +1,7 @@
 // ignore_for_file: unused_import
 
 import 'package:flutter/material.dart';
+import 'package:jr_design_app/components/data_box.dart';
 import '../../pages/dev_settings/settings_page.dart';
 import 'rpm_page.dart';
 import 'psi_page.dart';
@@ -64,140 +65,33 @@ class HomePage extends StatelessWidget {
                   height: MediaQuery.of(context).padding.top +
                       kToolbarHeight +
                       20), // Added space
-              _buildDataBox(
-                context,
-                label: 'Blood Pressure',
-                value: '15.6',
-                iconPath: 'assets/images/Blood.png',
-                iconSize: 50.0,
-                labelFontSize: 20.0,
-                valueFontSize: 20.0,
-                borderRadius: 20.0,
-                onPressed: (context) {
+              DataBox(label: 'Blood Pressure', value: '000', iconPath: 'assets/images/Blood.png', onPressed: (context) {
                   Navigator.pushNamed(context, '/PSIpage');
                 },
               ),
-              _buildDataBox(
-                context,
-                label: 'Heart Rate',
-                value: '60.2',
-                iconPath: 'assets/images/Heart.png',
-                iconSize: 50.0,
-                labelFontSize: 20.0,
-                valueFontSize: 20.0,
-                borderRadius: 20.0,
-                onPressed: (context) {
+              DataBox(label: 'Heart Rate', value: '000', iconPath: 'assets/images/Heart.png', onPressed: (context) {
                   Navigator.pushNamed(context, '/RPMpage');
                 },
               ),
-              _buildDataBox(
-                context,
-                label: 'Flow Rate',
-                value: '97%',
-                iconPath: 'assets/images/Flow.png',
-                iconSize: 50.0,
-                labelFontSize: 20.0,
-                valueFontSize: 20.0,
-                borderRadius: 20.0,
-                onPressed: (context) {
+              DataBox(label: 'Flow Rate', value: '00%', iconPath: 'assets/images/Flow.png', onPressed: (context) {
                   Navigator.pushNamed(context, '/GPMpage');
                 },
               ),
-              _buildDataBox(
-                context,
+              DataBox(
                 label: 'Power Consumption',
-                value: '100',
+                value: '000',
                 iconPath: 'assets/images/Battery.png',
-                iconSize: 50.0,
-                labelFontSize: 20.0,
-                valueFontSize: 20.0,
-                borderRadius: 20.0,
                 onPressed: (context) {
                   Navigator.pushNamed(context, '/BatteryPage');
                 },
               ),
-              _buildDataBox(
-                context,
+              DataBox(
                 label: 'Record Now',
                 value: '',
                 iconPath: 'assets/images/logo.png',
-                iconSize: 50.0,
-                labelFontSize: 20.0,
-                valueFontSize: 0,
-                borderRadius: 20.0,
                 onPressed: (context) {
                   Navigator.pushNamed(context, '/RecordNow');
                 },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDataBox(
-    BuildContext context, {
-    required String label,
-    required String value,
-    required String iconPath,
-    required double iconSize,
-    required double labelFontSize,
-    required double valueFontSize,
-    required double borderRadius,
-    required OnDataBoxPressedCallback onPressed,
-  }) {
-    return Container(
-      width: MediaQuery.of(context).size.width / 1.2,
-      child: GestureDetector(
-        onTap: () {
-          onPressed(context);
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(borderRadius),
-            border: Border.all(color: Colors.black, width: 1.0),
-          ),
-          margin: const EdgeInsets.all(10.0),
-          padding: const EdgeInsets.all(10.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center, // Adjusted to center
-            children: [
-              Image.asset(
-                iconPath,
-                height: iconSize,
-                width: iconSize,
-              ),
-              const SizedBox(width: 10.0),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.center, // Adjusted to center
-                  children: [
-                    Text(
-                      label,
-                      style: TextStyle(
-                        fontSize: labelFontSize,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center, // Adjusted to center
-                    ),
-                    const SizedBox(height: 5.0),
-                    Text(
-                      value,
-                      style: TextStyle(
-                        fontSize: valueFontSize,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 86, 140, 234),
-                      ),
-                      textAlign: TextAlign.center, // Adjusted to center
-                    ),
-                  ],
-                ),
-              ),
-              Icon(
-                Icons.add,
-                color: Colors.black,
               ),
             ],
           ),
