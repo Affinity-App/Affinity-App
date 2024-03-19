@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class RPMpage extends StatelessWidget {
-  const RPMpage({Key? key}) : super(key: key);
+  const RPMpage({super.key});
 
   @override
   Widget build(BuildContext context) {

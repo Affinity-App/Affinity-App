@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../pages/dev_settings/settings_page.dart'; // Import the settingsPage.dart
-import 'rpm_page.dart'; // Import the RPMpage.dart
-import 'psi_page.dart'; // Import the RPMpage.dart
-import 'battery_page.dart'; // Import the RPMpage.dart
-import 'gpm_page.dart'; // Import the RPMpage.dart
+// Import the RPMpage.dart
+// Import the RPMpage.dart
+// Import the RPMpage.dart
+// Import the RPMpage.dart
 
 import '../../components/background_gradient_container.dart';
 
-typedef void OnDataBoxPressedCallback(BuildContext context);
+typedef OnDataBoxPressedCallback = void Function(BuildContext context);
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -104,7 +104,7 @@ class HomePage extends StatelessWidget {
       required String value,
       required String iconPath,
       required OnDataBoxPressedCallback onPressed}) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width /
           1.5, // size of the box determined by number at the back
       child: GestureDetector(

@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CreateAccountPage extends StatefulWidget {
-  const CreateAccountPage({Key? key}) : super(key: key);
+  const CreateAccountPage({super.key});
 
   @override
   _CreateAccountPageState createState() => _CreateAccountPageState();
@@ -95,7 +95,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   obscureText: !_passwordVisible,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               if (_showPasswordRequirements)
@@ -155,7 +155,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   } else {
                     // Show error message for invalid email or password
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                         content: Text('Invalid email or password'),
                         backgroundColor: Colors.red,
                       ),

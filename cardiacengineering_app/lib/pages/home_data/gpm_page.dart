@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class GPMpage extends StatelessWidget {
-  const GPMpage({Key? key}) : super(key: key);
+  const GPMpage({super.key});
 
   @override
   Widget build(BuildContext context) {

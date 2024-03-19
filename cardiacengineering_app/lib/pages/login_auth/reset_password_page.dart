@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ResetPasswordPage extends StatelessWidget {
-  ResetPasswordPage({Key? key}) : super(key: key);
+  ResetPasswordPage({super.key});
 
   final TextEditingController _emailController = TextEditingController();
 
@@ -13,7 +13,7 @@ class ResetPasswordPage extends StatelessWidget {
       );
       // Show success message or navigate to a success page
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Password reset email sent'),
           backgroundColor: Colors.green,
         ),
@@ -21,7 +21,7 @@ class ResetPasswordPage extends StatelessWidget {
     } catch (error) {
       // Show error message if something goes wrong
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Failed to send password reset email'),
           backgroundColor: Colors.red,
         ),
@@ -33,7 +33,7 @@ class ResetPasswordPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Reset Password'),
+        title: const Text('Reset Password'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -42,13 +42,13 @@ class ResetPasswordPage extends StatelessWidget {
           children: [
             TextField(
               controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration: const InputDecoration(labelText: 'Email'),
               keyboardType: TextInputType.emailAddress,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () => _resetPassword(context),
-              child: Text('Reset Password'),
+              child: const Text('Reset Password'),
             ),
           ],
         ),

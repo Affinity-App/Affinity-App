@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PSIpage extends StatelessWidget {
-  const PSIpage({Key? key}) : super(key: key);
+  const PSIpage({super.key});
 
   @override
   Widget build(BuildContext context) {
