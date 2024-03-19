@@ -71,7 +71,7 @@ class HomePage extends StatelessWidget {
               _buildDataBox(context,
                   label: 'RPM',
                   value: '100',
-                  iconPath: 'images/Blood.png', onPressed: (context) {
+                  iconPath: 'assets/images/logo.png', onPressed: (context) {
                 Navigator.pushNamed(context, '/RPMpage');
               }),
               _buildDataBox(context,
