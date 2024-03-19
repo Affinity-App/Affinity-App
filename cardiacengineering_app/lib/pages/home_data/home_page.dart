@@ -6,6 +6,7 @@ import 'rpm_page.dart';
 import 'psi_page.dart';
 import 'battery_page.dart';
 import 'gpm_page.dart';
+import 'record_now_page.dart';
 
 import '../../components/background_gradient_container.dart';
 
@@ -125,7 +126,7 @@ class HomePage extends StatelessWidget {
                 valueFontSize: 0,
                 borderRadius: 20.0,
                 onPressed: (context) {
-                  // Add navigation logic for the Record Now box
+                  Navigator.pushNamed(context, '/RecordNow');
                 },
               ),
             ],
