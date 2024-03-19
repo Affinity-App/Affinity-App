@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jr_design_app/components/background_gradient_container.dart';
+import 'package:jr_design_app/pages/dev_settings/test_chart.dart';
 
 class RPMpage extends StatelessWidget {
   const RPMpage({super.key});
@@ -19,6 +20,17 @@ class RPMpage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Padding(
+              padding: EdgeInsets.only(top: 50.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(18.0),
+                  color: Colors.green,
+                ),
+                child: LineChartSample2(),
+              ),
+            ),
+              SizedBox(height: 25),
               ElevatedButton(
                 onPressed: () {
                   // Navigate back to the previous page (Home page)
@@ -26,6 +38,16 @@ class RPMpage extends StatelessWidget {
                 },
                 child: const Text('Back to Home'),
               ),
+              // ElevatedButton(
+              //   onPressed: () {
+              //     // Navigate back to the previous page (Home page)
+              //     Navigator.push(
+              //     context,
+              //     MaterialPageRoute(builder: (context) => const lineChart()),
+              //   );
+              //   },
+              //   child: const Text('Test Chart Page'),
+              // ),
             ],
           ),
         ),

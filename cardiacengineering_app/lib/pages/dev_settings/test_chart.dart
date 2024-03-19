@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/widgets.dart';
 import '../../components/background_gradient_container.dart';
 
-class testChart extends StatelessWidget {
+class lineChart extends StatelessWidget {
   final darkBlueColor = const Color.fromARGB(255, 29, 35, 53);
 
-  const testChart({super.key}); 
+  const lineChart({super.key}); 
 
   @override
   Widget build(BuildContext context) {
@@ -13,21 +14,31 @@ class testChart extends StatelessWidget {
       backgroundColor: Colors.transparent,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Test Line Chart'),
+        title: const Text('Line Chart'),
         backgroundColor: Colors.transparent,
       ),
-      body: const BackgroundGradientContainer(
+      body: BackgroundGradientContainer(
         child: Column(
           children: [
-            SizedBox(height: 150.0), // Move down to below the app bar
-            LineChartSample2(),
-            ],
-          ),
+            Padding(
+              padding: EdgeInsets.only(top: 250.0),
+              child: Container(
+
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(18.0),
+                  color: Colors.green,
+                ),
+                child: LineChartSample2(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
+//  LineChartSample2(),
 class LineChartSample2 extends StatefulWidget {
   const LineChartSample2({super.key});
 
