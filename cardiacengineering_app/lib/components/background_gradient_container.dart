@@ -6,11 +6,11 @@ class BackgroundGradientContainer extends StatelessWidget {
   final EdgeInsets padding;
 
   const BackgroundGradientContainer({
-    Key? key,
+    super.key,
     required this.child,
     this.padding = const EdgeInsets.all(10.0),
     this.gradientColor = const Color(0xFFA7C2F7),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
