@@ -101,17 +101,17 @@ class _LineChartSample2State extends State<LineChartSample2> {
     Widget text;
 
     switch (value.toInt()) {
-      case 2:
-        text = const Text('0:30', style: style);
+      case 15:
+        text = const Text('15', style: style);
         break;
-      case 5:
-        text = const Text('1:00', style: style);
+      case 30:
+        text = const Text('30', style: style);
         break;
-      case 8:
-        text = const Text('1:30', style: style);
+      case 45:
+        text = const Text('45', style: style);
         break;
-      case 11:
-        text = const Text('2:00', style: style);
+      case 60:
+        text = const Text('60', style: style);
       default:
         text = const Text('', style: style);
         break;
@@ -132,17 +132,26 @@ class _LineChartSample2State extends State<LineChartSample2> {
     String text;
 
     switch (value.toInt()) {
-      case 1:
-        text = '70';
+      case 0:
+        text = '0';
         break;
-      case 3:
-        text = '90';
+      case 20:
+        text = '20';
         break;
-      case 5:
+      case 40:
+        text = '40';
+        break;
+      case 60:
+        text = '60';
+        break;
+      case 80:
+        text = '80';
+        break;
+      case 100:
+        text = '100';
+        break;
+      case 120:
         text = '120';
-        break;
-      case 7:
-        text = '150';
         break;
       default:
         return Container();
@@ -156,7 +165,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
         show: true,
         drawVerticalLine: true,
         horizontalInterval: 10,
-        verticalInterval: 10,
+        verticalInterval: 5,
         getDrawingHorizontalLine: (value) {
           return const FlLine(
             color: Color.fromARGB(255, 29, 35, 53),
@@ -207,12 +216,12 @@ class _LineChartSample2State extends State<LineChartSample2> {
         LineChartBarData(
           spots: const [
             FlSpot(0, 10),
-            FlSpot(1.6, 20),
-            FlSpot(4.9, 55),
-            FlSpot(6.8, 50),
-            FlSpot(8, 30),
-            FlSpot(9.5, 40),
-            FlSpot(11, 4),
+            FlSpot(15, 20),
+            FlSpot(20, 55),
+            FlSpot(30, 50),
+            FlSpot(40, 30),
+            FlSpot(50, 40),
+            FlSpot(60, 45),
           ],
           isCurved: true,
           gradient: LinearGradient( 
@@ -236,100 +245,100 @@ class _LineChartSample2State extends State<LineChartSample2> {
     );
   }
 
-  // LineChartData avgData() {
-  //   return LineChartData(
-  //     lineTouchData: const LineTouchData(enabled: false),
-  //     gridData: FlGridData(
-  //       show: true,
-  //       drawHorizontalLine: true,
-  //       verticalInterval: 1,
-  //       horizontalInterval: 1,
-  //       getDrawingVerticalLine: (value) {
-  //         return const FlLine(
-  //           color: Color(0xff37434d),
-  //           strokeWidth: 1,
-  //         );
-  //       },
-  //       getDrawingHorizontalLine: (value) {
-  //         return const FlLine(
-  //           color: Color(0xff37434d),
-  //           strokeWidth: 1,
-  //         );
-  //       },
-  //     ),
-  //     titlesData: FlTitlesData(
-  //       show: true,
-  //       bottomTitles: AxisTitles(
-  //         sideTitles: SideTitles(
-  //           showTitles: true,
-  //           reservedSize: 30,
-  //           getTitlesWidget: bottomTitleWidgets,
-  //           interval: 1,
-  //         ),
-  //       ),
-  //       leftTitles: AxisTitles(
-  //         sideTitles: SideTitles(
-  //           showTitles: true,
-  //           getTitlesWidget: leftTitleWidgets,
-  //           reservedSize: 32,
-  //           interval: 1,
-  //         ),
-  //       ),
-  //       topTitles: const AxisTitles(
-  //         sideTitles: SideTitles(showTitles: false),
-  //       ),
-  //       rightTitles: const AxisTitles(
-  //         sideTitles: SideTitles(showTitles: false),
-  //       ),
-  //     ),
-  //     borderData: FlBorderData(
-  //       show: true,
-  //       border: Border.all(color: const Color(0xff37434d)),
-  //     ),
-  //     minX: 0,
-  //     maxX: 11,
-  //     minY: 0,
-  //     maxY: 6,
-  //     lineBarsData: [
-  //       LineChartBarData(
-  //         spots: const [
-  //           FlSpot(0, 3.44),
-  //           FlSpot(2.6, 3.44),
-  //           FlSpot(4.9, 3.44),
-  //           FlSpot(6.8, 3.44),
-  //           FlSpot(8, 3.44),
-  //           FlSpot(9.5, 3.44),
-  //           FlSpot(11, 3.44),
-  //         ],
-  //         isCurved: true,
-  //         gradient: LinearGradient(
-  //           colors: [
-  //             ColorTween(begin: gradientColors[0], end: gradientColors[1])
-  //                 .lerp(0.2)!,
-  //             ColorTween(begin: gradientColors[0], end: gradientColors[1])
-  //                 .lerp(0.2)!,
-  //           ],
-  //         ),
-  //         barWidth: 5,
-  //         isStrokeCapRound: true,
-  //         dotData: const FlDotData(
-  //           show: false,
-  //         ),
-  //         belowBarData: BarAreaData(
-  //           show: true,
-  //           gradient: LinearGradient(
-  //             colors: [
-  //               ColorTween(begin: gradientColors[0], end: gradientColors[1])
-  //                   .lerp(0.2)!
-  //                   .withOpacity(0.1),
-  //               ColorTween(begin: gradientColors[0], end: gradientColors[1])
-  //                   .lerp(0.2)!
-  //                   .withOpacity(0.1),
-  //             ],
-  //           ),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
+  LineChartData avgData() {
+    return LineChartData(
+      lineTouchData: const LineTouchData(enabled: false),
+      gridData: FlGridData(
+        show: true,
+        drawHorizontalLine: true,
+        verticalInterval: 1,
+        horizontalInterval: 1,
+        getDrawingVerticalLine: (value) {
+          return const FlLine(
+            color: Color(0xff37434d),
+            strokeWidth: 1,
+          );
+        },
+        getDrawingHorizontalLine: (value) {
+          return const FlLine(
+            color: Color(0xff37434d),
+            strokeWidth: 1,
+          );
+        },
+      ),
+      titlesData: FlTitlesData(
+        show: true,
+        bottomTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            reservedSize: 30,
+            getTitlesWidget: bottomTitleWidgets,
+            interval: 1,
+          ),
+        ),
+        leftTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            getTitlesWidget: leftTitleWidgets,
+            reservedSize: 32,
+            interval: 1,
+          ),
+        ),
+        topTitles: const AxisTitles(
+          sideTitles: SideTitles(showTitles: false),
+        ),
+        rightTitles: const AxisTitles(
+          sideTitles: SideTitles(showTitles: false),
+        ),
+      ),
+      borderData: FlBorderData(
+        show: true,
+        border: Border.all(color: const Color(0xff37434d)),
+      ),
+      minX: 0,
+      maxX: 60,
+      minY: 0,
+      maxY: 100,
+      lineBarsData: [
+        LineChartBarData(
+          spots: const [
+            FlSpot(0, 3.44),
+            FlSpot(2.6, 3.44),
+            FlSpot(4.9, 3.44),
+            FlSpot(6.8, 3.44),
+            FlSpot(8, 3.44),
+            FlSpot(9.5, 3.44),
+            FlSpot(11, 3.44),
+          ],
+          isCurved: true,
+          gradient: LinearGradient(
+            colors: [
+              ColorTween(begin: gradientColors[0], end: gradientColors[1])
+                  .lerp(0.2)!,
+              ColorTween(begin: gradientColors[0], end: gradientColors[1])
+                  .lerp(0.2)!,
+            ],
+          ),
+          barWidth: 5,
+          isStrokeCapRound: true,
+          dotData: const FlDotData(
+            show: false,
+          ),
+          belowBarData: BarAreaData(
+            show: true,
+            gradient: LinearGradient(
+              colors: [
+                ColorTween(begin: gradientColors[0], end: gradientColors[1])
+                    .lerp(0.2)!
+                    .withOpacity(0.1),
+                ColorTween(begin: gradientColors[0], end: gradientColors[1])
+                    .lerp(0.2)!
+                    .withOpacity(0.1),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }
