@@ -77,19 +77,11 @@ class HomePage extends StatelessWidget {
                   Navigator.pushNamed(context, '/GPMpage');
                 },
               ),
-              DataBox(
-                label: 'Power Consumption',
-                value: '000',
-                iconPath: 'assets/images/Battery.png',
-                onPressed: (context) {
+              DataBox(label: 'Power Consumption', value: '000', iconPath: 'assets/images/Battery.png', onPressed: (context) {
                   Navigator.pushNamed(context, '/BatteryPage');
                 },
               ),
-              DataBox(
-                label: 'Record Now',
-                value: '',
-                iconPath: 'assets/images/logo.png',
-                onPressed: (context) {
+              DataBox(label: 'Record Now', value: '', iconPath: 'assets/images/logo.png', onPressed: (context) {
                   Navigator.pushNamed(context, '/RecordNow');
                 },
               ),
