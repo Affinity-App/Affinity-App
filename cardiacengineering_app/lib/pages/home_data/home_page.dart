@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _initBloodPressureListener(); // Call function to listen for blood pressure changes
-    _initBPMListener(); // Call function to listen for heart rate changes'
+    _initHeartRateListener(); // Call function to listen for heart rate changes'
     _initFlowRateListener(); // Call function to listen for flow rate changes
     _initPowerConsumptionListener(); // Call function to listen for power consumption changes
   }
@@ -54,24 +54,22 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _initBPMListener() {
+  void _initHeartRateListener() {
     FirebaseFirestore.instance
         .collection('sensor_data')
-        .doc('bpm') // Document named 'bpm'
+        .doc('bpm')
         .snapshots()
         .listen((DocumentSnapshot snapshot) {
       if (snapshot.exists) {
-        int beatsPerMinute = (snapshot.data()
-            as Map<String, dynamic>)?['beats per minute'] as int;
-        if (beatsPerMinute != null) {
+        String beatsPerMin = (snapshot.data()
+            as Map<String, dynamic>)?['beats per minute'] as String;
+        if (beatsPerMin != null) {
           setState(() {
-            blood_pressure = beatsPerMinute
-                .toString(); // Update blood pressure state variable as String
+            bpm = beatsPerMin; // Update blood pressure state variable
           });
         } else {
           setState(() {
-            blood_pressure =
-                'Unknown'; // Set to 'Unknown' if beats per minute is null
+            bpm = 'Unknown'; // Set to 'Unknown' if mmHg is null
           });
         }
       }
