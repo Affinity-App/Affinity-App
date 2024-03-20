@@ -33,11 +33,11 @@ class _HomePageState extends State<HomePage> {
         .snapshots()
         .listen((DocumentSnapshot snapshot) {
       if (snapshot.exists) {
-        int? mmHg = (snapshot.data() as Map<String, dynamic>)?['mmHg'] as int?;
+        String mmHg =
+            (snapshot.data() as Map<String, dynamic>)?['mmHg'] as String;
         if (mmHg != null) {
           setState(() {
-            bloodPressure =
-                mmHg.toString(); // Update blood pressure state variable
+            bloodPressure = mmHg; // Update blood pressure state variable
           });
         } else {
           setState(() {
