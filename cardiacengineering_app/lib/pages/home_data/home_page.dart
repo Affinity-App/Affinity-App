@@ -57,19 +57,21 @@ class _HomePageState extends State<HomePage> {
   void _initBPMListener() {
     FirebaseFirestore.instance
         .collection('sensor_data')
-        .doc('bpm')
+        .doc('bpm') // Document named 'bpm'
         .snapshots()
         .listen((DocumentSnapshot snapshot) {
       if (snapshot.exists) {
-        String beatsPerMinute = (snapshot.data()
-            as Map<String, dynamic>)?['beats per minute'] as String;
+        int beatsPerMinute = (snapshot.data()
+            as Map<String, dynamic>)?['beats per minute'] as int;
         if (beatsPerMinute != null) {
           setState(() {
-            bpm = beatsPerMinute; // Update blood pressure state variable
+            blood_pressure = beatsPerMinute
+                .toString(); // Update blood pressure state variable as String
           });
         } else {
           setState(() {
-            bpm = 'Unknown'; // Set to 'Unknown' if mmHg is null
+            blood_pressure =
+                'Unknown'; // Set to 'Unknown' if beats per minute is null
           });
         }
       }
