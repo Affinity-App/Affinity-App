@@ -48,12 +48,14 @@ def update_blood_pressure():
     blood_pressure = max(min(blood_pressure, 110.0), 90.0)  # Ensure blood pressure stays within range
 
 # Upload data to Firebase
-def upload_data():
+def upload_data(duration_seconds):
     global blood_pressure  # Access the global blood pressure variable
-    first_upload = True  # Flag to indicate the first upload
+    start_time = time.time()  # Record the start time
     while True:
-        if not first_upload:
-            update_blood_pressure()  # Update blood pressure after the first upload
+        if time.time() - start_time >= duration_seconds:
+            break  # Exit the loop if desired duration is reached
+        
+        update_blood_pressure()  # Update blood pressure
         data = generate_data()
         db.collection("sensor_data").document("power_consumption").set({"watts per hour": data["power_consumption"]}) 
         db.collection("sensor_data").document("blood_pressure").set({"mmHg": data["pressure"]})             #mmHg
@@ -61,7 +63,7 @@ def upload_data():
         db.collection("sensor_data").document("bpm").set({"beats per minute": data["bpm"]})                                  #bpm
         print("Data uploaded successfully.")
         time.sleep(1)  # Adjust the time interval as needed
-        first_upload = False  # Update the flag after the first upload
 
 if __name__ == "__main__":
-    upload_data()
+    duration_seconds = 5  # Specify the desired duration in seconds
+    upload_data(duration_seconds)
