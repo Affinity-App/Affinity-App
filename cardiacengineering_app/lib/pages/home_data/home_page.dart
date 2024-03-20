@@ -173,7 +173,7 @@ class _HomePageState extends State<HomePage> {
               _buildDataBox(
                 context,
                 label: "Blood Pressure",
-                value: bloodPressure + '    mmHg',
+                value: blood_pressure + ' mmHg',
                 iconPath: 'assets/images/Blood.png',
                 iconSize: 50.0,
                 labelFontSize: 20.0,
@@ -186,7 +186,7 @@ class _HomePageState extends State<HomePage> {
               _buildDataBox(
                 context,
                 label: 'Heart Rate',
-                value: '60.2',
+                value: bpm + ' BPM',
                 iconPath: 'assets/images/Heart.png',
                 iconSize: 50.0,
                 labelFontSize: 20.0,
@@ -199,7 +199,7 @@ class _HomePageState extends State<HomePage> {
               _buildDataBox(
                 context,
                 label: 'Flow Rate',
-                value: '97%',
+                value: flow_rate + ' L/min',
                 iconPath: 'assets/images/Flow.png',
                 iconSize: 50.0,
                 labelFontSize: 20.0,
@@ -212,7 +212,7 @@ class _HomePageState extends State<HomePage> {
               _buildDataBox(
                 context,
                 label: 'Battery Life',
-                value: '100',
+                value: power_consumption + ' Watts/hr',
                 iconPath: 'assets/images/Battery.png',
                 iconSize: 50.0,
                 labelFontSize: 20.0,
