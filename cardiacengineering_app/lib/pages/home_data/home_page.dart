@@ -105,15 +105,16 @@ class _HomePageState extends State<HomePage> {
         .snapshots()
         .listen((DocumentSnapshot snapshot) {
       if (snapshot.exists) {
-        String mmHg = (snapshot.data()
+        String wattsPerHour = (snapshot.data()
             as Map<String, dynamic>)?['watt per hour'] as String;
-        if (mmHg != null) {
+        if (wattsPerHour != null) {
           setState(() {
-            bloodPressure = mmHg; // Update blood pressure state variable
+            power_consumption =
+                wattsPerHour; // Update blood pressure state variable
           });
         } else {
           setState(() {
-            bloodPressure = 'Unknown'; // Set to 'Unknown' if mmHg is null
+            power_consumption = 'Unknown'; // Set to 'Unknown' if mmHg is null
           });
         }
       }
