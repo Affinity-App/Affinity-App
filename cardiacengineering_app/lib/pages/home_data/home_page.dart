@@ -54,6 +54,50 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _initBPMListener() {
+    FirebaseFirestore.instance
+        .collection('sensor_data')
+        .doc('bpm')
+        .snapshots()
+        .listen((DocumentSnapshot snapshot) {
+      if (snapshot.exists) {
+        String mmHg = (snapshot.data()
+            as Map<String, dynamic>)?['beats per minute'] as String;
+        if (mmHg != null) {
+          setState(() {
+            bloodPressure = mmHg; // Update blood pressure state variable
+          });
+        } else {
+          setState(() {
+            bloodPressure = 'Unknown'; // Set to 'Unknown' if mmHg is null
+          });
+        }
+      }
+    });
+  }
+
+  void _initFlowRateListener() {
+    FirebaseFirestore.instance
+        .collection('sensor_data')
+        .doc('flow_rate')
+        .snapshots()
+        .listen((DocumentSnapshot snapshot) {
+      if (snapshot.exists) {
+        String mmHg = (snapshot.data()
+            as Map<String, dynamic>)?['liters per minute'] as String;
+        if (mmHg != null) {
+          setState(() {
+            bloodPressure = mmHg; // Update blood pressure state variable
+          });
+        } else {
+          setState(() {
+            bloodPressure = 'Unknown'; // Set to 'Unknown' if mmHg is null
+          });
+        }
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
