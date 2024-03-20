@@ -18,7 +18,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String bloodPressure = 'Unknown'; // Initialize blood pressure with 'Unknown'
+  String bloodPressure = '0'; // Initialize blood pressure with 'Unknown'
 
   @override
   void initState() {
@@ -99,8 +99,8 @@ class _HomePageState extends State<HomePage> {
                       20), // Added space
               _buildDataBox(
                 context,
-                label: bloodPressure,
-                value: '15.6',
+                label: "Blood Pressure",
+                value: bloodPressure + '    mmHg',
                 iconPath: 'assets/images/Blood.png',
                 iconSize: 50.0,
                 labelFontSize: 20.0,
