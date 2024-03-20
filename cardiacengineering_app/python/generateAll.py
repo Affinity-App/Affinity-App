@@ -65,5 +65,5 @@ def upload_data(duration_seconds):
         time.sleep(1)  # Adjust the time interval as needed
 
 if __name__ == "__main__":
-    duration_seconds = 5  # Specify the desired duration in seconds
+    duration_seconds = 10  # Specify the desired duration in seconds
     upload_data(duration_seconds)
