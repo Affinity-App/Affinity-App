@@ -98,6 +98,28 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _initPowerConsumptionListener() {
+    FirebaseFirestore.instance
+        .collection('sensor_data')
+        .doc('power_consumption')
+        .snapshots()
+        .listen((DocumentSnapshot snapshot) {
+      if (snapshot.exists) {
+        String mmHg = (snapshot.data()
+            as Map<String, dynamic>)?['watt per hour'] as String;
+        if (mmHg != null) {
+          setState(() {
+            bloodPressure = mmHg; // Update blood pressure state variable
+          });
+        } else {
+          setState(() {
+            bloodPressure = 'Unknown'; // Set to 'Unknown' if mmHg is null
+          });
+        }
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
