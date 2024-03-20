@@ -18,7 +18,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String bloodPressure = '0'; // Initialize blood pressure with '0'
+  String blood_pressure = '0'; // Initialize blood pressure with '0'
   String bpm = '0'; // Initialize heart rate with '0'
   String flow_rate = '0'; // Initialize flow rate with '0'
   String power_consumption = '0'; // Initialize power consumption with '0'
@@ -43,11 +43,11 @@ class _HomePageState extends State<HomePage> {
             (snapshot.data() as Map<String, dynamic>)?['mmHg'] as String;
         if (mmHg != null) {
           setState(() {
-            bloodPressure = mmHg; // Update blood pressure state variable
+            blood_pressure = mmHg; // Update blood pressure state variable
           });
         } else {
           setState(() {
-            bloodPressure = 'Unknown'; // Set to 'Unknown' if mmHg is null
+            blood_pressure = 'Unknown'; // Set to 'Unknown' if mmHg is null
           });
         }
       }
@@ -61,15 +61,15 @@ class _HomePageState extends State<HomePage> {
         .snapshots()
         .listen((DocumentSnapshot snapshot) {
       if (snapshot.exists) {
-        String mmHg = (snapshot.data()
+        String beatsPerMinute = (snapshot.data()
             as Map<String, dynamic>)?['beats per minute'] as String;
-        if (mmHg != null) {
+        if (beatsPerMinute != null) {
           setState(() {
-            bloodPressure = mmHg; // Update blood pressure state variable
+            bpm = beatsPerMinute; // Update blood pressure state variable
           });
         } else {
           setState(() {
-            bloodPressure = 'Unknown'; // Set to 'Unknown' if mmHg is null
+            bpm = 'Unknown'; // Set to 'Unknown' if mmHg is null
           });
         }
       }
