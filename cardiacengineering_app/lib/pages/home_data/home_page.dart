@@ -18,12 +18,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String bloodPressure = '0'; // Initialize blood pressure with 'Unknown'
+  String bloodPressure = '0'; // Initialize blood pressure with '0'
+  String bpm = '0'; // Initialize heart rate with '0'
+  String flow_rate = '0'; // Initialize flow rate with '0'
+  String power_consumption = '0'; // Initialize power consumption with '0'
 
   @override
   void initState() {
     super.initState();
     _initBloodPressureListener(); // Call function to listen for blood pressure changes
+    _initBPMListener(); // Call function to listen for heart rate changes'
+    _initFlowRateListener(); // Call function to listen for flow rate changes
+    _initPowerConsumptionListener(); // Call function to listen for power consumption changes
   }
 
   void _initBloodPressureListener() {
