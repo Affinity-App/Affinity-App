@@ -106,7 +106,7 @@ class _HomePageState extends State<HomePage> {
         .listen((DocumentSnapshot snapshot) {
       if (snapshot.exists) {
         String wattsPerHour = (snapshot.data()
-            as Map<String, dynamic>)?['watt per hour'] as String;
+            as Map<String, dynamic>)?['watts per hour'] as String;
         if (wattsPerHour != null) {
           setState(() {
             power_consumption =
