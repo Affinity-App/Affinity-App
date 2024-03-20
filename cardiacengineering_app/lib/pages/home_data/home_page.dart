@@ -1,6 +1,6 @@
-// ignore_for_file: unused_import
-
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../components/background_gradient_container.dart';
 import '../../pages/dev_settings/settings_page.dart';
 import 'rpm_page.dart';
 import 'psi_page.dart';
@@ -8,12 +8,45 @@ import 'battery_page.dart';
 import 'gpm_page.dart';
 import 'record_now_page.dart';
 
-import '../../components/background_gradient_container.dart';
-
 typedef OnDataBoxPressedCallback = void Function(BuildContext context);
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String bloodPressure = 'Unknown'; // Initialize blood pressure with 'Unknown'
+
+  @override
+  void initState() {
+    super.initState();
+    _initBloodPressureListener(); // Call function to listen for blood pressure changes
+  }
+
+  void _initBloodPressureListener() {
+    FirebaseFirestore.instance
+        .collection('sensor_data')
+        .doc('blood_pressure')
+        .snapshots()
+        .listen((DocumentSnapshot snapshot) {
+      if (snapshot.exists) {
+        int? mmHg = (snapshot.data() as Map<String, dynamic>)?['mmHg'] as int?;
+        if (mmHg != null) {
+          setState(() {
+            bloodPressure =
+                mmHg.toString(); // Update blood pressure state variable
+          });
+        } else {
+          setState(() {
+            bloodPressure = 'Unknown'; // Set to 'Unknown' if mmHg is null
+          });
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +99,7 @@ class HomePage extends StatelessWidget {
                       20), // Added space
               _buildDataBox(
                 context,
-                label: 'Blood Pressure',
+                label: bloodPressure,
                 value: '15.6',
                 iconPath: 'assets/images/Blood.png',
                 iconSize: 50.0,
