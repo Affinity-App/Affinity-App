@@ -83,15 +83,15 @@ class _HomePageState extends State<HomePage> {
         .snapshots()
         .listen((DocumentSnapshot snapshot) {
       if (snapshot.exists) {
-        String mmHg = (snapshot.data()
+        String litersPerMinute = (snapshot.data()
             as Map<String, dynamic>)?['liters per minute'] as String;
-        if (mmHg != null) {
+        if (litersPerMinute != null) {
           setState(() {
-            bloodPressure = mmHg; // Update blood pressure state variable
+            flow_rate = litersPerMinute; // Update blood pressure state variable
           });
         } else {
           setState(() {
-            bloodPressure = 'Unknown'; // Set to 'Unknown' if mmHg is null
+            flow_rate = 'Unknown'; // Set to 'Unknown' if mmHg is null
           });
         }
       }
