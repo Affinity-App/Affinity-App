@@ -212,7 +212,7 @@ class _HomePageState extends State<HomePage> {
               _buildDataBox(
                 context,
                 label: 'Battery Life',
-                value: power_consumption + ' Watts/hr',
+                value: power_consumption + ' watts/hr',
                 iconPath: 'assets/images/Battery.png',
                 iconSize: 50.0,
                 labelFontSize: 20.0,
