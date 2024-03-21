@@ -28,7 +28,7 @@ class DataBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width / 1.2,
       child: GestureDetector(
         onTap: () => onPressed(context),
@@ -66,14 +66,14 @@ class DataBox extends StatelessWidget {
                       style: TextStyle(
                         fontSize: valueFontSize,
                         fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 86, 140, 234),
+                        color: const Color.fromARGB(255, 86, 140, 234),
                       ),
                       textAlign: TextAlign.center,
                     ),
                   ],
                 ),
               ),
-              Icon(
+              const Icon(
                 Icons.add,
                 color: Colors.black,
               ),
