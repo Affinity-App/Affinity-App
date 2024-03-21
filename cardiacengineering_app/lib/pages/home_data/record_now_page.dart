@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import '../login_auth/login_page.dart';
 
 import '../../components/background_gradient_container.dart';
 
 class RecordNow extends StatelessWidget {
-  const RecordNow({Key? key}) : super(key: key); //Blood Pressure
+  const RecordNow({super.key}); //Blood Pressure
 
   @override
   Widget build(BuildContext context) {
