@@ -49,19 +49,27 @@ def generate_data(): # Time (seconds), RPM, Pressure (psi), Battery (number), Fl
   print(f"Initial RPM: {rpm}")
     
   def generate_RPM(val):
-    rpmStep = 3
-    rpmMin = 60
-    rpmMax = 100
+    # rpm = random.randint(60, 100)
 
-    dice = random.randint(0, 21)
+    while True:
+        # Simulate RPM fluctuations by +-2
+        val += random.choice([-2, 0, 2])
+        # Ensure RPM stays within the range of 60 to 100
+        val = max(60, min(rpm, 100))
+        return val
+    # rpmStep = 3
+    # rpmMin = 60
+    # rpmMax = 100
+
+    # dice = random.randint(0, 21)
     
-    # 33% chance each
-    if dice <= 7 and val >= rpmMin + rpmStep:
-        return val - rpmStep  # Decrease
-    elif dice > 14 and val <= rpmMax - rpmStep:
-        return val + rpmStep  # Increase
-    else:
-        return val  # Stay the same
+    # # 33% chance each
+    # if dice <= 7 and val >= rpmMin + rpmStep:
+    #     return val - rpmStep  # Decrease
+    # elif dice > 14 and val <= rpmMax - rpmStep:
+    #     return val + rpmStep  # Increase
+    # else:
+    #     return val  # Stay the same
 
   # Pressure will be random between 45 - 55 psi and change
   psi = random.randint(45, 55)
@@ -116,19 +124,23 @@ def generate_data(): # Time (seconds), RPM, Pressure (psi), Battery (number), Fl
   print(f"Initial Blood Pressure: {bp}")
 
   def generate_BP(val):
-    bpStep = 1  # Variation of ±1
-    bpMin = 80
-    bpMax = 120
+    change = random.uniform(-1.0, 1.0)  # Generate random change between -1.0 and 1.0
+    val += change
+    val = max(min(val, 110.0), 90.0)
+    return round(val,1)
+    # bpStep = 1  # Variation of ±1
+    # bpMin = 80
+    # bpMax = 120
 
-    dice = random.randint(0, 21)
+    # dice = random.randint(0, 21)
 
-    # 33% chance each
-    if dice <= 7 and val >= bpMin + bpStep:
-      return val - bpStep  # Decrease
-    elif dice > 14 and val <= bpMax - bpStep:
-      return val + bpStep  # Increase
-    else:
-      return val  # Stay the same
+    # # 33% chance each
+    # if dice <= 7 and val >= bpMin + bpStep:
+    #   return val - bpStep  # Decrease
+    # elif dice > 14 and val <= bpMax - bpStep:
+    #   return val + bpStep  # Increase
+    # else:
+    #   return val  # Stay the same
 
   data = []
 
