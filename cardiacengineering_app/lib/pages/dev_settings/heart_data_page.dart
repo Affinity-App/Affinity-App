@@ -19,7 +19,7 @@ class HeartDataPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Account Info',
+              'Heart ID',
               style: TextStyle(
                 fontSize: 30.0,
               ),
@@ -32,6 +32,12 @@ class HeartDataPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Image.asset(
+              width: double.infinity,
+              'assets/images/logo.png',
+              height: 100.0,
+            ),
+            const SizedBox(height: 100.0),
             ElevatedButton(
               onPressed: () {
                 // Navigate back to the previous page
@@ -42,11 +48,11 @@ class HeartDataPage extends StatelessWidget {
             const SizedBox(height: 30.0),
             // Display Heart ID information
             Text(
-              'Heart ID Information:',
+              'Heart ID Info:',
               style: TextStyle(fontSize: 20.0),
             ),
             Text(
-              'Your Heart ID: XYZ123',
+              'Heart ID: 401-365',
               style: TextStyle(fontSize: 16.0),
             ),
             // You can display more information related to Heart ID here
