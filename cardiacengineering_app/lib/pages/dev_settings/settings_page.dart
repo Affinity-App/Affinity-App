@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:jr_design_app/pages/dev_settings/heart_data_page.dart';
 import '../login_auth/login_page.dart';
 
 import '../../components/background_gradient_container.dart';
@@ -41,6 +42,10 @@ class SettingsPage extends StatelessWidget {
             const SizedBox(height: 100.0),
             ElevatedButton(
               onPressed: () {
+                Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const HeartDataPage()),
+    );
                 //_logout(context);
               },
               child: const Text('Heart ID'),
