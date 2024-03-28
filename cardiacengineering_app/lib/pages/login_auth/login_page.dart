@@ -129,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: _signInWithEmailAndPassword,
                 style: ButtonStyle(
                   // backgroundColor
-                  backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(247, 169, 186, 1.0)), // set background color to pink
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(247, 169, 186, 1.0)), // set background color to pink
                   foregroundColor: MaterialStateProperty.all<Color>(Colors.black), // Set text color to white
                 // Add the animation controller
                 animationDuration: const Duration(milliseconds: 200),
@@ -169,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 style: ButtonStyle(
                   // backgroundColor
-                  backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(247, 169, 186, 1.0)), // set background color to pink
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(247, 169, 186, 1.0)), // set background color to pink
                   foregroundColor: MaterialStateProperty.all<Color>(Colors.black), // Set text color to white
                 // Add the animation controller
                 animationDuration: const Duration(milliseconds: 200),

@@ -23,9 +23,9 @@ class RPMpage extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18.0),
-                color: Colors.green,
+                color: Color.fromRGBO(247, 169, 186, 1.0),
               ),
-              child: LineChartSample2(),
+              child: const LineChartSample2(),
             ),
             const SizedBox(height: 30.0),
             ElevatedButton(

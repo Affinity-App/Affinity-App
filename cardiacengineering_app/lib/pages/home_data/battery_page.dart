@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import '../login_auth/login_page.dart';
 import 'package:jr_design_app/pages/dev_settings/test_chart.dart';
 import '../../components/background_gradient_container.dart';
 
@@ -35,9 +33,9 @@ class BatteryPage extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18.0),
-                color: Colors.green,
+                color: Color.fromRGBO(247, 169, 186, 1.0),
               ),
-              child: LineChartSample2(),
+              child: const LineChartSample2(),
             ),
             const SizedBox(height: 30.0),
             ElevatedButton(

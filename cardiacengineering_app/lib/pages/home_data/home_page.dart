@@ -146,7 +146,7 @@ class HomePage extends StatelessWidget {
     required double borderRadius,
     required OnDataBoxPressedCallback onPressed,
   }) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width / 1.2,
       child: GestureDetector(
         onTap: () {
@@ -187,14 +187,14 @@ class HomePage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: valueFontSize,
                         fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 86, 140, 234),
+                        color: const Color.fromARGB(255, 86, 140, 234),
                       ),
                       textAlign: TextAlign.center, // Adjusted to center
                     ),
                   ],
                 ),
               ),
-              Icon(
+              const Icon(
                 Icons.add,
                 color: Colors.black,
               ),

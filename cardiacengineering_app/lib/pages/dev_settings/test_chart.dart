@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/widgets.dart';
 import '../../components/background_gradient_container.dart';
 
 class lineChart extends StatelessWidget {
@@ -21,13 +20,13 @@ class lineChart extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 250.0),
+              padding: const EdgeInsets.only(top: 250.0),
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(18.0),
                   color: Colors.green,
                 ),
-                child: LineChartSample2(),
+                child: const LineChartSample2(),
               ),
             ),
           ],

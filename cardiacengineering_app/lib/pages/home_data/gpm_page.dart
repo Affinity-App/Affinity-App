@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import '../login_auth/login_page.dart';
 import 'package:jr_design_app/pages/dev_settings/test_chart.dart';
 import '../../components/background_gradient_container.dart';
+import '../../components/custom_button.dart';
 
 class GPMpage extends StatelessWidget {
-  const GPMpage({Key? key}) : super(key: key); //Flow Rate
+  const GPMpage({super.key}); //Flow Rate
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +34,9 @@ class GPMpage extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18.0),
-                color: Colors.green,
+                color: Color.fromRGBO(247, 169, 186, 1.0),
               ),
-              child: LineChartSample2(),
+              child: const LineChartSample2(),
             ),
             const SizedBox(height: 30.0),
             ElevatedButton(
@@ -45,6 +44,12 @@ class GPMpage extends StatelessWidget {
                 // Navigate back to the previous page (Home page)
                 Navigator.pop(context);
               },
+              //**This portion changed
+              style: CustomButton(
+                backgroundColor:  Color.fromRGBO(247, 169, 186, 1.0),
+                foregroundColor:  Colors.black, 
+              ).toButtonStyle(),
+              //
               child: const Text('Back to Home'),
             ),
             const SizedBox(height: 30.0),
