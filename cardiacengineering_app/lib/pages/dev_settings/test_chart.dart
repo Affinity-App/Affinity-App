@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../../components/background_gradient_container.dart';
@@ -24,7 +25,7 @@ class lineChart extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(18.0),
-                  color: Colors.green,
+                  color: darkBlueColor,
                 ),
                 child: const LineChartSample2(),
               ),
@@ -46,10 +47,24 @@ class LineChartSample2 extends StatefulWidget {
 
 class _LineChartSample2State extends State<LineChartSample2> {
   List<Color> gradientColors = [
-    const Color(0xFFA7C2F7), const Color.fromARGB(255, 167, 247, 190)
+    const Color(0xFFA7C2F7),
+    const Color.fromARGB(255, 167, 247, 190)
   ];
-
   bool showAvg = false;
+  Future<List<FlSpot>>? chartData; // Future to hold fetched data
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData(); // Call data fetching method on initialization
+  }
+
+  Future<void> fetchData() async {
+    final data = await fetchDataFromFirebase(); // Call your Firebase fetching method
+    setState(() {
+      chartData = Future.value(data);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,9 +79,23 @@ class _LineChartSample2State extends State<LineChartSample2> {
               top: 40,
               bottom: 12,
             ),
-            child: LineChart(
-              showAvg ? avgData() : mainData(),
-            ),
+            child: chartData == null
+              ? const Center(child: CircularProgressIndicator())
+              : FutureBuilder<List<FlSpot>>(
+                  future: chartData!,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return const Center(child: Text('Error fetching data'));
+                    }
+
+                    if (snapshot.hasData) {
+                      final data = snapshot.data!;
+                      return LineChart(showAvg ? avgData(data) : mainData(data));
+                    }
+
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                ),
           ),
         ),
         SizedBox(
@@ -79,7 +108,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
               });
             },
             child: Text(
-              'avg',
+              '', // avg button text
               style: TextStyle(
                 fontSize: 12,
                 color: showAvg ? Colors.white.withOpacity(0.5) : Colors.white,
@@ -158,7 +187,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
     return Text(text, style: style, textAlign: TextAlign.center);
   }
 
-  LineChartData mainData() {
+  LineChartData mainData(List<FlSpot> data) {
     return LineChartData(
       gridData: FlGridData(
         show: true,
@@ -213,15 +242,16 @@ class _LineChartSample2State extends State<LineChartSample2> {
       maxY: 100,
       lineBarsData: [
         LineChartBarData(
-          spots: const [
-            FlSpot(0, 10),
-            FlSpot(15, 20),
-            FlSpot(20, 55),
-            FlSpot(30, 50),
-            FlSpot(40, 30),
-            FlSpot(50, 40),
-            FlSpot(60, 45),
-          ],
+          spots: data,
+          // const [
+          //   FlSpot(0, 10),
+          //   FlSpot(15, 20),
+          //   FlSpot(20, 55),
+          //   FlSpot(30, 50),
+          //   FlSpot(40, 30),
+          //   FlSpot(50, 40),
+          //   FlSpot(60, 45),
+          // ],
           isCurved: true,
           gradient: LinearGradient( 
             colors: gradientColors, 
@@ -244,7 +274,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
     );
   }
 
-  LineChartData avgData() {
+  LineChartData avgData(List<FlSpot> data) {
     return LineChartData(
       lineTouchData: const LineTouchData(enabled: false),
       gridData: FlGridData(
@@ -300,15 +330,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
       maxY: 100,
       lineBarsData: [
         LineChartBarData(
-          spots: const [
-            FlSpot(0, 3.44),
-            FlSpot(2.6, 3.44),
-            FlSpot(4.9, 3.44),
-            FlSpot(6.8, 3.44),
-            FlSpot(8, 3.44),
-            FlSpot(9.5, 3.44),
-            FlSpot(11, 3.44),
-          ],
+          spots: data,
           isCurved: true,
           gradient: LinearGradient(
             colors: [
@@ -340,4 +362,23 @@ class _LineChartSample2State extends State<LineChartSample2> {
       ],
     );
   }
+}
+
+Future<List<FlSpot>> fetchDataFromFirebase() async {
+  final collectionRef = FirebaseFirestore.instance.collection('data_1'); // collection name
+  final querySnapshot = await collectionRef.get(); // getting all documents from the collection
+
+  final data = querySnapshot.docs.map((doc) => doc.data()).toList(); // converting documents to list of maps
+
+  // Sort data based on xField in ascending order
+  data.sort((a, b) => a['xField'].compareTo(b['xField']));
+
+  // Parse data into FlSpot format
+    final flSpots = data.map((item) {
+    final xValue = item['xField'].toDouble();
+    final yValue = item['yField'].toDouble();
+    return FlSpot(xValue, yValue);
+  }).toList();
+
+  return flSpots;
 }
