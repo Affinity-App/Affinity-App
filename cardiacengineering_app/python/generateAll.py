@@ -34,7 +34,7 @@ blood_pressure = random.randint(900, 1100) / 10  # To have one decimal place
 # Function to generate random data for each sensor
 def generate_data():
     return {
-        "power_consumption" : str(format(round(1.33 + random.uniform(-0.200, 0.200), 2), '.2f')),
+        "power_consumption" : str(format(round(20 + random.uniform(-1.0, +1.0), 2), '.2f')),
         "pressure" : str(format(blood_pressure, '.2f')),
         "flow_rate" : str(format(round(random.uniform(4.5, 5.5), 2), '.2f')),
         "bpm": str(format(round(random.uniform(75, 77), 2), '.2f'))
