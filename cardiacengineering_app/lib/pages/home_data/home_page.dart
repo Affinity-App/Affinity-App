@@ -8,6 +8,9 @@ import 'psi_page.dart';
 import 'battery_page.dart';
 import 'gpm_page.dart';
 import 'record_now_page.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart';
+import 'package:flutter_tflite/flutter_tflite.dart';
 
 import '../../components/background_gradient_container.dart';
 
@@ -65,23 +68,43 @@ class HomePage extends StatelessWidget {
                   height: MediaQuery.of(context).padding.top +
                       kToolbarHeight +
                       20), // Added space
-              DataBox(label: 'Blood Pressure', value: '000', iconPath: 'assets/images/Blood.png', onPressed: (context) {
+              DataBox(
+                label: 'Blood Pressure',
+                value: '000',
+                iconPath: 'assets/images/Blood.png',
+                onPressed: (context) {
                   Navigator.pushNamed(context, '/PSIpage');
                 },
               ),
-              DataBox(label: 'Heart Rate', value: '000', iconPath: 'assets/images/Heart.png', onPressed: (context) {
+              DataBox(
+                label: 'Heart Rate',
+                value: '000',
+                iconPath: 'assets/images/Heart.png',
+                onPressed: (context) {
                   Navigator.pushNamed(context, '/RPMpage');
                 },
               ),
-              DataBox(label: 'Flow Rate', value: '00%', iconPath: 'assets/images/Flow.png', onPressed: (context) {
+              DataBox(
+                label: 'Flow Rate',
+                value: '00%',
+                iconPath: 'assets/images/Flow.png',
+                onPressed: (context) {
                   Navigator.pushNamed(context, '/GPMpage');
                 },
               ),
-              DataBox(label: 'Power Consumption', value: '000', iconPath: 'assets/images/Battery.png', onPressed: (context) {
+              DataBox(
+                label: 'Power Consumption',
+                value: '000',
+                iconPath: 'assets/images/Battery.png',
+                onPressed: (context) {
                   Navigator.pushNamed(context, '/BatteryPage');
                 },
               ),
-              DataBox(label: 'Record Now', value: '', iconPath: 'assets/images/logo.png', onPressed: (context) {
+              DataBox(
+                label: 'Record Now',
+                value: '',
+                iconPath: 'assets/images/logo.png',
+                onPressed: (context) {
                   Navigator.pushNamed(context, '/RecordNow');
                 },
               ),
