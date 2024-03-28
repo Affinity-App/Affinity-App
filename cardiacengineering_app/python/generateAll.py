@@ -34,10 +34,11 @@ blood_pressure = random.randint(900, 1100) / 10  # To have one decimal place
 # Function to generate random data for each sensor
 def generate_data():
     return {
-        "power_consumption": str(round(random.uniform(45, 50), 1)),  # Power consumption between 40-60 watts/h
-        "pressure": str(format(blood_pressure, '.1f')),  # Format blood pressure to one decimal place
-        "flow_rate": str(round(random.uniform(4.5, 5.5), 1)),  # Round flow rate to one decimal place
-        "bpm": str(round(random.uniform(75, 77), 1))  # Convert bpm to string
+        "power_consumption" : str(format(round(1.33 + random.uniform(-0.200, 0.200), 2), '.2f')),
+        "pressure" : str(format(blood_pressure, '.2f')),
+        "flow_rate" : str(format(round(random.uniform(4.5, 5.5), 2), '.2f')),
+        "bpm": str(format(round(random.uniform(75, 77), 2), '.2f'))
+        
     }
 
 # Function to update blood pressure within range and increment by random value less than 1
@@ -65,5 +66,5 @@ def upload_data(duration_seconds):
         time.sleep(1)  # Adjust the time interval as needed
 
 if __name__ == "__main__":
-    duration_seconds = 10  # Specify the desired duration in seconds
+    duration_seconds = 25  # Specify the desired duration in seconds
     upload_data(duration_seconds)
