@@ -42,15 +42,16 @@ class _HomePageState extends State<HomePage> {
         .snapshots()
         .listen((DocumentSnapshot snapshot) {
       if (snapshot.exists) {
-        String mmHg =
-            (snapshot.data() as Map<String, dynamic>)?['mmHg'] as String;
-        if (mmHg != null) {
+        Map<String, dynamic> data =
+            (snapshot.data() as Map<String, dynamic>)?['data'];
+        if (data != null) {
           setState(() {
-            blood_pressure = mmHg; // Update blood pressure state variable
+            blood_pressure = data['y_value']
+                .toString(); // Update y_value with blood pressure
           });
         } else {
           setState(() {
-            blood_pressure = 'Unknown'; // Set to 'Unknown' if mmHg is null
+            blood_pressure = 'Unknown'; // Set to 'Unknown' if data is null
           });
         }
       }
@@ -64,11 +65,12 @@ class _HomePageState extends State<HomePage> {
         .snapshots()
         .listen((DocumentSnapshot snapshot) {
       if (snapshot.exists) {
-        String beatsPerMin = (snapshot.data()
-            as Map<String, dynamic>)?['beats per minute'] as String;
-        if (beatsPerMin != null) {
+        Map<String, dynamic> data =
+            (snapshot.data() as Map<String, dynamic>)?['data'];
+        if (data != null) {
           setState(() {
-            bpm = beatsPerMin; // Update blood pressure state variable
+            bpm = data['y_value']
+                .toString(); // Update blood pressure state variable
           });
         } else {
           setState(() {
@@ -86,11 +88,12 @@ class _HomePageState extends State<HomePage> {
         .snapshots()
         .listen((DocumentSnapshot snapshot) {
       if (snapshot.exists) {
-        String litersPerMinute = (snapshot.data()
-            as Map<String, dynamic>)?['liters per minute'] as String;
-        if (litersPerMinute != null) {
+        Map<String, dynamic> data =
+            (snapshot.data() as Map<String, dynamic>)?['data'];
+        if (data != null) {
           setState(() {
-            flow_rate = litersPerMinute; // Update blood pressure state variable
+            flow_rate = data['y_value']
+                .toString(); // Update blood pressure state variable
           });
         } else {
           setState(() {
@@ -108,12 +111,12 @@ class _HomePageState extends State<HomePage> {
         .snapshots()
         .listen((DocumentSnapshot snapshot) {
       if (snapshot.exists) {
-        String wattsPerHour = (snapshot.data()
-            as Map<String, dynamic>)?['watts per hour'] as String;
-        if (wattsPerHour != null) {
+        Map<String, dynamic> data =
+            (snapshot.data() as Map<String, dynamic>)?['data'];
+        if (data != null) {
           setState(() {
-            power_consumption =
-                wattsPerHour; // Update blood pressure state variable
+            power_consumption = data['y_value']
+                .toString(); // Update blood pressure state variable
           });
         } else {
           setState(() {

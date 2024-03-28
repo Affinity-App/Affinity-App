@@ -31,14 +31,16 @@ db = firestore.client()
 # Initialize blood pressure with a random value between 90-110
 blood_pressure = random.randint(900, 1100) / 10  # To have one decimal place
 
+# Initialize x_value
+x_value = 0
+
 # Function to generate random data for each sensor
 def generate_data():
     return {
-        "power_consumption" : str(format(round(20 + random.uniform(-1.0, +1.0), 2), '.2f')),
-        "pressure" : str(format(blood_pressure, '.2f')),
-        "flow_rate" : str(format(round(random.uniform(4.5, 5.5), 2), '.2f')),
+        "power_consumption": str(format(round(20 + random.uniform(-1.0, +1.0), 2), '.2f')),
+        "pressure": str(format(blood_pressure, '.2f')),
+        "flow_rate": str(format(round(random.uniform(4.5, 5.5), 2), '.2f')),
         "bpm": str(format(round(random.uniform(75, 77), 2), '.2f'))
-        
     }
 
 # Function to update blood pressure within range and increment by random value less than 1
@@ -50,7 +52,7 @@ def update_blood_pressure():
 
 # Upload data to Firebase
 def upload_data(duration_seconds):
-    global blood_pressure  # Access the global blood pressure variable
+    global blood_pressure, x_value  # Access the global variables
     start_time = time.time()  # Record the start time
     while True:
         if time.time() - start_time >= duration_seconds:
@@ -58,13 +60,42 @@ def upload_data(duration_seconds):
         
         update_blood_pressure()  # Update blood pressure
         data = generate_data()
-        db.collection("sensor_data").document("power_consumption").set({"watts per hour": data["power_consumption"]}) 
-        db.collection("sensor_data").document("blood_pressure").set({"mmHg": data["pressure"]})             #mmHg
-        db.collection("sensor_data").document("flow_rate").set({"liters per minute": data["flow_rate"]})                #watts/hour
-        db.collection("sensor_data").document("bpm").set({"beats per minute": data["bpm"]})                                  #bpm
+        
+        # Update the map inside the document "blood_pressure"
+        db.collection("sensor_data").document("blood_pressure").update({
+            "data": {
+                "x_value": x_value,  # Use the current x_value
+                "y_value": data["pressure"]
+            }
+        })
+
+        db.collection("sensor_data").document("bpm").update({
+            "data": {
+                "x_value": x_value,  # Use the current x_value
+                "y_value": data["bpm"]
+            }
+        })
+        db.collection("sensor_data").document("flow_rate").update({
+            "data": {
+                "x_value": x_value,  # Use the current x_value
+                "y_value": data["flow_rate"]
+            }
+        })
+        db.collection("sensor_data").document("power_consumption").update({
+            "data": {
+                "x_value": x_value,  # Use the current x_value
+                "y_value": data["power_consumption"]
+            }
+        })
+        
         print("Data uploaded successfully.")
+        
+        # Increment x_value
+        x_value += 1
+        
         time.sleep(1)  # Adjust the time interval as needed
 
 if __name__ == "__main__":
     duration_seconds = 25  # Specify the desired duration in seconds
+    x_value = 0  # Reset x_value
     upload_data(duration_seconds)
