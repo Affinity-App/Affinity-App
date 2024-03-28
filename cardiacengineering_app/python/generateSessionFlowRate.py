@@ -32,13 +32,16 @@ db = firestore.client()
 # Function to generate random data for each sensor
 def generate_data(previous_flow_rate, x_value):
     normal_flow_rate = 5.000
-    deviation = round((x_value - 1) * 0.150, 3)  # Calculate deviation based on x_value
+    max_deviation = 0.250
+    deviation = round(random.uniform(-max_deviation, max_deviation), 3)
     flow_rate = round(normal_flow_rate + deviation, 3)
-
+    flow_rate = min(max(flow_rate, 3.000), 3.500)  # Ensure flow rate is within bounds
+    
     return {
         "x_value": str(x_value), 
         "y_value": str(format(flow_rate, '.3f'))  # Format flow rate value to 3 decimal places
     }
+
 
 
 # Upload data to Firebase
