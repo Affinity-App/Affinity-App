@@ -30,12 +30,13 @@ initialize_firebase()
 db = firestore.client()
 
 # Function to generate random data for each sensor
+# window for this is y = 4.500 to 5.500
 def generate_data(previous_flow_rate, x_value):
     normal_flow_rate = 5.000
-    max_deviation = 0.250
+    max_deviation = 0.450
     deviation = round(random.uniform(-max_deviation, max_deviation), 3)
     flow_rate = round(normal_flow_rate + deviation, 3)
-    flow_rate = min(max(flow_rate, 3.000), 3.500)  # Ensure flow rate is within bounds
+    flow_rate = min(max(flow_rate, 4.550), 5.450)  # Ensure flow rate is within bounds
     
     return {
         "x_value": str(x_value), 
