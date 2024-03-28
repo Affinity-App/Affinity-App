@@ -35,8 +35,8 @@ def generate_data(previous_blood_pressure, x_value):
         # For the first map, set blood pressure between 90 and 110
         blood_pressure = random.randint(900, 1100) / 10
     else:
-        # For subsequent maps, adjust blood pressure by up to ±2 from the previous value
-        blood_pressure = max(min(previous_blood_pressure + random.uniform(-2, 2), 110.0), 90.0)
+        # For subsequent maps, adjust blood pressure by up to ±1 from the previous value
+        blood_pressure = max(min(previous_blood_pressure + random.uniform(-1.5, 1.5), 110.0), 90.0)
     return {
         "x_value": str(x_value), 
         "y_value": str(format(blood_pressure, '.1f'))  # Update blood pressure value in BP_data
