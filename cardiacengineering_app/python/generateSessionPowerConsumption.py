@@ -30,17 +30,17 @@ initialize_firebase()
 db = firestore.client()
 
 # Function to generate random data for each sensor
-# window for this is y = 4.500 to 5.500
-def generate_data(_previous_watts_per_hour, x_value):
-    normal_watts_per_hour = 5.000
-    max_deviation = 0.450
+# window for this is y = 18 to 22
+def generate_data(previous_watts, x_value):
+    normal_watts = 19.500
+    max_deviation = 0.500
     deviation = round(random.uniform(-max_deviation, max_deviation), 3)
-    watts_per_hour = round(normal_watts_per_hour + deviation, 3)
-    watts_per_hour = min(max(watts_per_hour, 4.550), 5.450)  # Ensure flow rate is within bounds
+    watts = round(normal_watts + deviation, 3)
+    watts = min(max(watts, 19.001), 19.999)  # Ensure flow rate is within bounds
     
     return {
         "x_value": str(x_value), 
-        "y_value": str(format(watts_per_hour, '.3f'))  # Format flow rate value to 3 decimal places
+        "y_value": str(format(watts, '.3f'))  # Format flow rate value to 3 decimal places
     }
 
 
@@ -50,16 +50,16 @@ def upload_data(duration_seconds):
     start_time = time.time()  # Record the start time
     x_value = 0
     data_array = []
-    _previous_watts_per_hour = 0
+    previous_watts = 0
     
     while True:
         if time.time() - start_time >= duration_seconds:
             break  # Exit the loop if desired duration is reached
         
-        watts_per_hour = generate_data(_previous_watts_per_hour, x_value)["y_value"]
-        _previous_watts_per_hour = float(watts_per_hour)
+        watts = generate_data(previous_watts, x_value)["y_value"]
+        previous_watts = float(watts)
 
-        data = generate_data(_previous_watts_per_hour, x_value)
+        data = generate_data(previous_watts, x_value)
         data_array.append(data)
 
         if len(data_array) >= 31:  # New session starts after every 31 data points
