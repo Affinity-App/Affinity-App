@@ -10,6 +10,10 @@ import 'pages/home_data/psi_page.dart';
 import 'pages/home_data/battery_page.dart';
 import 'pages/home_data/gpm_page.dart';
 import 'services/firebase_options.dart';
+import 'pages/dev_settings/developerMode.dart';
+
+import 'components/themeProvider.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,15 +21,39 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
+
+final ThemeData lightTheme = ThemeData(
+  brightness: Brightness.light,
+  primarySwatch: Colors.blue,
+  // Add other customizations for the light theme here
+);
+
+final ThemeData darkTheme = ThemeData(
+  brightness: Brightness.dark,
+  primarySwatch: Colors.lightGreen,
+  // Add other customizations for the dark theme here
+);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return MaterialApp(
+      title: 'Affinity',
+      themeMode: themeProvider.themeMode, // Use the theme from the provider
+      theme: lightTheme, //ThemeData.light(), // Use the light theme
+      darkTheme: darkTheme, //ThemeData.dark(), // Use the dark theme
+
       // Define routes
       routes: {
         '/RPMpage': (context) => const RPMpage(),
@@ -33,12 +61,12 @@ class MyApp extends StatelessWidget {
         '/BatteryPage': (context) => const BatteryPage(),
         '/GPMpage': (context) => const GPMpage(),
         '/RecordNow': (context) => const RecordNow(),
+        '/DeveloperMode': (context) => const DeveloperMode(),
       },
-
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      // theme: ThemeData(
+      //   primarySwatch: Colors.blue,
+      // ),
       home: const AuthWrapper(),
     );
   }
