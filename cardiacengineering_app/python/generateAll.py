@@ -31,24 +31,38 @@ db = firestore.client()
 # Initialize blood pressure with a random value between 90-110
 blood_pressure = random.randint(900, 1100) / 10  # To have one decimal place
 
-# Initialize x_value
+# Initialize x_values
 x_value = 0
 
 # Function to generate random data for each sensor
 def generate_data():
     return {
         "power_consumption": str(format(round(20 + random.uniform(-1.0, +1.0), 2), '.2f')),
-        "pressure": str(format(blood_pressure, '.2f')),
+        "pressure": f"{systolic_pressure:.2f}/{diastolic_pressure:.2f}",
         "flow_rate": str(format(round(random.uniform(4.5, 5.5), 2), '.2f')),
         "bpm": str(format(round(random.uniform(75, 77), 2), '.2f'))
     }
 
+# Global variables to store blood pressure
+systolic_pressure = 120.0
+diastolic_pressure = 80.0
+
 # Function to update blood pressure within range and increment by random value less than 1
 def update_blood_pressure():
-    global blood_pressure
-    change = random.uniform(-1.0, 1.0)  # Generate random change between -1.0 and 1.0
-    blood_pressure += change
-    blood_pressure = max(min(blood_pressure, 110.0), 90.0)  # Ensure blood pressure stays within range
+    global systolic_pressure
+    global diastolic_pressure
+    systolic_change = random.uniform(-1.0, 1.0)  # Generate random change for systolic pressure
+    diastolic_change = random.uniform(-1.0, 1.0)  # Generate random change for diastolic pressure
+    systolic_pressure += systolic_change
+    diastolic_pressure += diastolic_change
+    # Ensure blood pressure stays within reasonable ranges
+    systolic_pressure = max(min(systolic_pressure, 180.0), 90.0)
+    diastolic_pressure = max(min(diastolic_pressure, 120.0), 60.0)
+    # Adjust diastolic pressure if it's too high or too low
+    if diastolic_pressure >= systolic_pressure:
+        diastolic_pressure = systolic_pressure - random.uniform(30, 50)  # Adjust within a reasonable range
+    elif diastolic_pressure < 50:
+        diastolic_pressure = random.uniform(50, 60)  # Adjust within a reasonable range
 
 # Upload data to Firebase
 def upload_data(duration_seconds):
@@ -96,6 +110,6 @@ def upload_data(duration_seconds):
         time.sleep(1)  # Adjust the time interval as needed
 
 if __name__ == "__main__":
-    duration_seconds = 25  # Specify the desired duration in seconds
+    duration_seconds = 60  # Specify the desired duration in seconds
     x_value = 0  # Reset x_value
     upload_data(duration_seconds)
