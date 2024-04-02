@@ -11,11 +11,18 @@ class RPMpage extends StatefulWidget {
 }
 
 class _RPMpageState extends State<RPMpage> {
-  late int selectedCollectionIndex = 0;
+  late int selectedSessionIndex = 0;
+  final List<String> sessionNames = [
+    "session 03-28-24 12:04",
+    "session 03-28-24 12:13",
+    "session 03-28-24 12:16",
+    "session 03-28-24 12:17",
+    "session 03-28-24 12;21"
+  ];
 
-  void changeCollection(int index) {
+  void changeSession(int index) {
     setState(() {
-      selectedCollectionIndex = index;
+      selectedSessionIndex = index;
     });
   }
 
@@ -36,16 +43,16 @@ class _RPMpageState extends State<RPMpage> {
           children: [
             const SizedBox(height: 50.0), // Added space below the title
             DropdownButton<int>(
-              value: selectedCollectionIndex,
+              value: selectedSessionIndex,
               onChanged: (int? newIndex) {
                 if (newIndex != null) {
-                  changeCollection(newIndex);
+                  changeSession(newIndex);
                 }
               },
-              items: List.generate(5, (index) {
+              items: List.generate(sessionNames.length, (index) {
                 return DropdownMenuItem<int>(
                   value: index,
-                  child: Text('Collection ${index + 1}'),
+                  child: Text(sessionNames[index]),
                 );
               }),
             ),
@@ -64,7 +71,7 @@ class _RPMpageState extends State<RPMpage> {
                 stream: FirebaseFirestore.instance
                     .collection('large_heart_data')
                     .doc('bpm')
-                    .collection('session 03-28-24 12:04')
+                    .collection(sessionNames[selectedSessionIndex])
                     .doc('data')
                     .snapshots(),
                 builder: (BuildContext context,
