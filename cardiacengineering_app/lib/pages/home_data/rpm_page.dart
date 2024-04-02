@@ -3,8 +3,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:jr_design_app/components/background_gradient_container.dart';
 import 'package:jr_design_app/pages/dev_settings/test_chart.dart';
 
-class RPMpage extends StatelessWidget {
+class RPMpage extends StatefulWidget {
   const RPMpage({Key? key}) : super(key: key);
+
+  @override
+  _RPMpageState createState() => _RPMpageState();
+}
+
+class _RPMpageState extends State<RPMpage> {
+  late int selectedCollectionIndex = 0;
+
+  void changeCollection(int index) {
+    setState(() {
+      selectedCollectionIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +35,20 @@ class RPMpage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(height: 50.0), // Added space below the title
+            DropdownButton<int>(
+              value: selectedCollectionIndex,
+              onChanged: (int? newIndex) {
+                if (newIndex != null) {
+                  changeCollection(newIndex);
+                }
+              },
+              items: List.generate(5, (index) {
+                return DropdownMenuItem<int>(
+                  value: index,
+                  child: Text('Collection ${index + 1}'),
+                );
+              }),
+            ),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18.0),
