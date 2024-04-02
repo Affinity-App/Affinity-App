@@ -45,7 +45,8 @@ class _RPMpageState extends State<RPMpage> {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
-                border: Border.all(color: Colors.black),
+                border: Border.all(
+                    color: Colors.black, width: 2.0), // Set border thickness
                 color: Colors
                     .transparent, // Set the container background to transparent
               ),
@@ -62,7 +63,11 @@ class _RPMpageState extends State<RPMpage> {
                 items: List.generate(sessionNames.length, (index) {
                   return DropdownMenuItem<int>(
                     value: index,
-                    child: Text(sessionNames[index]),
+                    child: Text(
+                      sessionNames[index],
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold), // Make text bold
+                    ),
                   );
                 }),
               ),
@@ -73,7 +78,7 @@ class _RPMpageState extends State<RPMpage> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(18.0),
-                  color: Colors.blueGrey,
+                  color: Colors.white,
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -118,7 +123,7 @@ class _RPMpageState extends State<RPMpage> {
                             8.0), // Adjust the padding to include the border width
                         decoration: BoxDecoration(
                           border: Border.all(
-                              color: Colors.black,
+                              color: Colors.white,
                               width: 2.0), // Adjust the border thickness
                           borderRadius:
                               BorderRadius.circular(10.0), // Set border radius
