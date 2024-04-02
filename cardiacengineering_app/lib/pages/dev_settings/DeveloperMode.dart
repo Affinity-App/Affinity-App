@@ -18,7 +18,7 @@ class DeveloperMode extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Heart ID',
+              'Developer Mode',
               style: TextStyle(
                 fontSize: 30.0,
               ),
@@ -27,35 +27,71 @@ class DeveloperMode extends StatelessWidget {
         ),
       ),
       body: BackgroundGradientContainer(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              width: double.infinity,
-              'assets/images/logo.png',
-              height: 100.0,
-            ),
-            const SizedBox(height: 100.0),
-            ElevatedButton(
-              onPressed: () {
-                // Navigate back to the previous page
-                Navigator.pop(context);
-              },
-              child: const Text('Back'),
-            ),
-            const SizedBox(height: 30.0),
-            // Display Heart ID information
-            Text(
-              'Heart ID Info:',
-              style: TextStyle(fontSize: 20.0),
-            ),
-            Text(
-              'Heart ID: 401-365',
-              style: TextStyle(fontSize: 16.0),
-            ),
-            // You can display more information related to Heart ID here
-          ],
+        child: SingleChildScrollView(
+          // Added SingleChildScrollView to allow scrolling
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                width: double.infinity,
+                'assets/images/logo.png',
+                height: 1.0,
+              ),
+              const SizedBox(height: 100.0),
+              DataTable(
+                columnSpacing: 16.0,
+                columns: const <DataColumn>[
+                  DataColumn(
+                    label: Text(
+                      'Seconds',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'Blood Pressure',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
+                  ),
+                  // Added Temperature Column
+                  DataColumn(
+                    label: Text(
+                      'BPM',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
+                  ),
+                  // Added Pressure Column
+                  DataColumn(
+                    label: Text(
+                      'Flow Rate',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'Power Use',
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
+                  ),
+                ],
+                rows: List<DataRow>.generate(
+                  30,
+                  (index) => DataRow(
+                    cells: <DataCell>[
+                      DataCell(Text('${index + 1}')), // 'Seconds' column
+                      DataCell(
+                          Text('${index + 1}mmHg')), // 'Blood Pressure' column
+                      DataCell(Text('${index + 2}BPM')), // 'BPM' column
+                      DataCell(Text('${index + 3}L/min')), // 'Flow Rate' column
+                      DataCell(
+                          Text('${index + 3}W')), // 'Power Consumption' column
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: const BottomAppBar(
