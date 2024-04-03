@@ -41,7 +41,7 @@ class _RPMpageState extends State<RPMpage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 50.0), // Added space below the title
+            const SizedBox(height: 100.0), // Added space below the title
             Container(
               decoration: BoxDecoration(
                 // borderRadius: BorderRadius.circular(10.0),
