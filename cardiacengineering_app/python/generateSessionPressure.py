@@ -29,35 +29,50 @@ initialize_firebase()
 # Get Firestore client
 db = firestore.client()
 
-# Function to generate random data for each sensor
-def generate_data(previous_blood_pressure, x_value):
-    if x_value == 0:
-        # For the first map, set blood pressure between 90 and 110
-        previous_blood_pressure = random.randint(900, 1100) / 10
-    else:
-        # For subsequent maps, adjust blood pressure by up to ±1 from the previous value
-        blood_pressure = max(min(previous_blood_pressure + random.uniform(-1.5, 1.5), 110.0), 90.0)
-    return {
-        "x_value": str(x_value), 
-        "y_value": str(format(blood_pressure, '.1f'))  # Update blood pressure value in BP_data
-    }
+# Global variables to store blood pressure
+systolic_pressure = 120.0
+diastolic_pressure = 80.0
 
+# Function to update blood pressure within range and increment by random value less than 1
+def update_blood_pressure():
+    global systolic_pressure
+    global diastolic_pressure
+    systolic_change = random.uniform(-1.0, 1.0)  # Generate random change for systolic pressure
+    diastolic_change = random.uniform(-1.0, 1.0)  # Generate random change for diastolic pressure
+    systolic_pressure += systolic_change
+    diastolic_pressure += diastolic_change
+    # Ensure blood pressure stays within reasonable ranges
+    systolic_pressure = max(min(systolic_pressure, 180.0), 90.0)
+    diastolic_pressure = max(min(diastolic_pressure, 120.0), 60.0)
+    # Adjust diastolic pressure if it's too high or too low
+    if diastolic_pressure >= systolic_pressure:
+        diastolic_pressure = systolic_pressure - random.uniform(30, 50)  # Adjust within a reasonable range
+    elif diastolic_pressure < 50:
+        diastolic_pressure = random.uniform(50, 60)  # Adjust within a reasonable range
+
+# Function to generate random data for each sensor
+def generate_data():
+    update_blood_pressure()  # Update blood pressure values
+    combined_pressure = str(format(systolic_pressure, '.1f')) + "/" + str(format(diastolic_pressure, '.1f'))
+
+    return {
+        "diastolic_pressure": str(format(diastolic_pressure, '.1f')),
+        "systolic_pressure": str(format(systolic_pressure, '.1f')), 
+        "combined_pressure": combined_pressure
+
+    }
 
 # Upload data to Firebase
 def upload_data(duration_seconds):
     start_time = time.time()  # Record the start time
     x_value = 0
     data_array = []
-    previous_blood_pressure = 0
     
     while True:
         if time.time() - start_time >= duration_seconds:
             break  # Exit the loop if desired duration is reached
         
-        blood_pressure = generate_data(previous_blood_pressure, x_value)["y_value"]
-        previous_blood_pressure = float(blood_pressure)
-
-        data = generate_data(previous_blood_pressure, x_value)
+        data = generate_data()  # Generate new blood pressure data
         data_array.append(data)
 
         if len(data_array) >= 31:  # New session starts after every 31 data points
