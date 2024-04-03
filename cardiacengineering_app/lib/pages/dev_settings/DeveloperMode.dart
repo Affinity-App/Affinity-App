@@ -94,19 +94,6 @@ class DeveloperMode extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: const BottomAppBar(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'App Version 1.2.0',
-              style: TextStyle(
-                fontSize: 15.0,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
