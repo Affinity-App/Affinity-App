@@ -44,9 +44,9 @@ class _RPMpageState extends State<RPMpage> {
             const SizedBox(height: 50.0), // Added space below the title
             Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                border: Border.all(
-                    color: Colors.black, width: 2.0), // Set border thickness
+                // borderRadius: BorderRadius.circular(10.0),
+                // border: Border.all(
+                //     color: Colors.black, width: 5.0), // Set border thickness
                 color: Colors
                     .transparent, // Set the container background to transparent
               ),
@@ -58,8 +58,8 @@ class _RPMpageState extends State<RPMpage> {
                     changeSession(newIndex);
                   }
                 },
-                dropdownColor: Colors
-                    .transparent, // Set dropdown box background to transparent
+                dropdownColor:
+                    Colors.white, // Set dropdown box background to transparent
                 items: List.generate(sessionNames.length, (index) {
                   return DropdownMenuItem<int>(
                     value: index,
