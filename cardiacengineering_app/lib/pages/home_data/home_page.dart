@@ -208,6 +208,89 @@ class _HomePageState extends State<HomePage> {
                   Navigator.pushNamed(context, '/BatteryPage');
                 },
               ),
+              _buildDataBox(
+                context,
+                label: 'Record Now',
+                value: '',
+                iconPath: 'assets/images/logo.png',
+                iconSize: 50.0,
+                labelFontSize: 20.0,
+                valueFontSize: 0,
+                borderRadius: 20.0,
+                onPressed: (context) {
+                  Navigator.pushNamed(context, '/RecordNow');
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDataBox(
+    BuildContext context, {
+    required String label,
+    required String value,
+    required String iconPath,
+    required double iconSize,
+    required double labelFontSize,
+    required double valueFontSize,
+    required double borderRadius,
+    required OnDataBoxPressedCallback onPressed,
+  }) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width / 1.2,
+      child: GestureDetector(
+        onTap: () {
+          onPressed(context);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(borderRadius),
+            border: Border.all(color: Colors.black, width: 1.0),
+          ),
+          margin: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center, // Adjusted to center
+            children: [
+              Image.asset(
+                iconPath,
+                height: iconSize,
+                width: iconSize,
+              ),
+              const SizedBox(width: 10.0),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment:
+                      CrossAxisAlignment.center, // Adjusted to center
+                  children: [
+                    Text(
+                      label,
+                      style: TextStyle(
+                        fontSize: labelFontSize,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center, // Adjusted to center
+                    ),
+                    const SizedBox(height: 5.0),
+                    Text(
+                      value,
+                      style: TextStyle(
+                        fontSize: valueFontSize,
+                        fontWeight: FontWeight.bold,
+                        color: const Color.fromARGB(255, 86, 140, 234),
+                      ),
+                      textAlign: TextAlign.center, // Adjusted to center
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(
+                Icons.add,
+                color: Colors.black,
+              ),
             ],
           ),
         ),

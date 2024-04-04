@@ -61,6 +61,33 @@ class SettingsPage extends StatelessWidget {
                       builder: (context) => const HeartDataPage()),
                 );
               },
+              style: ButtonStyle(
+                  // backgroundColor
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(247, 169, 186, 1.0)), // set background color to pink
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // Set text color to white
+                // Add the animation controller
+                animationDuration: const Duration(milliseconds: 200),
+                // Shrink on press
+                overlayColor: MaterialStateProperty.resolveWith<Color>(
+                  (states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return Colors.white10; // Shrink and visually indicate press
+                    }
+                    return Colors.transparent; // Use default overlay color
+                  },
+                ),
+                // Scale the button down slightly on press
+                padding: MaterialStateProperty.resolveWith<EdgeInsets>(
+                  (states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8.0);
+                    }
+                    return const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 12.0);
+                  },
+                ),
+              ),
               child: const Text('Heart ID'),
             ),
             const SizedBox(height: 30.0),
@@ -73,6 +100,33 @@ class SettingsPage extends StatelessWidget {
                       builder: (context) => const DeveloperMode()),
                 );
               },
+              style: ButtonStyle(
+                  // backgroundColor
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(247, 169, 186, 1.0)), // set background color to pink
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // Set text color to white
+                // Add the animation controller
+                animationDuration: const Duration(milliseconds: 200),
+                // Shrink on press
+                overlayColor: MaterialStateProperty.resolveWith<Color>(
+                  (states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return Colors.white10; // Shrink and visually indicate press
+                    }
+                    return Colors.transparent; // Use default overlay color
+                  },
+                ),
+                // Scale the button down slightly on press
+                padding: MaterialStateProperty.resolveWith<EdgeInsets>(
+                  (states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8.0);
+                    }
+                    return const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 12.0);
+                  },
+                ),
+              ),
               child: const Text('Developer Mode'),
             ),
             const SizedBox(height: 30.0),
@@ -80,6 +134,33 @@ class SettingsPage extends StatelessWidget {
               onPressed: () {
                 _logout(context);
               },
+              style: ButtonStyle(
+                  // backgroundColor
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(247, 169, 186, 1.0)), // set background color to pink
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // Set text color to white
+                // Add the animation controller
+                animationDuration: const Duration(milliseconds: 200),
+                // Shrink on press
+                overlayColor: MaterialStateProperty.resolveWith<Color>(
+                  (states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return Colors.white10; // Shrink and visually indicate press
+                    }
+                    return Colors.transparent; // Use default overlay color
+                  },
+                ),
+                // Scale the button down slightly on press
+                padding: MaterialStateProperty.resolveWith<EdgeInsets>(
+                  (states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8.0);
+                    }
+                    return const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 12.0);
+                  },
+                ),
+              ),
               child: const Text('Logout'),
             ),
           ],

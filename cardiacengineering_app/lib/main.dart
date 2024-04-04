@@ -58,10 +58,11 @@ class MyApp extends StatelessWidget {
       routes: {
         '/RPMpage': (context) => const RPMpage(),
         '/PSIpage': (context) => const PSIpage(),
-        '/BatteryPage': (context) => const BatteryPage(),
+        '/BatteryPage': (context) => const Batterypage(),
         '/GPMpage': (context) => const GPMpage(),
         '/RecordNow': (context) => const RecordNow(),
         '/DeveloperMode': (context) => const DeveloperMode(),
+        '/home_page': (context) => const HomePage(),
       },
       debugShowCheckedModeBanner: false,
       // theme: ThemeData(
