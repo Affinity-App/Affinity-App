@@ -51,28 +51,26 @@ def update_blood_pressure():
         diastolic_pressure = random.uniform(50, 60)  # Adjust within a reasonable range
 
 # Function to generate random data for each sensor
-def generate_data():
+def generate_data(x_value):
     update_blood_pressure()  # Update blood pressure values
     combined_pressure = str(format(systolic_pressure, '.1f')) + "/" + str(format(diastolic_pressure, '.1f'))
 
     return {
-        "diastolic_pressure": str(format(diastolic_pressure, '.1f')),
-        "systolic_pressure": str(format(systolic_pressure, '.1f')), 
-        "combined_pressure": combined_pressure
-
+        "x-value": str(x_value),
+        "y_value": combined_pressure
     }
 
 # Upload data to Firebase
 def upload_data(duration_seconds):
     start_time = time.time()  # Record the start time
-    x_value = 0
+    x_value = 0  # Initialize x_value
     data_array = []
     
     while True:
         if time.time() - start_time >= duration_seconds:
             break  # Exit the loop if desired duration is reached
         
-        data = generate_data()  # Generate new blood pressure data
+        data = generate_data(x_value)  # Generate new blood pressure data with current x_value
         data_array.append(data)
 
         if len(data_array) >= 31:  # New session starts after every 31 data points
@@ -89,7 +87,7 @@ def upload_data(duration_seconds):
             data_array = []
 
         time.sleep(1)  # Adjust the time interval as needed
-        x_value += 1
+        x_value += 1  # Increment x_value
 
 if __name__ == "__main__":
     duration_seconds = 31 # Specify the desired duration in seconds
