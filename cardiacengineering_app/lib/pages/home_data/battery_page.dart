@@ -99,7 +99,6 @@ class _BatterypageState extends State<Batterypage> {
               child: const LineChartSample2(),
             ),
             const SizedBox(height: 30.0),
-            // Removed the Back to Home button
           ],
         ),
       ),

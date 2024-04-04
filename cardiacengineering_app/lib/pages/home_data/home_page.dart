@@ -130,28 +130,32 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      extendBody: true, // Extend body behind both app bar and status bar
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         //automatically imply leading = false to remove the back button on the app bar
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(width: 86.0),
-            Image.asset(
-              'assets/images/logo.png',
-              height: 50.0,
-            ),
-            const SizedBox(width: 5.0),
-            const Text(
-              'Affinity',
-              style: TextStyle(
-                fontSize: 30.0,
+        title: Padding(
+          padding: const EdgeInsets.only(top: 20.0), // Add padding here
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(width: 86.0),
+              Image.asset(
+                'assets/images/logo.png',
+                height: 50.0,
               ),
-            ),
-          ],
+              const SizedBox(width: 5.0),
+              const Text(
+                'Affinity',
+                style: TextStyle(
+                  fontSize: 30.0,
+                ),
+              ),
+            ],
+          ),
         ),
         actions: [
           Padding(
@@ -169,119 +173,57 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: BackgroundGradientContainer(
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(
-                  height: MediaQuery.of(context).padding.top +
-                      kToolbarHeight +
-                      20), // Added space
-              DataBox(
-                label: 'Blood Pressure',
-                value: blood_pressure + ' mmHg',
-                iconPath: 'assets/images/Blood.png',
-                onPressed: (context) {
-                  Navigator.pushNamed(context, '/PSIpage');
-                },
-              ),
-              DataBox(
-                label: 'Heart Rate',
-                value: bpm + ' RPM',
-                iconPath: 'assets/images/Heart.png',
-                onPressed: (context) {
-                  Navigator.pushNamed(context, '/RPMpage');
-                },
-              ),
-              DataBox(
-                label: 'Flow Rate',
-                value: flow_rate + ' L/min',
-                iconPath: 'assets/images/Flow.png',
-                onPressed: (context) {
-                  Navigator.pushNamed(context, '/GPMpage');
-                },
-              ),
-              DataBox(
-                label: 'Power Consumption',
-                value: power_consumption + ' watts',
-                iconPath: 'assets/images/Battery.png',
-                onPressed: (context) {
-                  Navigator.pushNamed(context, '/BatteryPage');
-                },
-              ),
-            ],
+      body: Stack(
+        children: [
+          const BackgroundGradientContainer(
+            child: SizedBox
+                .expand(), // Added SizedBox.expand() as a placeholder for child
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDataBox(
-    BuildContext context, {
-    required String label,
-    required String value,
-    required String iconPath,
-    required double iconSize,
-    required double labelFontSize,
-    required double valueFontSize,
-    required double borderRadius,
-    required OnDataBoxPressedCallback onPressed,
-  }) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width / 1.2,
-      child: GestureDetector(
-        onTap: () {
-          onPressed(context);
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(borderRadius),
-            border: Border.all(color: Colors.black, width: 1.0),
-          ),
-          margin: const EdgeInsets.all(10.0),
-          padding: const EdgeInsets.all(10.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center, // Adjusted to center
-            children: [
-              Image.asset(
-                iconPath,
-                height: iconSize,
-                width: iconSize,
-              ),
-              const SizedBox(width: 10.0),
-              Expanded(
+          SafeArea(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    top: 100.0), // Adjust the top padding as needed
                 child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.center, // Adjusted to center
                   children: [
-                    Text(
-                      label,
-                      style: TextStyle(
-                        fontSize: labelFontSize,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center, // Adjusted to center
+                    DataBox(
+                      label: 'Blood Pressure',
+                      value: blood_pressure + ' mmHg',
+                      iconPath: 'assets/images/Blood.png',
+                      onPressed: (context) {
+                        Navigator.pushNamed(context, '/PSIpage');
+                      },
                     ),
-                    const SizedBox(height: 5.0),
-                    Text(
-                      value,
-                      style: TextStyle(
-                        fontSize: valueFontSize,
-                        fontWeight: FontWeight.bold,
-                        color: const Color.fromARGB(255, 86, 140, 234),
-                      ),
-                      textAlign: TextAlign.center, // Adjusted to center
+                    DataBox(
+                      label: 'Heart Rate',
+                      value: bpm + ' RPM',
+                      iconPath: 'assets/images/Heart.png',
+                      onPressed: (context) {
+                        Navigator.pushNamed(context, '/RPMpage');
+                      },
+                    ),
+                    DataBox(
+                      label: 'Flow Rate',
+                      value: flow_rate + ' L/min',
+                      iconPath: 'assets/images/Flow.png',
+                      onPressed: (context) {
+                        Navigator.pushNamed(context, '/GPMpage');
+                      },
+                    ),
+                    DataBox(
+                      label: 'Power Consumption',
+                      value: power_consumption + ' watts',
+                      iconPath: 'assets/images/Battery.png',
+                      onPressed: (context) {
+                        Navigator.pushNamed(context, '/BatteryPage');
+                      },
                     ),
                   ],
                 ),
               ),
-              const Icon(
-                Icons.add,
-                color: Colors.black,
-              ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
