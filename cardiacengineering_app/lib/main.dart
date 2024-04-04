@@ -29,15 +29,31 @@ void main() async {
   );
 }
 
+final TextStyle myAppTextStyle = TextStyle(
+  fontFamily: 'RaleWay',
+  fontSize: 16.0, // Set the desired font size
+  // You can customize other properties like fontWeight, color, etc. here
+);
+
 final ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
   primarySwatch: Colors.blue,
+  textTheme: TextTheme(
+    bodyText1: myAppTextStyle,
+    bodyText2: myAppTextStyle,
+    // You can assign the custom text style to various text themes as needed
+  ),
   // Add other customizations for the light theme here
 );
 
 final ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
   primarySwatch: Colors.lightGreen,
+  textTheme: TextTheme(
+    bodyText1: myAppTextStyle,
+    bodyText2: myAppTextStyle,
+    // You can assign the custom text style to various text themes as needed
+  ),
   // Add other customizations for the dark theme here
 );
 
