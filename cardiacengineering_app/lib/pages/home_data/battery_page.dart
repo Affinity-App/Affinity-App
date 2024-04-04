@@ -7,7 +7,7 @@ import 'package:jr_design_app/pages/home_data/rpm_page.dart';
 import '../../components/background_gradient_container.dart';
 
 class Batterypage extends StatefulWidget {
-  const Batterypage({super.key});
+  const Batterypage({Key? key}) : super(key: key);
 
   @override
   State<Batterypage> createState() => _BatterypageState();
@@ -49,10 +49,7 @@ class _BatterypageState extends State<Batterypage> {
                 );
                 break;
               case 'Power Consumption':
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Batterypage()),
-                );
+                // No need to navigate to the same page
                 break;
               // Add more cases for other options as needed
               // Default case for 'Blood Pressure' is to do nothing
@@ -100,48 +97,6 @@ class _BatterypageState extends State<Batterypage> {
                 color: Colors.white,
               ),
               child: const LineChartSample2(),
-            ),
-            const SizedBox(height: 30.0),
-            ElevatedButton(
-              onPressed: () {
-                // Navigate back to the Home page
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomePage()),
-                );
-              },
-              style: ButtonStyle(
-                // backgroundColor
-                backgroundColor: MaterialStateProperty.all<Color>(
-                    const Color.fromRGBO(
-                        247, 169, 186, 1.0)), // set background color to pink
-                foregroundColor: MaterialStateProperty.all<Color>(
-                    Colors.black), // Set text color to white
-                // Add the animation controller
-                animationDuration: const Duration(milliseconds: 200),
-                // Shrink on press
-                overlayColor: MaterialStateProperty.resolveWith<Color>(
-                  (states) {
-                    if (states.contains(MaterialState.pressed)) {
-                      return Colors
-                          .white10; // Shrink and visually indicate press
-                    }
-                    return Colors.transparent; // Use default overlay color
-                  },
-                ),
-                // Scale the button down slightly on press
-                padding: MaterialStateProperty.resolveWith<EdgeInsets>(
-                  (states) {
-                    if (states.contains(MaterialState.pressed)) {
-                      return const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 8.0);
-                    }
-                    return const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 12.0);
-                  },
-                ),
-              ),
-              child: const Text('Back to Home'),
             ),
             const SizedBox(height: 30.0),
           ],
