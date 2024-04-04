@@ -1,10 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
 import '../../../components/background_gradient_container.dart';
 
-class DeveloperMode extends StatelessWidget {
+class DeveloperMode extends StatefulWidget {
   const DeveloperMode({Key? key}) : super(key: key);
+
+  @override
+  _DeveloperModeState createState() => _DeveloperModeState();
+}
+
+class _DeveloperModeState extends State<DeveloperMode> {
+  String dropdownValue = ''; // Corrected variable name
+  late int selectedOption = 0;
+  final List<String> options = [
+    'Session 1',
+    'Session 2',
+    'Session 3',
+    'Session 4',
+    'Session 5',
+  ]; // Define custom dropdown options
+
+  void changeSession(int index) {
+    setState(() {
+      selectedOption = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,16 +33,11 @@ class DeveloperMode extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent, // Make app bar transparent
         elevation: 0, // Remove app bar elevation
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Developer Mode',
-              style: TextStyle(
-                fontSize: 30.0,
-              ),
-            ),
-          ],
+        title: const Text(
+          'Developer Mode',
+          style: TextStyle(
+            fontSize: 30.0,
+          ),
         ),
       ),
       body: BackgroundGradientContainer(
@@ -34,11 +48,31 @@ class DeveloperMode extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                width: double.infinity,
                 'assets/images/logo.png',
-                height: 1.0,
+                width: double.infinity,
+                height: 0.0, // Adjusted height
               ),
-              const SizedBox(height: 100.0),
+              const SizedBox(height: 100.0), // Spacing before the DataTable
+              DropdownButton<int>(
+                value: selectedOption,
+                onChanged: (int? newIndex) {
+                  if (newIndex != null) {
+                    changeSession(newIndex);
+                  }
+                },
+                dropdownColor:
+                    Colors.white, // Set dropdown box background to transparent
+                items: List.generate(options.length, (index) {
+                  return DropdownMenuItem<int>(
+                    value: index,
+                    child: Text(
+                      options[index],
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold), // Make text bold
+                    ),
+                  );
+                }),
+              ),
               DataTable(
                 columnSpacing: 16.0,
                 columns: const <DataColumn>[
@@ -54,14 +88,12 @@ class DeveloperMode extends StatelessWidget {
                       style: TextStyle(fontStyle: FontStyle.italic),
                     ),
                   ),
-                  // Added Temperature Column
                   DataColumn(
                     label: Text(
                       'BPM',
                       style: TextStyle(fontStyle: FontStyle.italic),
                     ),
                   ),
-                  // Added Pressure Column
                   DataColumn(
                     label: Text(
                       'Flow Rate',
@@ -81,11 +113,11 @@ class DeveloperMode extends StatelessWidget {
                     cells: <DataCell>[
                       DataCell(Text('${index + 1}')), // 'Seconds' column
                       DataCell(
-                          Text('${index + 1}mmHg')), // 'Blood Pressure' column
-                      DataCell(Text('${index + 2}BPM')), // 'BPM' column
-                      DataCell(Text('${index + 3}L/min')), // 'Flow Rate' column
+                          Text('${index + 1} mmHg')), // 'Blood Pressure' column
+                      DataCell(Text('${index + 2} BPM')), // 'BPM' column
                       DataCell(
-                          Text('${index + 3}W')), // 'Power Consumption' column
+                          Text('${index + 3} L/min')), // 'Flow Rate' column
+                      DataCell(Text('${index + 4} W')), // 'Power Use' column
                     ],
                   ),
                 ),
