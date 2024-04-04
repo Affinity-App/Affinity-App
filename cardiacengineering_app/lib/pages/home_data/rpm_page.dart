@@ -199,7 +199,7 @@ class _RPMpageState extends State<RPMpage> {
                                   .bold), // Set the text style of the header row
                           columns: [
                             DataColumn(label: Text('Time(s)')),
-                            DataColumn(label: Text('Value (mmHg)')),
+                            DataColumn(label: Text('Value (bpm)')),
                           ],
                           rows: List<DataRow>.generate(
                             yValues.length,
