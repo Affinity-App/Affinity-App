@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:jr_design_app/pages/dev_settings/DeveloperMode.dart';
 import 'package:jr_design_app/pages/dev_settings/heart_data_page.dart';
+import 'package:provider/provider.dart';
+import '../../components/ThemeProvider.dart';
 import '../login_auth/login_page.dart';
 
 import '../../components/background_gradient_container.dart';
@@ -40,25 +43,39 @@ class SettingsPage extends StatelessWidget {
               height: 100.0,
             ),
             const SizedBox(height: 100.0),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     // Access the ThemeProvider without passing a boolean value
+            //     final themeProvider =
+            //         Provider.of<ThemeProvider>(context, listen: false);
+            //     themeProvider.toggleTheme(); // No argument needed
+            //   },
+            //   child: Text('Toggle Theme'),
+            // ),
+            const SizedBox(height: 30.0),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const HeartDataPage()),
-    );
-                //_logout(context);
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const HeartDataPage()),
+                );
               },
               style: ButtonStyle(
-                  // backgroundColor
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(247, 169, 186, 1.0)), // set background color to pink
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // Set text color to white
+                // backgroundColor
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    const Color.fromRGBO(
+                        247, 169, 186, 1.0)), // set background color to pink
+                foregroundColor: MaterialStateProperty.all<Color>(
+                    Colors.white), // Set text color to white
                 // Add the animation controller
                 animationDuration: const Duration(milliseconds: 200),
                 // Shrink on press
                 overlayColor: MaterialStateProperty.resolveWith<Color>(
                   (states) {
                     if (states.contains(MaterialState.pressed)) {
-                      return Colors.white10; // Shrink and visually indicate press
+                      return Colors
+                          .white10; // Shrink and visually indicate press
                     }
                     return Colors.transparent; // Use default overlay color
                   },
@@ -80,19 +97,28 @@ class SettingsPage extends StatelessWidget {
             const SizedBox(height: 30.0),
             ElevatedButton(
               onPressed: () {
-                //_logout(context);
+                // Navigate to the developer settings page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const DeveloperMode()),
+                );
               },
               style: ButtonStyle(
-                  // backgroundColor
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(247, 169, 186, 1.0)), // set background color to pink
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // Set text color to white
+                // backgroundColor
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    const Color.fromRGBO(
+                        247, 169, 186, 1.0)), // set background color to pink
+                foregroundColor: MaterialStateProperty.all<Color>(
+                    Colors.white), // Set text color to white
                 // Add the animation controller
                 animationDuration: const Duration(milliseconds: 200),
                 // Shrink on press
                 overlayColor: MaterialStateProperty.resolveWith<Color>(
                   (states) {
                     if (states.contains(MaterialState.pressed)) {
-                      return Colors.white10; // Shrink and visually indicate press
+                      return Colors
+                          .white10; // Shrink and visually indicate press
                     }
                     return Colors.transparent; // Use default overlay color
                   },
@@ -117,16 +143,20 @@ class SettingsPage extends StatelessWidget {
                 _logout(context);
               },
               style: ButtonStyle(
-                  // backgroundColor
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(247, 169, 186, 1.0)), // set background color to pink
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // Set text color to white
+                // backgroundColor
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    const Color.fromRGBO(
+                        247, 169, 186, 1.0)), // set background color to pink
+                foregroundColor: MaterialStateProperty.all<Color>(
+                    Colors.white), // Set text color to white
                 // Add the animation controller
                 animationDuration: const Duration(milliseconds: 200),
                 // Shrink on press
                 overlayColor: MaterialStateProperty.resolveWith<Color>(
                   (states) {
                     if (states.contains(MaterialState.pressed)) {
-                      return Colors.white10; // Shrink and visually indicate press
+                      return Colors
+                          .white10; // Shrink and visually indicate press
                     }
                     return Colors.transparent; // Use default overlay color
                   },
