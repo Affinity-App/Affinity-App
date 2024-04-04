@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:jr_design_app/pages/dev_settings/DeveloperMode.dart';
 import 'package:jr_design_app/pages/dev_settings/heart_data_page.dart';
+import 'package:provider/provider.dart';
+import '../../components/ThemeProvider.dart';
 import '../login_auth/login_page.dart';
 
 import '../../components/background_gradient_container.dart';
@@ -42,18 +45,33 @@ class SettingsPage extends StatelessWidget {
             const SizedBox(height: 100.0),
             ElevatedButton(
               onPressed: () {
+                // Access the ThemeProvider without passing a boolean value
+                final themeProvider =
+                    Provider.of<ThemeProvider>(context, listen: false);
+                themeProvider.toggleTheme(); // No argument needed
+              },
+              child: Text('Toggle Theme'),
+            ),
+            const SizedBox(height: 30.0),
+            ElevatedButton(
+              onPressed: () {
                 Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const HeartDataPage()),
-    );
-                //_logout(context);
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const HeartDataPage()),
+                );
               },
               child: const Text('Heart ID'),
             ),
             const SizedBox(height: 30.0),
             ElevatedButton(
               onPressed: () {
-                //_logout(context);
+                // Navigate to the developer settings page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const DeveloperMode()),
+                );
               },
               child: const Text('Developer Mode'),
             ),

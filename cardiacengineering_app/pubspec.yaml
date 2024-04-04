@@ -30,6 +30,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  pdf: ^3.10.8
+  path_provider: ^2.0.3
+
   
   fl_chart:
 
@@ -43,6 +46,9 @@ dependencies:
   #adds google sign in dependency
   google_sign_in: ^6.2.1
   cloud_firestore: ^4.15.7
+  provider: ^6.1.2
+  file_picker: ^8.0.0+1
+  open_file: ^3.3.2
 
 dev_dependencies:
   flutter_test:
