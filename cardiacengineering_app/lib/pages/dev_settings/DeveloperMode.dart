@@ -92,10 +92,14 @@ class _DeveloperModeState extends State<DeveloperMode> {
       appBar: AppBar(
         backgroundColor: Colors.transparent, // Make app bar transparent
         elevation: 0, // Remove app bar elevation
-        title: const Text(
-          'Developer Mode',
-          style: TextStyle(
-            fontSize: 30.0,
+        title: Center(
+          // Center the title
+          child: Text(
+            'Developer Mode',
+            style: TextStyle(
+              fontSize: 30.0,
+            ),
+            textAlign: TextAlign.center, // Center the text horizontally
           ),
         ),
         leading: IconButton(
@@ -147,52 +151,56 @@ class _DeveloperModeState extends State<DeveloperMode> {
                   ),
                 ],
               ),
-              DataTable(
-                columnSpacing: 16.0,
-                columns: const <DataColumn>[
-                  DataColumn(
-                    label: Text(
-                      'Seconds',
-                      style: TextStyle(fontStyle: FontStyle.italic),
+              SingleChildScrollView(
+                // Wrap the DataTable in SingleChildScrollView
+                scrollDirection: Axis.horizontal,
+                child: DataTable(
+                  columnSpacing: 16.0,
+                  columns: const <DataColumn>[
+                    DataColumn(
+                      label: Text(
+                        'Seconds',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
                     ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'Blood Pressure',
-                      style: TextStyle(fontStyle: FontStyle.italic),
+                    DataColumn(
+                      label: Text(
+                        'Blood Pressure',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
                     ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'BPM',
-                      style: TextStyle(fontStyle: FontStyle.italic),
+                    DataColumn(
+                      label: Text(
+                        'BPM',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
                     ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'Flow Rate',
-                      style: TextStyle(fontStyle: FontStyle.italic),
+                    DataColumn(
+                      label: Text(
+                        'Flow Rate',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
                     ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'Power Use',
-                      style: TextStyle(fontStyle: FontStyle.italic),
+                    DataColumn(
+                      label: Text(
+                        'Power Use',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
                     ),
-                  ),
-                ],
-                rows: List<DataRow>.generate(
-                  30,
-                  (index) => DataRow(
-                    cells: <DataCell>[
-                      DataCell(Text('${index + 1}')), // 'Seconds' column
-                      DataCell(
-                          Text('${index + 1} mmHg')), // 'Blood Pressure' column
-                      DataCell(Text('${index + 2} BPM')), // 'BPM' column
-                      DataCell(
-                          Text('${index + 3} L/min')), // 'Flow Rate' column
-                      DataCell(Text('${index + 4} W')), // 'Power Use' column
-                    ],
+                  ],
+                  rows: List<DataRow>.generate(
+                    30,
+                    (index) => DataRow(
+                      cells: <DataCell>[
+                        DataCell(Text('${index + 1}')), // 'Seconds' column
+                        DataCell(Text(
+                            '${index + 1} mmHg')), // 'Blood Pressure' column
+                        DataCell(Text('${index + 2} BPM')), // 'BPM' column
+                        DataCell(
+                            Text('${index + 3} L/min')), // 'Flow Rate' column
+                        DataCell(Text('${index + 4} W')), // 'Power Use' column
+                      ],
+                    ),
                   ),
                 ),
               ),
