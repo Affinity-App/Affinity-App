@@ -19,9 +19,6 @@ class _RPMpageState extends State<RPMpage> {
   final List<String> sessionNames = [
     "session 03-28-24 12:04",
     "session 03-28-24 12:13",
-    "session 03-28-24 12:16",
-    "session 03-28-24 12:17",
-    "session 03-28-24 12:21"
   ];
   String _selectedOption = 'RPM Data';
 

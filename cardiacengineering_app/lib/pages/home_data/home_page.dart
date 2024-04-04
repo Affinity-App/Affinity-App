@@ -7,7 +7,6 @@ import 'rpm_page.dart';
 import 'psi_page.dart';
 import 'battery_page.dart';
 import 'gpm_page.dart';
-import 'record_now_page.dart';
 import '../../components/background_gradient_container.dart';
 import '../../pages/dev_settings/settings_page.dart';
 

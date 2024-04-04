@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../../components/background_gradient_container.dart';
+import '../../services/firebase_data.dart';
 
 class lineChart extends StatelessWidget {
   final darkBlueColor = const Color.fromARGB(255, 29, 35, 53);
@@ -60,9 +61,9 @@ class _LineChartSample2State extends State<LineChartSample2> {
   }
 
   Future<void> fetchData() async {
-    final data = await fetchDataFromFirebase(); // Call your Firebase fetching method
+    final data = await fetchDataFromFirebaseOld(); // Call your Firebase fetching method
     setState(() {
-      chartData = Future.value(data);
+      chartData = convertDataToFlSpots();
     });
   }
 
@@ -129,17 +130,17 @@ class _LineChartSample2State extends State<LineChartSample2> {
     Widget text;
 
     switch (value.toInt()) {
-      case 15:
-        text = const Text('15', style: style);
+      case 0:
+        text = const Text('0', style: style);
+        break;
+      case 10:
+        text = const Text('10', style: style);
+        break;
+      case 20:
+        text = const Text('20', style: style);
         break;
       case 30:
         text = const Text('30', style: style);
-        break;
-      case 45:
-        text = const Text('45', style: style);
-        break;
-      case 60:
-        text = const Text('60', style: style);
       default:
         text = const Text('', style: style);
         break;
@@ -237,7 +238,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
         border: Border.all(color: const Color.fromARGB(255, 77, 55, 73)), // chart border outline color
       ),
       minX: 0,
-      maxX: 60,
+      maxX: 30,
       minY: 0,
       maxY: 100,
       lineBarsData: [
@@ -364,7 +365,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
   }
 }
 
-Future<List<FlSpot>> fetchDataFromFirebase() async {
+Future<List<FlSpot>> fetchDataFromFirebaseOld() async {
   final collectionRef = FirebaseFirestore.instance.collection('data_1'); // collection name
   final querySnapshot = await collectionRef.get(); // getting all documents from the collection
 
@@ -381,4 +382,21 @@ Future<List<FlSpot>> fetchDataFromFirebase() async {
   }).toList();
 
   return flSpots;
+}
+
+Future<List<FlSpot>> convertDataToFlSpots() async {
+  List<FlSpot> data = [];
+  List<String> xValues = await FirebaseDataFetcher().fetchXValues(0);
+  List<String> yValues = await FirebaseDataFetcher().fetchYValues(0);
+
+  for (int i = 0; i < xValues.length; i++) {
+    // Parse x and y values from strings (assuming they are numerical)
+    double x = double.parse(xValues[i]);
+    double y = double.parse(yValues[i]);
+
+    // Create a new FlSpot instance with parsed values
+    data.add(FlSpot(x, y));
+  }
+  print('returning data');
+  return data;
 }
