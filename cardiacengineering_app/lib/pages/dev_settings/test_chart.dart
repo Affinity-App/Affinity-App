@@ -47,8 +47,8 @@ class LineChartSample2 extends StatefulWidget {
 
 class _LineChartSample2State extends State<LineChartSample2> {
   List<Color> gradientColors = [
-    const Color(0xFFA7C2F7),
-    const Color.fromARGB(255, 167, 247, 190)
+    Colors.red[400]!,
+    Colors.red[200]!,
   ];
   bool showAvg = false;
   Future<List<FlSpot>>? chartData; // Future to hold fetched data
