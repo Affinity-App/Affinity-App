@@ -7,7 +7,7 @@ import '../home_data/home_page.dart';
 import '../../components/background_gradient_container.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -17,7 +17,12 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  bool _isLoading = false; // Added _isLoading variable
+
   Future<void> _signInWithEmailAndPassword() async {
+    setState(() {
+      _isLoading = true;
+    });
     try {
       final String email = _emailController.text;
       final String password = _passwordController.text;
@@ -41,6 +46,10 @@ class _LoginPageState extends State<LoginPage> {
           backgroundColor: Colors.red,
         ),
       );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -87,7 +96,8 @@ class _LoginPageState extends State<LoginPage> {
                   controller: _emailController,
                   decoration: const InputDecoration(
                     labelText: 'Email',
-                    labelStyle: TextStyle(color: Color.fromARGB(255, 70, 163, 205)),
+                    labelStyle:
+                        TextStyle(color: Color.fromARGB(255, 70, 163, 205)),
                     border: InputBorder.none,
                   ),
                 ),
@@ -103,62 +113,30 @@ class _LoginPageState extends State<LoginPage> {
                   controller: _passwordController,
                   decoration: const InputDecoration(
                     labelText: 'Password',
-                    labelStyle: TextStyle(color: Color.fromARGB(255, 70, 163, 205)), // Set text color to blue
+                    labelStyle: TextStyle(
+                        color: Color.fromARGB(
+                            255, 70, 163, 205)), // Set text color to blue
                     border: InputBorder.none,
                   ),
                   obscureText: true,
                 ),
               ),
               const SizedBox(height: 20.0),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     SquareTile(
-              //       onTap: () => AuthService().signInWithGoogle(),
-              //       imagePath: 'assets/images/google.png',
-              //     ),
-              //   ],
-              // ),
-              const SizedBox(height: 20.0),
-              Row (
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox (
-                    width: 140.0,
-                    child: ElevatedButton(
-                onPressed: _signInWithEmailAndPassword,
-                style: ButtonStyle(
-                  // backgroundColor
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(247, 169, 186, 1.0)), // set background color to pink
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.black), // Set text color to white
-                // Add the animation controller
-                animationDuration: const Duration(milliseconds: 200),
-                // Shrink on press
-                overlayColor: MaterialStateProperty.resolveWith<Color>(
-                  (states) {
-                    if (states.contains(MaterialState.pressed)) {
-                      return Colors.white10; // Shrink and visually indicate press
-                    }
-                    return Colors.transparent; // Use default overlay color
-                  },
+              ElevatedButton(
+                onPressed: _isLoading ? null : _signInWithEmailAndPassword,
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.black,
+                  backgroundColor: const Color.fromRGBO(
+                      247, 169, 186, 1.0), // Set text color to white
                 ),
-                // Scale the button down slightly on press
-                padding: MaterialStateProperty.resolveWith<EdgeInsets>(
-                  (states) {
-                    if (states.contains(MaterialState.pressed)) {
-                      return const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 8.0);
-                    }
-                    return const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 12.0);
-                  },
-                ),
+                child: _isLoading
+                    ? CircularProgressIndicator()
+                    : const Text('Login'),
               ),
-                child: const Text('Login'),
-              ),
-                  ),
               const SizedBox(height: 10.0),
-              const SizedBox(width: 10.0), // Add some space between the login and create account buttons
+              const SizedBox(
+                  width:
+                      10.0), // Add some space between the login and create account buttons
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -167,40 +145,15 @@ class _LoginPageState extends State<LoginPage> {
                         builder: (context) => const CreateAccountPage()),
                   );
                 },
-                style: ButtonStyle(
-                  // backgroundColor
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(247, 169, 186, 1.0)), // set background color to pink
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.black), // Set text color to white
-                // Add the animation controller
-                animationDuration: const Duration(milliseconds: 200),
-                // Shrink on press
-                overlayColor: MaterialStateProperty.resolveWith<Color>(
-                  (states) {
-                    if (states.contains(MaterialState.pressed)) {
-                      return Colors.white10; // Shrink and visually indicate press
-                    }
-                    return Colors.transparent; // Use default overlay color
-                  },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.black,
+                  backgroundColor: const Color.fromRGBO(
+                      247, 169, 186, 1.0), // Set text color to white
                 ),
-                // Scale the button down slightly on press
-                padding: MaterialStateProperty.resolveWith<EdgeInsets>(
-                  (states) {
-                    if (states.contains(MaterialState.pressed)) {
-                      return const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 8.0);
-                    }
-                    return const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 12.0);
-                  },
-                ),
-              ),
                 child: const Text('Create Account'),
               ),
               // Button for navigating to the reset password page
-              
-            ],
-          ),
-            TextButton(
+              TextButton(
                 onPressed: _navigateToResetPasswordPage,
                 child: const Text('Forgot Password?'),
               ),
