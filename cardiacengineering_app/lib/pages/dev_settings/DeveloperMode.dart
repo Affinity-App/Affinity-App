@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+import 'package:open_file/open_file.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 import '../../../components/background_gradient_container.dart';
 
 class DeveloperMode extends StatefulWidget {
@@ -9,7 +14,6 @@ class DeveloperMode extends StatefulWidget {
 }
 
 class _DeveloperModeState extends State<DeveloperMode> {
-  String dropdownValue = ''; // Corrected variable name
   late int selectedOption = 0;
   final List<String> options = [
     'Session 1',
@@ -23,6 +27,61 @@ class _DeveloperModeState extends State<DeveloperMode> {
     setState(() {
       selectedOption = index;
     });
+  }
+
+  Future<void> generatePDF() async {
+    try {
+      final pdf = pw.Document();
+      // Generate PDF content
+      pdf.addPage(
+        pw.Page(
+          build: (context) => pw.TableHelper.fromTextArray(
+            data: <List<String>>[
+              <String>[
+                'Seconds',
+                'Blood Pressure',
+                'BPM',
+                'Flow Rate',
+                'Power Use'
+              ],
+              ...List.generate(
+                30,
+                (index) => <String>[
+                  '${index + 1}',
+                  '${index + 1} mmHg',
+                  '${index + 2} BPM',
+                  '${index + 3} L/min',
+                  '${index + 4} W',
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+
+      // Save the PDF file
+      final downloadsDirectory = await getDownloadsDirectory();
+      if (downloadsDirectory != null) {
+        final filePath = '${downloadsDirectory.path}/HeartData.pdf';
+        final file = File(filePath);
+        await file.writeAsBytes(await pdf.save());
+
+        // Open the PDF file (supported only on platforms with file opening capability)
+        if (Platform.isAndroid ||
+            Platform.isIOS ||
+            Platform.isMacOS ||
+            Platform.isWindows) {
+          OpenFile.open(filePath);
+        } else {
+          print('File saved to: $filePath');
+        }
+      } else {
+        throw 'Downloads directory is null.';
+      }
+    } catch (e) {
+      print('Error generating PDF: $e');
+      // Handle the error
+    }
   }
 
   @override
@@ -39,6 +98,12 @@ class _DeveloperModeState extends State<DeveloperMode> {
             fontSize: 30.0,
           ),
         ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop(); // Navigate back when arrow is pressed
+          },
+        ),
       ),
       body: BackgroundGradientContainer(
         child: SingleChildScrollView(
@@ -53,25 +118,34 @@ class _DeveloperModeState extends State<DeveloperMode> {
                 height: 0.0, // Adjusted height
               ),
               const SizedBox(height: 100.0), // Spacing before the DataTable
-              DropdownButton<int>(
-                value: selectedOption,
-                onChanged: (int? newIndex) {
-                  if (newIndex != null) {
-                    changeSession(newIndex);
-                  }
-                },
-                dropdownColor:
-                    Colors.white, // Set dropdown box background to transparent
-                items: List.generate(options.length, (index) {
-                  return DropdownMenuItem<int>(
-                    value: index,
-                    child: Text(
-                      options[index],
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold), // Make text bold
-                    ),
-                  );
-                }),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  DropdownButton<int>(
+                    value: selectedOption,
+                    onChanged: (int? newIndex) {
+                      if (newIndex != null) {
+                        changeSession(newIndex);
+                      }
+                    },
+                    dropdownColor: Colors
+                        .white, // Set dropdown box background to transparent
+                    items: List.generate(options.length, (index) {
+                      return DropdownMenuItem<int>(
+                        value: index,
+                        child: Text(
+                          options[index],
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold), // Make text bold
+                        ),
+                      );
+                    }),
+                  ),
+                  ElevatedButton(
+                    onPressed: generatePDF,
+                    child: Text('Generate PDF'),
+                  ),
+                ],
               ),
               DataTable(
                 columnSpacing: 16.0,
