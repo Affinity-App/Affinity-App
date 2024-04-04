@@ -1,9 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:jr_design_app/pages/dev_settings/test_chart.dart';
+import 'package:jr_design_app/pages/home_data/gpm_page.dart';
+import 'package:jr_design_app/pages/home_data/home_page.dart';
+import 'package:jr_design_app/pages/home_data/psi_page.dart';
+import 'package:jr_design_app/pages/home_data/rpm_page.dart';
 import '../../components/background_gradient_container.dart';
 
-class BatteryPage extends StatelessWidget {
-  const BatteryPage({super.key});
+class Batterypage extends StatefulWidget {
+  const Batterypage({super.key});
+
+  @override
+  State<Batterypage> createState() => _BatterypageState();
+}
+
+class _BatterypageState extends State<Batterypage> {
+  // Initially selected option
+  String _selectedOption = 'Power Consumption';
+
 
   @override
   Widget build(BuildContext context) {
@@ -13,16 +26,59 @@ class BatteryPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent, // Make app bar transparent
         elevation: 0, // Remove app bar elevation
-        title: const Row(
-          children: [
-            Text(
-              'Power Consumption',
-              style: TextStyle(
-                fontSize: 30.0,
-              ),
-// Add some space between the logo and text
-            ),
-          ],
+        title: DropdownButton<String>(
+          value: _selectedOption,
+          icon: Text('\u25BC', style: TextStyle(color: Colors.grey[800], fontSize: 25.0)),
+          underline: Container(height: 0),
+          onChanged: (String? newValue) {
+            setState(() {
+              _selectedOption = newValue!;
+            });
+            // Navigate based on the selected option
+            switch (newValue) {
+              case 'RPM Data':
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RPMpage()),
+                );
+                break;
+              case 'Flow Rate GPM':
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PSIpage()),
+                );
+                break;
+              case 'Flow Rate GPM':
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => GPMpage()),
+                );
+                break;
+              // Add more cases for other options as needed
+              // Default case for 'Blood Pressure' is to do nothing
+              default:
+                break;
+            }
+          },
+          items: <String>['Blood Pressure', 'RPM Data', 'Flow Rate GPM', 'Power Consumption']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value,
+                  style: const TextStyle(color: Colors.black, fontSize: 22.0)),
+            );
+          }).toList(),
+          dropdownColor: Colors.white,
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          },
         ),
       ),
       body: BackgroundGradientContainer(
@@ -44,8 +100,11 @@ class BatteryPage extends StatelessWidget {
             const SizedBox(height: 30.0),
             ElevatedButton(
               onPressed: () {
-                // Navigate back to the previous page (Home page)
-                Navigator.pop(context);
+                // Navigate back to the Home page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                );
               },
               style: ButtonStyle(
                   // backgroundColor
