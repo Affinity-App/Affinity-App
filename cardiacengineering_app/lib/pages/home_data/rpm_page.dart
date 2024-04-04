@@ -156,13 +156,6 @@ class _RPMpageState extends State<RPMpage> {
                 ),
               ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                // Navigate back to the previous page (Home page)
-                Navigator.pop(context);
-              },
-              child: const Text('Back to Home'),
-            ),
           ],
         ),
       ),
