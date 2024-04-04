@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:jr_design_app/pages/home_data/record_now_page.dart';
 
 import 'pages/home_data/home_page.dart';
 import 'pages/login_auth/login_page.dart';
@@ -76,7 +75,6 @@ class MyApp extends StatelessWidget {
         '/PSIpage': (context) => const PSIpage(),
         '/BatteryPage': (context) => const Batterypage(),
         '/GPMpage': (context) => const GPMpage(),
-        '/RecordNow': (context) => const RecordNow(),
         '/DeveloperMode': (context) => const DeveloperMode(),
         '/home_page': (context) => const HomePage(),
       },
