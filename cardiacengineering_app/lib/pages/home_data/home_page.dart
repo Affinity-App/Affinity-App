@@ -7,7 +7,6 @@ import 'rpm_page.dart';
 import 'psi_page.dart';
 import 'battery_page.dart';
 import 'gpm_page.dart';
-import 'record_now_page.dart';
 import '../../components/background_gradient_container.dart';
 import '../../pages/dev_settings/settings_page.dart';
 
@@ -188,7 +187,7 @@ class _HomePageState extends State<HomePage> {
               ),
               DataBox(
                 label: 'Heart Rate',
-                value: bpm + ' BPM',
+                value: bpm + ' RPM',
                 iconPath: 'assets/images/Heart.png',
                 onPressed: (context) {
                   Navigator.pushNamed(context, '/RPMpage');

@@ -7,7 +7,7 @@ import 'package:jr_design_app/pages/home_data/rpm_page.dart';
 import '../../components/background_gradient_container.dart';
 
 class GPMpage extends StatefulWidget {
-  const GPMpage({super.key});
+  const GPMpage({Key? key}) : super(key: key);
 
   @override
   State<GPMpage> createState() => _GPMpageState();
@@ -27,7 +27,8 @@ class _GPMpageState extends State<GPMpage> {
         elevation: 0, // Remove app bar elevation
         title: DropdownButton<String>(
           value: _selectedOption,
-          icon: Text('\u25BC', style: TextStyle(color: Colors.grey[800], fontSize: 25.0)),
+          icon: Text('\u25BC',
+              style: TextStyle(color: Colors.grey[800], fontSize: 25.0)),
           underline: Container(height: 0),
           onChanged: (String? newValue) {
             setState(() {
@@ -59,8 +60,12 @@ class _GPMpageState extends State<GPMpage> {
                 break;
             }
           },
-          items: <String>['Blood Pressure', 'RPM Data', 'Flow Rate GPM', 'Power Consumption']
-              .map<DropdownMenuItem<String>>((String value) {
+          items: <String>[
+            'Blood Pressure',
+            'RPM Data',
+            'Flow Rate GPM',
+            'Power Consumption'
+          ].map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(value,
@@ -95,44 +100,6 @@ class _GPMpageState extends State<GPMpage> {
                 color: Colors.white,
               ),
               child: const LineChartSample2(),
-            ),
-            const SizedBox(height: 30.0),
-            ElevatedButton(
-              onPressed: () {
-                // Navigate back to the Home page
-                Navigator.pop(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomePage()),
-                );
-              },
-              style: ButtonStyle(
-                  // backgroundColor
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(247, 169, 186, 1.0)), // set background color to pink
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.black), // Set text color to white
-                // Add the animation controller
-                animationDuration: const Duration(milliseconds: 200),
-                // Shrink on press
-                overlayColor: MaterialStateProperty.resolveWith<Color>(
-                  (states) {
-                    if (states.contains(MaterialState.pressed)) {
-                      return Colors.white10; // Shrink and visually indicate press
-                    }
-                    return Colors.transparent; // Use default overlay color
-                  },
-                ),
-                // Scale the button down slightly on press
-                padding: MaterialStateProperty.resolveWith<EdgeInsets>(
-                  (states) {
-                    if (states.contains(MaterialState.pressed)) {
-                      return const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 8.0);
-                    }
-                    return const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 12.0);
-                  },
-                ),
-              ),
-              child: const Text('Back to Home'),
             ),
             const SizedBox(height: 30.0),
           ],
