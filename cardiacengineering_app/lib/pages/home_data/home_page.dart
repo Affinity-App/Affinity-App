@@ -208,19 +208,6 @@ class _HomePageState extends State<HomePage> {
                   Navigator.pushNamed(context, '/BatteryPage');
                 },
               ),
-              _buildDataBox(
-                context,
-                label: 'Record Now',
-                value: '',
-                iconPath: 'assets/images/logo.png',
-                iconSize: 50.0,
-                labelFontSize: 20.0,
-                valueFontSize: 0,
-                borderRadius: 20.0,
-                onPressed: (context) {
-                  Navigator.pushNamed(context, '/RecordNow');
-                },
-              ),
             ],
           ),
         ),
