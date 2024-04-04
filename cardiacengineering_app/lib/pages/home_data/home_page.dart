@@ -133,6 +133,8 @@ class _HomePageState extends State<HomePage> {
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        //automatically imply leading = false to remove the back button on the app bar
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Row(
