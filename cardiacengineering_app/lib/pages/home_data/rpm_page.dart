@@ -133,18 +133,16 @@ class _RPMpageState extends State<RPMpage> {
               ),
             ),
             const SizedBox(height: 16.0), // Added spacing below the dropdown
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(18.0),
-                  color: Colors.white,
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(18.0),
+                border: Border.all(
+                  width: 2.0,
+                  color: Colors.black,
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: const LineChartSample2(), // Added padding to the chart
-                ),
+                color: Colors.white,
               ),
+              child: const LineChartSample2(),
             ),
             Expanded(
               child: Padding(
