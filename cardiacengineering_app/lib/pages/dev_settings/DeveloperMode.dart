@@ -6,6 +6,11 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import '../../../components/background_gradient_container.dart';
 
+import 'package:open_file/open_file.dart';
+import 'package:csv/csv.dart';
+import 'dart:convert';
+import 'package:share/share.dart'; // Import the share package
+
 class DeveloperMode extends StatefulWidget {
   const DeveloperMode({Key? key}) : super(key: key);
 
@@ -84,6 +89,41 @@ class _DeveloperModeState extends State<DeveloperMode> {
     }
   }
 
+  Future<void> generateCSV() async {
+    try {
+      // Prepare the data for CSV
+      final List<List<String>> rows = <List<String>>[
+        ['Seconds', 'Blood Pressure', 'BPM', 'Flow Rate', 'Power Use'],
+        ...List.generate(
+          30,
+          (index) => [
+            '${index + 1}',
+            '${index + 1} mmHg',
+            '${index + 2} BPM',
+            '${index + 3} L/min',
+            '${index + 4} W',
+          ],
+        ),
+      ];
+
+      // Convert data to CSV string
+      String csv = const ListToCsvConverter().convert(rows);
+
+      // Save the CSV file
+      final directory = await getApplicationDocumentsDirectory();
+      final filePath = '${directory.path}/HeartData.csv';
+      final file = File(filePath);
+      await file.writeAsString(csv);
+
+      print('CSV file saved to: $filePath'); // Confirm file path in logs
+
+      // Share the file
+      Share.shareFiles([filePath], text: 'Your CSV file is ready!');
+    } catch (e) {
+      print('Error generating CSV: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -145,9 +185,14 @@ class _DeveloperModeState extends State<DeveloperMode> {
                       );
                     }),
                   ),
+                  const SizedBox(width: 10.0), // Spacing before the DataTable
                   ElevatedButton(
                     onPressed: generatePDF,
                     child: Text('Generate PDF'),
+                  ),
+                  ElevatedButton(
+                    onPressed: generateCSV,
+                    child: Text('Generate CSV'),
                   ),
                 ],
               ),

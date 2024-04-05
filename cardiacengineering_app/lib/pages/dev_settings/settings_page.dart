@@ -1,15 +1,49 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:jr_design_app/pages/dev_settings/DeveloperMode.dart';
 import 'package:jr_design_app/pages/dev_settings/heart_data_page.dart';
-import 'package:provider/provider.dart';
-import '../../components/ThemeProvider.dart';
+import 'package:jr_design_app/pages/home_data/home_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../login_auth/login_page.dart';
-
 import '../../components/background_gradient_container.dart';
 
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({Key? key});
+import 'package:csv/csv.dart';
+import 'dart:convert';
+
+class SettingsPage extends StatefulWidget {
+  const SettingsPage({super.key});
+
+  @override
+  _SettingsPageState createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  XFile? _profileImage;
+
+  Future<void> _pickImage() async {
+    final ImagePicker _picker = ImagePicker();
+    // Check for gallery permission
+    var permissionStatus = await Permission.photos.status;
+    if (permissionStatus.isGranted ||
+        await Permission.photos.request().isGranted) {
+      // Pick an image from the gallery
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        setState(() {
+          _profileImage = image;
+        });
+      }
+    } else {
+      // Handle the permission denied case
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Permission to access gallery denied'),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +60,27 @@ class SettingsPage extends StatelessWidget {
           ),
         ),
         centerTitle: true, // Center align the title
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          },
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 30.0),
+            child: IconButton(
+              icon: const Icon(Icons.account_circle),
+              iconSize: 50.0,
+              onPressed: () {
+                _pickImage();
+              },
+            ),
+          ),
+        ],
       ),
       body: BackgroundGradientContainer(
         child: Column(
@@ -33,11 +88,12 @@ class SettingsPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/logo.png', // Corrected asset path
               width: double.infinity,
+              'assets/images/logo.png',
               height: 100.0,
             ),
             const SizedBox(height: 100.0),
+            const SizedBox(height: 30.0),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -111,7 +167,7 @@ class SettingsPage extends StatelessWidget {
       // Navigate back to the login page
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoginPage()), // Removed const
+        MaterialPageRoute(builder: (context) => const LoginPage()),
       );
     } catch (e) {
       print('Error logging out: $e');
