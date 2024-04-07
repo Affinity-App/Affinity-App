@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CreateAccountPage extends StatefulWidget {
-  const CreateAccountPage({super.key});
+  const CreateAccountPage({Key? key});
 
   @override
   _CreateAccountPageState createState() => _CreateAccountPageState();
@@ -17,6 +17,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
 
   bool _passwordVisible = false;
   bool _showPasswordRequirements = false;
+
+  bool _isLoading = false; // Added _isLoading variable
 
   @override
   Widget build(BuildContext context) {
@@ -113,56 +115,15 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 ),
               const SizedBox(height: 20.0),
               ElevatedButton(
-                onPressed: () async {
-                  String email = _emailController.text;
-                  String password = _passwordController.text;
-                  if (_isEmailValid(email) && _isPasswordValid(password)) {
-                    // Email and password are valid, proceed with account creation
-                    try {
-                      // Create user in Firebase Authentication
-                      UserCredential userCredential = await FirebaseAuth
-                          .instance
-                          .createUserWithEmailAndPassword(
-                        email: email,
-                        password: password,
-                      );
-
-                      // Store user data in Firestore
-                      await FirebaseFirestore.instance
-                          .collection('users')
-                          .doc(userCredential.user!.uid)
-                          .set({
-                        'email': email,
-                        // Add more user data if needed
-                      });
-
-                      // Account creation successful, navigate to home page
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const HomePage()),
-                      );
-                    } catch (e) {
-                      // Handle errors during account creation
-                      print('Error creating account: $e');
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Error creating account: $e'),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                    }
-                  } else {
-                    // Show error message for invalid email or password
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Invalid email or password'),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                  }
-                },
-                child: const Text('Create Account'),
+                onPressed: _isLoading ? null : _createAccount,
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.black,
+                  backgroundColor: const Color.fromRGBO(
+                      247, 169, 186, 1.0), // Set text color to white
+                ),
+                child: _isLoading
+                    ? CircularProgressIndicator()
+                    : const Text('Create Account'),
               ),
             ],
           ),
@@ -194,5 +155,63 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     return requirements.isNotEmpty
         ? 'Password must contain:\n$requirements'
         : '';
+  }
+
+  void _createAccount() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String email = _emailController.text;
+    String password = _passwordController.text;
+    if (_isEmailValid(email) && _isPasswordValid(password)) {
+      // Email and password are valid, proceed with account creation
+      try {
+        // Create user in Firebase Authentication
+        UserCredential userCredential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+
+        // Store user data in Firestore
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCredential.user!.uid)
+            .set({
+          'email': email,
+          // Add more user data if needed
+        });
+
+        // Account creation successful, navigate to home page
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+      } catch (e) {
+        // Handle errors during account creation
+        print('Error creating account: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error creating account: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } else {
+      // Show error message for invalid email or password
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Invalid email or password'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 }

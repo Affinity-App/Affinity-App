@@ -1,33 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:jr_design_app/components/background_gradient_container.dart';
 import 'package:jr_design_app/pages/dev_settings/test_chart.dart';
 import 'package:jr_design_app/pages/home_data/battery_page.dart';
+import 'package:jr_design_app/pages/home_data/gpm_page.dart';
 import 'package:jr_design_app/pages/home_data/home_page.dart';
 import 'package:jr_design_app/pages/home_data/psi_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:jr_design_app/pages/home_data/rpm_page.dart';
-import '../../components/background_gradient_container.dart';
 
 class GPMpage extends StatefulWidget {
-  const GPMpage({super.key});
+  const GPMpage({Key? key}) : super(key: key);
 
   @override
   State<GPMpage> createState() => _GPMpageState();
 }
 
 class _GPMpageState extends State<GPMpage> {
-  // Initially selected option
+  late int selectedSessionIndex = 0;
+  final List<String> sessionNames = [
+    "session 03-28-24 12:50",
+    "session 03-28-24 13:01",
+    "session 03-28-24 13:05",
+    "session 03-28-24 13:07",
+    "session 03-28-24 13:09"
+  ];
   String _selectedOption = 'Flow Rate GPM';
+
+  void changeSession(int index) {
+    setState(() {
+      selectedSessionIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false, // Prevents bottom overflow
-      extendBodyBehindAppBar: true, // Extend the body behind the app bar
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent, // Make app bar transparent
         elevation: 0, // Remove app bar elevation
         title: DropdownButton<String>(
           value: _selectedOption,
-          icon: Text('\u25BC', style: TextStyle(color: Colors.grey[800], fontSize: 25.0)),
+          icon: Text('\u25BC',
+              style: TextStyle(color: Colors.grey[800], fontSize: 25.0)),
           underline: Container(height: 0),
           onChanged: (String? newValue) {
             setState(() {
@@ -59,8 +75,12 @@ class _GPMpageState extends State<GPMpage> {
                 break;
             }
           },
-          items: <String>['Blood Pressure', 'RPM Data', 'Flow Rate GPM', 'Power Consumption']
-              .map<DropdownMenuItem<String>>((String value) {
+          items: <String>[
+            'Blood Pressure',
+            'RPM Data',
+            'Flow Rate GPM',
+            'Power Consumption'
+          ].map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(value,
@@ -85,6 +105,38 @@ class _GPMpageState extends State<GPMpage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(height: 100.0), // Added space below the title
+            Container(
+              decoration: BoxDecoration(
+                // borderRadius: BorderRadius.circular(10.0),
+                // border: Border.all(
+                //     color: Colors.black, width: 5.0), // Set border thickness
+                color: Colors
+                    .transparent, // Set the container background to transparent
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: DropdownButton<int>(
+                value: selectedSessionIndex,
+                onChanged: (int? newIndex) {
+                  if (newIndex != null) {
+                    changeSession(newIndex);
+                  }
+                },
+                dropdownColor:
+                    Colors.white, // Set dropdown box background to transparent
+                items: List.generate(sessionNames.length, (index) {
+                  return DropdownMenuItem<int>(
+                    value: index,
+                    child: Text(
+                      sessionNames[index],
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold), // Make text bold
+                    ),
+                  );
+                }),
+              ),
+            ),
+            const SizedBox(height: 16.0), // Added spacing below the dropdown
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18.0),
@@ -96,45 +148,76 @@ class _GPMpageState extends State<GPMpage> {
               ),
               child: const LineChartSample2(),
             ),
-            const SizedBox(height: 30.0),
-            ElevatedButton(
-              onPressed: () {
-                // Navigate back to the Home page
-                Navigator.pop(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomePage()),
-                );
-              },
-              style: ButtonStyle(
-                  // backgroundColor
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(247, 169, 186, 1.0)), // set background color to pink
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.black), // Set text color to white
-                // Add the animation controller
-                animationDuration: const Duration(milliseconds: 200),
-                // Shrink on press
-                overlayColor: MaterialStateProperty.resolveWith<Color>(
-                  (states) {
-                    if (states.contains(MaterialState.pressed)) {
-                      return Colors.white10; // Shrink and visually indicate press
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: StreamBuilder<DocumentSnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('large_heart_data')
+                      .doc('flow rate')
+                      .collection(sessionNames[selectedSessionIndex])
+                      .doc('data')
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<DocumentSnapshot> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
                     }
-                    return Colors.transparent; // Use default overlay color
-                  },
-                ),
-                // Scale the button down slightly on press
-                padding: MaterialStateProperty.resolveWith<EdgeInsets>(
-                  (states) {
-                    if (states.contains(MaterialState.pressed)) {
-                      return const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 8.0);
+                    if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
                     }
-                    return const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 12.0);
+                    final Map<String, dynamic> data =
+                        snapshot.data!.data() as Map<String, dynamic>;
+                    final List<dynamic> dataArray =
+                        data['data'] as List<dynamic>;
+
+                    // Prepare lists for Y and X values
+                    List<String> yValues = [];
+                    List<String> xValues = [];
+                    dataArray.forEach((map) {
+                      yValues.add(map['y_value'] as String);
+                      xValues.add(map['x_value'] as String);
+                    });
+
+                    return SingleChildScrollView(
+                      child: Container(
+                        padding: EdgeInsets.all(
+                            8.0), // Adjust the padding to include the border width
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Colors.white,
+                              width: 2.0), // Adjust the border thickness
+                          borderRadius:
+                              BorderRadius.circular(10.0), // Set border radius
+                        ),
+                        child: DataTable(
+                          headingRowColor: MaterialStateColor.resolveWith(
+                              (states) => Colors
+                                  .white), // Set the background color of the header row
+                          headingTextStyle: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight
+                                  .bold), // Set the text style of the header row
+                          columns: [
+                            DataColumn(label: Text('Time(s)')),
+                            DataColumn(label: Text('Value (L/min)')),
+                          ],
+                          rows: List<DataRow>.generate(
+                            yValues.length,
+                            (int index) => DataRow(
+                              cells: [
+                                DataCell(Text(xValues[index])),
+                                DataCell(Text(yValues[index])),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
                   },
                 ),
               ),
-              child: const Text('Back to Home'),
             ),
-            const SizedBox(height: 30.0),
           ],
         ),
       ),

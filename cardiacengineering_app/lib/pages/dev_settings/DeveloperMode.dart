@@ -6,6 +6,11 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import '../../../components/background_gradient_container.dart';
 
+import 'package:open_file/open_file.dart';
+import 'package:csv/csv.dart';
+import 'dart:convert';
+import 'package:share/share.dart'; // Import the share package
+
 class DeveloperMode extends StatefulWidget {
   const DeveloperMode({Key? key}) : super(key: key);
 
@@ -84,6 +89,41 @@ class _DeveloperModeState extends State<DeveloperMode> {
     }
   }
 
+  Future<void> generateCSV() async {
+    try {
+      // Prepare the data for CSV
+      final List<List<String>> rows = <List<String>>[
+        ['Seconds', 'Blood Pressure', 'BPM', 'Flow Rate', 'Power Use'],
+        ...List.generate(
+          30,
+          (index) => [
+            '${index + 1}',
+            '${index + 1} mmHg',
+            '${index + 2} BPM',
+            '${index + 3} L/min',
+            '${index + 4} W',
+          ],
+        ),
+      ];
+
+      // Convert data to CSV string
+      String csv = const ListToCsvConverter().convert(rows);
+
+      // Save the CSV file
+      final directory = await getApplicationDocumentsDirectory();
+      final filePath = '${directory.path}/HeartData.csv';
+      final file = File(filePath);
+      await file.writeAsString(csv);
+
+      print('CSV file saved to: $filePath'); // Confirm file path in logs
+
+      // Share the file
+      Share.shareFiles([filePath], text: 'Your CSV file is ready!');
+    } catch (e) {
+      print('Error generating CSV: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,10 +132,14 @@ class _DeveloperModeState extends State<DeveloperMode> {
       appBar: AppBar(
         backgroundColor: Colors.transparent, // Make app bar transparent
         elevation: 0, // Remove app bar elevation
-        title: const Text(
-          'Developer Mode',
-          style: TextStyle(
-            fontSize: 30.0,
+        title: Center(
+          // Center the title
+          child: Text(
+            'Developer Mode',
+            style: TextStyle(
+              fontSize: 30.0,
+            ),
+            textAlign: TextAlign.center, // Center the text horizontally
           ),
         ),
         leading: IconButton(
@@ -141,6 +185,7 @@ class _DeveloperModeState extends State<DeveloperMode> {
                       );
                     }),
                   ),
+                  const SizedBox(width: 10.0), // Spacing before the DataTable
                   ElevatedButton(
                     onPressed: generatePDF,
                     style: ButtonStyle(
@@ -176,54 +221,63 @@ class _DeveloperModeState extends State<DeveloperMode> {
               ),
                     child: Text('Generate PDF'),
                   ),
+                  const SizedBox(width: 10.0), // Spacing between buttons
+                  ElevatedButton(
+                    onPressed: generateCSV,
+                    child: Text('Generate CSV'),
+                  ),
                 ],
               ),
-              DataTable(
-                columnSpacing: 16.0,
-                columns: const <DataColumn>[
-                  DataColumn(
-                    label: Text(
-                      'Seconds',
-                      style: TextStyle(fontStyle: FontStyle.italic),
+              SingleChildScrollView(
+                // Wrap the DataTable in SingleChildScrollView
+                scrollDirection: Axis.horizontal,
+                child: DataTable(
+                  columnSpacing: 16.0,
+                  columns: const <DataColumn>[
+                    DataColumn(
+                      label: Text(
+                        'Seconds',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
                     ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'Blood Pressure',
-                      style: TextStyle(fontStyle: FontStyle.italic),
+                    DataColumn(
+                      label: Text(
+                        'Blood Pressure',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
                     ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'BPM',
-                      style: TextStyle(fontStyle: FontStyle.italic),
+                    DataColumn(
+                      label: Text(
+                        'BPM',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
                     ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'Flow Rate',
-                      style: TextStyle(fontStyle: FontStyle.italic),
+                    DataColumn(
+                      label: Text(
+                        'Flow Rate',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
                     ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'Power Use',
-                      style: TextStyle(fontStyle: FontStyle.italic),
+                    DataColumn(
+                      label: Text(
+                        'Power Use',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
                     ),
-                  ),
-                ],
-                rows: List<DataRow>.generate(
-                  30,
-                  (index) => DataRow(
-                    cells: <DataCell>[
-                      DataCell(Text('${index + 1}')), // 'Seconds' column
-                      DataCell(
-                          Text('${index + 1} mmHg')), // 'Blood Pressure' column
-                      DataCell(Text('${index + 2} BPM')), // 'BPM' column
-                      DataCell(
-                          Text('${index + 3} L/min')), // 'Flow Rate' column
-                      DataCell(Text('${index + 4} W')), // 'Power Use' column
-                    ],
+                  ],
+                  rows: List<DataRow>.generate(
+                    30,
+                    (index) => DataRow(
+                      cells: <DataCell>[
+                        DataCell(Text('${index + 1}')), // 'Seconds' column
+                        DataCell(Text(
+                            '${index + 1} mmHg')), // 'Blood Pressure' column
+                        DataCell(Text('${index + 2} BPM')), // 'BPM' column
+                        DataCell(
+                            Text('${index + 3} L/min')), // 'Flow Rate' column
+                        DataCell(Text('${index + 4} W')), // 'Power Use' column
+                      ],
+                    ),
                   ),
                 ),
               ),

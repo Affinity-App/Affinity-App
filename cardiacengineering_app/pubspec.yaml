@@ -49,6 +49,10 @@ dependencies:
   provider: ^6.1.2
   file_picker: ^8.0.0+1
   open_file: ^3.3.2
+  image_picker: ^1.0.7
+  permission_handler: ^11.3.1
+  csv: ^6.0.0
+  share: ^2.0.4
 
 dev_dependencies:
   flutter_test:

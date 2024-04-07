@@ -1,15 +1,49 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:jr_design_app/pages/dev_settings/DeveloperMode.dart';
 import 'package:jr_design_app/pages/dev_settings/heart_data_page.dart';
-import 'package:provider/provider.dart';
-import '../../components/ThemeProvider.dart';
+import 'package:jr_design_app/pages/home_data/home_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../login_auth/login_page.dart';
-
 import '../../components/background_gradient_container.dart';
 
-class SettingsPage extends StatelessWidget {
+import 'package:csv/csv.dart';
+import 'dart:convert';
+
+class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
+
+  @override
+  _SettingsPageState createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  XFile? _profileImage;
+
+  Future<void> _pickImage() async {
+    final ImagePicker _picker = ImagePicker();
+    // Check for gallery permission
+    var permissionStatus = await Permission.photos.status;
+    if (permissionStatus.isGranted ||
+        await Permission.photos.request().isGranted) {
+      // Pick an image from the gallery
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        setState(() {
+          _profileImage = image;
+        });
+      }
+    } else {
+      // Handle the permission denied case
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Permission to access gallery denied'),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,18 +53,34 @@ class SettingsPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent, // Make app bar transparent
         elevation: 0, // Remove app bar elevation
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Settings',
-              style: TextStyle(
-                fontSize: 30.0,
-              ),
-// Add some space between the logo and text
-            ),
-          ],
+        title: const Text(
+          'Settings',
+          style: TextStyle(
+            fontSize: 30.0,
+          ),
         ),
+        centerTitle: true, // Center align the title
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          },
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 30.0),
+            child: IconButton(
+              icon: const Icon(Icons.account_circle),
+              iconSize: 50.0,
+              onPressed: () {
+                _pickImage();
+              },
+            ),
+          ),
+        ],
       ),
       body: BackgroundGradientContainer(
         child: Column(
@@ -43,97 +93,35 @@ class SettingsPage extends StatelessWidget {
               height: 100.0,
             ),
             const SizedBox(height: 100.0),
-            // ElevatedButton(
-            //   onPressed: () {
-            //     // Access the ThemeProvider without passing a boolean value
-            //     final themeProvider =
-            //         Provider.of<ThemeProvider>(context, listen: false);
-            //     themeProvider.toggleTheme(); // No argument needed
-            //   },
-            //   child: Text('Toggle Theme'),
-            // ),
             const SizedBox(height: 30.0),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const HeartDataPage()),
+                      builder: (context) => HeartDataPage()), // Removed const
                 );
               },
               style: ButtonStyle(
-                // backgroundColor
                 backgroundColor: MaterialStateProperty.all<Color>(
-                    const Color.fromRGBO(
-                        247, 169, 186, 1.0)), // set background color to pink
-                foregroundColor: MaterialStateProperty.all<Color>(
-                    Colors.white), // Set text color to white
-                // Add the animation controller
-                animationDuration: const Duration(milliseconds: 200),
-                // Shrink on press
-                overlayColor: MaterialStateProperty.resolveWith<Color>(
-                  (states) {
-                    if (states.contains(MaterialState.pressed)) {
-                      return Colors
-                          .white10; // Shrink and visually indicate press
-                    }
-                    return Colors.transparent; // Use default overlay color
-                  },
-                ),
-                // Scale the button down slightly on press
-                padding: MaterialStateProperty.resolveWith<EdgeInsets>(
-                  (states) {
-                    if (states.contains(MaterialState.pressed)) {
-                      return const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 8.0);
-                    }
-                    return const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 12.0);
-                  },
-                ),
+                    const Color.fromRGBO(247, 169, 186, 1.0)),
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
               ),
               child: const Text('Heart ID'),
             ),
             const SizedBox(height: 30.0),
             ElevatedButton(
               onPressed: () {
-                // Navigate to the developer settings page
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const DeveloperMode()),
+                      builder: (context) => DeveloperMode()), // Removed const
                 );
               },
               style: ButtonStyle(
-                // backgroundColor
                 backgroundColor: MaterialStateProperty.all<Color>(
-                    const Color.fromRGBO(
-                        247, 169, 186, 1.0)), // set background color to pink
-                foregroundColor: MaterialStateProperty.all<Color>(
-                    Colors.white), // Set text color to white
-                // Add the animation controller
-                animationDuration: const Duration(milliseconds: 200),
-                // Shrink on press
-                overlayColor: MaterialStateProperty.resolveWith<Color>(
-                  (states) {
-                    if (states.contains(MaterialState.pressed)) {
-                      return Colors
-                          .white10; // Shrink and visually indicate press
-                    }
-                    return Colors.transparent; // Use default overlay color
-                  },
-                ),
-                // Scale the button down slightly on press
-                padding: MaterialStateProperty.resolveWith<EdgeInsets>(
-                  (states) {
-                    if (states.contains(MaterialState.pressed)) {
-                      return const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 8.0);
-                    }
-                    return const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 12.0);
-                  },
-                ),
+                    const Color.fromRGBO(247, 169, 186, 1.0)),
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
               ),
               child: const Text('Developer Mode'),
             ),
@@ -143,51 +131,29 @@ class SettingsPage extends StatelessWidget {
                 _logout(context);
               },
               style: ButtonStyle(
-                // backgroundColor
                 backgroundColor: MaterialStateProperty.all<Color>(
-                    const Color.fromRGBO(
-                        247, 169, 186, 1.0)), // set background color to pink
-                foregroundColor: MaterialStateProperty.all<Color>(
-                    Colors.white), // Set text color to white
-                // Add the animation controller
-                animationDuration: const Duration(milliseconds: 200),
-                // Shrink on press
-                overlayColor: MaterialStateProperty.resolveWith<Color>(
-                  (states) {
-                    if (states.contains(MaterialState.pressed)) {
-                      return Colors
-                          .white10; // Shrink and visually indicate press
-                    }
-                    return Colors.transparent; // Use default overlay color
-                  },
-                ),
-                // Scale the button down slightly on press
-                padding: MaterialStateProperty.resolveWith<EdgeInsets>(
-                  (states) {
-                    if (states.contains(MaterialState.pressed)) {
-                      return const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 8.0);
-                    }
-                    return const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 12.0);
-                  },
-                ),
+                    Color.fromARGB(255, 247, 169, 186)),
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
               ),
               child: const Text('Logout'),
             ),
           ],
         ),
       ),
-      bottomNavigationBar: const BottomAppBar(
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.transparent, // Make bottom navigation bar transparent
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'App Version 1.2.0',
-              style: TextStyle(
-                fontSize: 15.0,
+            Container(
+              color: Colors
+                  .transparent, // Set the color of the container to transparent
+              child: Text(
+                'App Version 1.2.0',
+                style: TextStyle(
+                  fontSize: 15.0,
+                ),
               ),
-// Add some space between the logo and text
             ),
           ],
         ),
