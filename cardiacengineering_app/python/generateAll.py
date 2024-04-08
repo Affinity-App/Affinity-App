@@ -75,7 +75,7 @@ def upload_data(duration_seconds):
         update_blood_pressure()  # Update blood pressure
         data = generate_data()
         
-        # Update the map inside the document "blood_pressure"
+        # Update the live data for blood_pressure"
         db.collection("sensor_data").document("blood_pressure").update({
             "data": {
                 "x_value": x_value,  # Use the current x_value
@@ -83,23 +83,44 @@ def upload_data(duration_seconds):
             }
         })
 
+        db.collection("large_heart_data").document("blood pressure").collection("live session").document("livedata").update({
+            "livedata": ([{ "x_value": x_value, "y_value": data["pressure"] }])
+        })
+
+        # update live data for bpm
         db.collection("sensor_data").document("bpm").update({
             "data": {
                 "x_value": x_value,  # Use the current x_value
                 "y_value": data["bpm"]
             }
         })
+
+        db.collection("large_heart_data").document("bpm").collection("live session").document("livedata").update({
+            "livedata": ([{ "x_value": x_value, "y_value": data["bpm"] }])
+        })
+
+        # update live data for flow rate
         db.collection("sensor_data").document("flow_rate").update({
             "data": {
                 "x_value": x_value,  # Use the current x_value
                 "y_value": data["flow_rate"]
             }
         })
+        
+        db.collection("large_heart_data").document("flow rate").collection("live session").document("livedata").update({
+            "livedata": ([{ "x_value": x_value, "y_value": data["flow_rate"] }])
+        })
+
+        # update live data for power consumption
         db.collection("sensor_data").document("power_consumption").update({
             "data": {
                 "x_value": x_value,  # Use the current x_value
                 "y_value": data["power_consumption"]
             }
+        })
+
+        db.collection("large_heart_data").document("power consumption").collection("live session").document("livedata").update({
+            "livedata": ([{ "x_value": x_value, "y_value": data["power_consumption"] }])
         })
         
         print("Data uploaded successfully.")
@@ -110,6 +131,6 @@ def upload_data(duration_seconds):
         time.sleep(1)  # Adjust the time interval as needed
 
 if __name__ == "__main__":
-    duration_seconds = 60  # Specify the desired duration in seconds
+    duration_seconds = 10  # Specify the desired duration in seconds
     x_value = 0  # Reset x_value
     upload_data(duration_seconds)
