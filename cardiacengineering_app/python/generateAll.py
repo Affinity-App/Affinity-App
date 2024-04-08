@@ -96,7 +96,7 @@ def upload_data(duration_seconds):
         })
 
         db.collection("large_heart_data").document("bpm").collection("live session").document("data").update({
-            "data": ([{ "x_value": x_value, "y_value": data["bpm"] }])
+            "data": ([{ "x_value": str(x_value), "y_value": data["bpm"] }])
         })
 
         # update live data for flow rate
@@ -119,8 +119,8 @@ def upload_data(duration_seconds):
             }
         })
 
-        db.collection("large_heart_data").document("power consumption").collection("live session").document("livedata").update({
-            "livedata": ([{ "x_value": x_value, "y_value": data["power_consumption"] }])
+        db.collection("large_heart_data").document("power consumption").collection("live session").document("data").update({
+            "data": ([{ "x_value": x_value, "y_value": data["power_consumption"] }])
         })
         
         print("Data uploaded successfully.")
@@ -131,6 +131,6 @@ def upload_data(duration_seconds):
         time.sleep(1)  # Adjust the time interval as needed
 
 if __name__ == "__main__":
-    duration_seconds = 10  # Specify the desired duration in seconds
+    duration_seconds = 60  # Specify the desired duration in seconds
     x_value = 0  # Reset x_value
     upload_data(duration_seconds)
