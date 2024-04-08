@@ -83,8 +83,8 @@ def upload_data(duration_seconds):
             }
         })
 
-        db.collection("large_heart_data").document("blood pressure").collection("live session").document("livedata").update({
-            "livedata": ([{ "x_value": x_value, "y_value": data["pressure"] }])
+        db.collection("large_heart_data").document("blood pressure").collection("live session").document("data").update({
+            "data": ([{ "x_value": x_value, "y_value": data["pressure"] }])
         })
 
         # update live data for bpm
@@ -95,8 +95,8 @@ def upload_data(duration_seconds):
             }
         })
 
-        db.collection("large_heart_data").document("bpm").collection("live session").document("livedata").update({
-            "livedata": ([{ "x_value": x_value, "y_value": data["bpm"] }])
+        db.collection("large_heart_data").document("bpm").collection("live session").document("data").update({
+            "data": ([{ "x_value": x_value, "y_value": data["bpm"] }])
         })
 
         # update live data for flow rate
@@ -107,8 +107,8 @@ def upload_data(duration_seconds):
             }
         })
         
-        db.collection("large_heart_data").document("flow rate").collection("live session").document("livedata").update({
-            "livedata": ([{ "x_value": x_value, "y_value": data["flow_rate"] }])
+        db.collection("large_heart_data").document("flow rate").collection("live session").document("data").update({
+            "data": ([{ "x_value": x_value, "y_value": data["flow_rate"] }])
         })
 
         # update live data for power consumption
