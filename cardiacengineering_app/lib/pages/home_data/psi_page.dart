@@ -22,7 +22,8 @@ class _PSIpageState extends State<PSIpage> {
     "session 04-04-24 07:10",
     "session 04-04-24 07:23",
     "session 04-04-24 07:24",
-    "session 04-04-24 07:25"
+    "session 04-04-24 07:25",
+    "live session"
   ];
 
   void changeSession(int index) {

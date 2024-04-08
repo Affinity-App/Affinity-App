@@ -21,7 +21,8 @@ class _BatterypageState extends State<Batterypage> {
     "session 03-28-24 13:59",
     "session 03-28-24 14:00",
     "session 03-28-24 14:01",
-    "session 03-28-24 14:03"
+    "session 03-28-24 14:03",
+    "live session"
   ];
   String _selectedOption = 'Power Consumption';
 
