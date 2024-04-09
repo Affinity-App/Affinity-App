@@ -51,6 +51,7 @@ class _SettingsPageState extends State<SettingsPage> {
       resizeToAvoidBottomInset: false, // Prevents bottom overflow
       extendBodyBehindAppBar: true, // Extend the body behind the app bar
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent, // Make app bar transparent
         elevation: 0, // Remove app bar elevation
         title: const Text(
@@ -60,15 +61,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
         ),
         centerTitle: true, // Center align the title
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage()),
-            );
-          },
-        ),
+
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 30.0),

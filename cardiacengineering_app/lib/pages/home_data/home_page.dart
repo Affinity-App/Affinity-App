@@ -99,17 +99,17 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           ),
 
                           //IconButton is outside the Expanded widget, so it aligns to the right
-                          IconButton(
-                            icon: const Icon(Icons.account_circle),
-                            iconSize: 50.0,
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const SettingsPage()),
-                              );
-                            },
-                          ),
+                          // IconButton(
+                          //   icon: const Icon(Icons.account_circle),
+                          //   iconSize: 50.0,
+                          //   onPressed: () {
+                          //     Navigator.push(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //           builder: (context) => const SettingsPage()),
+                          //     );
+                          //   },
+                          // ),
                         ],
                       ),
                     ),
