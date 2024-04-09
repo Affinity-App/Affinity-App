@@ -1,194 +1,125 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../components/background_gradient_container.dart';
-import '../../pages/dev_settings/settings_page.dart';
 import 'package:jr_design_app/components/data_box.dart';
-import 'rpm_page.dart';
-import 'psi_page.dart';
-import 'battery_page.dart';
-import 'gpm_page.dart';
-import '../../components/background_gradient_container.dart';
 import '../../pages/dev_settings/settings_page.dart';
+import '../../pages/dev_settings/DeveloperMode.dart';
 
-typedef OnDataBoxPressedCallback = void Function(BuildContext context);
-
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+// HomePage widget now includes the gradient and data boxes and is a StatefulWidget
+class HomePageWidget extends StatefulWidget {
+  const HomePageWidget({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePageWidgetState createState() => _HomePageWidgetState();
 }
 
-class _HomePageState extends State<HomePage> {
-  String blood_pressure = '0'; // Initialize blood pressure with '0'
-  String bpm = '0'; // Initialize heart rate with '0'
-  String flow_rate = '0'; // Initialize flow rate with '0'
-  String power_consumption = '0'; // Initialize power consumption with '0'
+class _HomePageWidgetState extends State<HomePageWidget> {
+  String bloodPressure = '0';
+  String bpm = '0';
+  String flowRate = '0';
+  String powerConsumption = '0';
 
   @override
   void initState() {
     super.initState();
-    _initBloodPressureListener(); // Call function to listen for blood pressure changes
-    _initHeartRateListener(); // Call function to listen for heart rate changes'
-    _initFlowRateListener(); // Call function to listen for flow rate changes
-    _initPowerConsumptionListener(); // Call function to listen for power consumption changes
+    _initListeners();
   }
 
-  void _initBloodPressureListener() {
+  void _initListeners() {
     FirebaseFirestore.instance
         .collection('sensor_data')
         .doc('blood_pressure')
         .snapshots()
-        .listen((DocumentSnapshot snapshot) {
-      if (snapshot.exists) {
-        Map<String, dynamic> data =
-            (snapshot.data() as Map<String, dynamic>)?['data'];
-        if (data != null) {
-          setState(() {
-            blood_pressure = data['y_value']
-                .toString(); // Update y_value with blood pressure
-          });
-        } else {
-          setState(() {
-            blood_pressure = 'Unknown'; // Set to 'Unknown' if data is null
-          });
-        }
-      }
+        .listen((snapshot) {
+      final data = snapshot.data()?['data'];
+      setState(() => bloodPressure = data?['y_value'].toString() ?? 'Unknown');
     });
-  }
 
-  void _initHeartRateListener() {
     FirebaseFirestore.instance
         .collection('sensor_data')
         .doc('bpm')
         .snapshots()
-        .listen((DocumentSnapshot snapshot) {
-      if (snapshot.exists) {
-        Map<String, dynamic> data =
-            (snapshot.data() as Map<String, dynamic>)?['data'];
-        if (data != null) {
-          setState(() {
-            bpm = data['y_value']
-                .toString(); // Update blood pressure state variable
-          });
-        } else {
-          setState(() {
-            bpm = 'Unknown'; // Set to 'Unknown' if mmHg is null
-          });
-        }
-      }
+        .listen((snapshot) {
+      final data = snapshot.data()?['data'];
+      setState(() => bpm = data?['y_value'].toString() ?? 'Unknown');
     });
-  }
 
-  void _initFlowRateListener() {
     FirebaseFirestore.instance
         .collection('sensor_data')
         .doc('flow_rate')
         .snapshots()
-        .listen((DocumentSnapshot snapshot) {
-      if (snapshot.exists) {
-        Map<String, dynamic> data =
-            (snapshot.data() as Map<String, dynamic>)?['data'];
-        if (data != null) {
-          setState(() {
-            flow_rate = data['y_value']
-                .toString(); // Update blood pressure state variable
-          });
-        } else {
-          setState(() {
-            flow_rate = 'Unknown'; // Set to 'Unknown' if mmHg is null
-          });
-        }
-      }
+        .listen((snapshot) {
+      final data = snapshot.data()?['data'];
+      setState(() => flowRate = data?['y_value'].toString() ?? 'Unknown');
     });
-  }
 
-  void _initPowerConsumptionListener() {
     FirebaseFirestore.instance
         .collection('sensor_data')
         .doc('power_consumption')
         .snapshots()
-        .listen((DocumentSnapshot snapshot) {
-      if (snapshot.exists) {
-        Map<String, dynamic> data =
-            (snapshot.data() as Map<String, dynamic>)?['data'];
-        if (data != null) {
-          setState(() {
-            power_consumption = data['y_value']
-                .toString(); // Update blood pressure state variable
-          });
-        } else {
-          setState(() {
-            power_consumption = 'Unknown'; // Set to 'Unknown' if mmHg is null
-          });
-        }
-      }
+        .listen((snapshot) {
+      final data = snapshot.data()?['data'];
+      setState(
+          () => powerConsumption = data?['y_value'].toString() ?? 'Unknown');
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      extendBody: true, // Extend body behind both app bar and status bar
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        //automatically imply leading = false to remove the back button on the app bar
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Padding(
-          padding: const EdgeInsets.only(top: 20.0), // Add padding here
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(width: 86.0),
-              Image.asset(
-                'assets/images/logo.png',
-                height: 50.0,
-              ),
-              const SizedBox(width: 5.0),
-              const Text(
-                'Affinity',
-                style: TextStyle(
-                  fontSize: 30.0,
-                ),
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 30.0),
-            child: IconButton(
-              icon: const Icon(Icons.account_circle),
-              iconSize: 50.0,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SettingsPage()),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
       body: Stack(
         children: [
-          const BackgroundGradientContainer(
-            child: SizedBox
-                .expand(), // Added SizedBox.expand() as a placeholder for child
-          ),
+          const BackgroundGradientContainer(child: SizedBox.expand()),
           SafeArea(
             child: Center(
               child: Padding(
-                padding: const EdgeInsets.only(
-                    top: 100.0), // Adjust the top padding as needed
+                padding: const EdgeInsets.only(top: 10.0),
                 child: Column(
                   children: [
+// Header Row with Logo and Settings Icon
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment
+                            .center, // This centers the Row content
+                        children: [
+                          // Expanded widget to ensure the text and logo take up all available space
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment
+                                .center, // Centers the text and logo within the Expanded widget
+                            children: [
+                              Image.asset('assets/images/logo.png',
+                                  height: 50.0),
+                              const SizedBox(width: 5.0),
+                              const Text('Affinity',
+                                  style: TextStyle(fontSize: 30.0)),
+                            ],
+                          ),
+
+                          //IconButton is outside the Expanded widget, so it aligns to the right
+                          // IconButton(
+                          //   icon: const Icon(Icons.account_circle),
+                          //   iconSize: 50.0,
+                          //   onPressed: () {
+                          //     Navigator.push(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //           builder: (context) => const SettingsPage()),
+                          //     );
+                          //   },
+                          // ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                        height:
+                            40), // Space between the row and the first DataBox
+                    // Dynamic DataBox widgets for displaying sensor data
                     DataBox(
                       label: 'Blood Pressure',
-                      value: blood_pressure + ' mmHg',
+                      value: '$bloodPressure mmHg',
                       iconPath: 'assets/images/Blood.png',
                       onPressed: (context) {
                         Navigator.pushNamed(context, '/PSIpage');
@@ -196,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     DataBox(
                       label: 'Heart Rate',
-                      value: bpm + ' RPM',
+                      value: '$bpm BPM',
                       iconPath: 'assets/images/Heart.png',
                       onPressed: (context) {
                         Navigator.pushNamed(context, '/RPMpage');
@@ -204,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     DataBox(
                       label: 'Flow Rate',
-                      value: flow_rate + ' L/min',
+                      value: '$flowRate L/min',
                       iconPath: 'assets/images/Flow.png',
                       onPressed: (context) {
                         Navigator.pushNamed(context, '/GPMpage');
@@ -212,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     DataBox(
                       label: 'Power Consumption',
-                      value: power_consumption + ' watts',
+                      value: '$powerConsumption watts',
                       iconPath: 'assets/images/Battery.png',
                       onPressed: (context) {
                         Navigator.pushNamed(context, '/BatteryPage');
@@ -223,6 +154,42 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int pageIndex = 0;
+  final pages = [
+    const HomePageWidget(),
+    const SettingsPage(),
+    const DeveloperMode()
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: pages[pageIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: pageIndex,
+        onTap: (int index) {
+          setState(() => pageIndex = index);
+        },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), label: "Settings"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.developer_mode), label: "Developer Mode"),
         ],
       ),
     );

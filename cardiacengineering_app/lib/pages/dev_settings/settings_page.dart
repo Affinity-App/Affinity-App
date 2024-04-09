@@ -51,6 +51,7 @@ class _SettingsPageState extends State<SettingsPage> {
       resizeToAvoidBottomInset: false, // Prevents bottom overflow
       extendBodyBehindAppBar: true, // Extend the body behind the app bar
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent, // Make app bar transparent
         elevation: 0, // Remove app bar elevation
         title: const Text(
@@ -60,15 +61,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
         ),
         centerTitle: true, // Center align the title
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage()),
-            );
-          },
-        ),
+
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 30.0),
@@ -112,22 +105,6 @@ class _SettingsPageState extends State<SettingsPage> {
             const SizedBox(height: 30.0),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => DeveloperMode()), // Removed const
-                );
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                    const Color.fromRGBO(247, 169, 186, 1.0)),
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-              ),
-              child: const Text('Developer Mode'),
-            ),
-            const SizedBox(height: 30.0),
-            ElevatedButton(
-              onPressed: () {
                 _logout(context);
               },
               style: ButtonStyle(
@@ -136,24 +113,6 @@ class _SettingsPageState extends State<SettingsPage> {
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
               ),
               child: const Text('Logout'),
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.transparent, // Make bottom navigation bar transparent
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              color: Colors
-                  .transparent, // Set the color of the container to transparent
-              child: Text(
-                'App Version 1.2.0',
-                style: TextStyle(
-                  fontSize: 15.0,
-                ),
-              ),
             ),
           ],
         ),
