@@ -1,5 +1,8 @@
+//THIS IS NOW THE PROFILE PAGE
+
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -103,7 +106,9 @@ class _SettingsPageState extends State<SettingsPage> {
                     ],
                   ),
                   child: const GFListTile(
-                    avatar: GFAvatar(),
+                    avatar: GFAvatar(
+                      child: Icon(Icons.favorite),
+                    ),
                     titleText: 'Heart ID',
                     // subTitleText: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
                     // icon: Icon(Icons.favorite),
@@ -138,8 +143,10 @@ class _SettingsPageState extends State<SettingsPage> {
                     ],
                   ),
                   child: const GFListTile(
-                    avatar: GFAvatar(),
-                    titleText: 'Title',
+                    avatar: GFAvatar(
+                      child: Icon(Icons.notifications),
+                    ),
+                    titleText: 'Notifications',
                     // subTitleText: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
                     //icon: Icon(Icons.favorite),
                   ),
@@ -173,7 +180,9 @@ class _SettingsPageState extends State<SettingsPage> {
                     ],
                   ),
                   child: const GFListTile(
-                    avatar: GFAvatar(),
+                    avatar: GFAvatar(
+                      child: Icon(Icons.logout),
+                    ),
                     titleText: 'Logout',
                   ),
                 ),
