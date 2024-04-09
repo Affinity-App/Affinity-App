@@ -11,6 +11,7 @@ import 'pages/home_data/battery_page.dart';
 import 'pages/home_data/gpm_page.dart';
 import 'services/firebase_options.dart';
 import 'pages/dev_settings/developerMode.dart';
+import 'pages/dev_settings/heart_data_page.dart';
 
 import 'components/themeProvider.dart';
 import 'package:provider/provider.dart';
@@ -79,6 +80,8 @@ class MyApp extends StatelessWidget {
         '/DeveloperMode': (context) => const DeveloperMode(),
         '/home_page': (context) => const HomePage(),
         'settings_page': (context) => const SettingsPage(),
+        'heart_data_page': (context) => const HeartDataPage(),
+        'login_page': (context) => const LoginPage(),
       },
       debugShowCheckedModeBanner: false,
       // theme: ThemeData(

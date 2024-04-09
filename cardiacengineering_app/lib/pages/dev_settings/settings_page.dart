@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:jr_design_app/pages/dev_settings/DeveloperMode.dart';
 import 'package:jr_design_app/pages/dev_settings/heart_data_page.dart';
@@ -8,6 +9,8 @@ import 'package:jr_design_app/pages/home_data/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../login_auth/login_page.dart';
 import '../../components/background_gradient_container.dart';
+import '../../components/custom_rating_bar.dart';
+import 'package:getwidget/getwidget.dart';
 
 import 'package:csv/csv.dart';
 import 'dart:convert';
@@ -20,6 +23,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  double _userRating = 0.0; // Add a default rating value
   XFile? _profileImage;
 
   Future<void> _pickImage() async {
@@ -67,40 +71,140 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             IconButton(
               icon: const Icon(Icons.account_circle),
-              iconSize: 70.0,
+              iconSize: 100.0,
               onPressed: () {
                 _pickImage();
               },
             ),
-            const SizedBox(height: 100.0),
-            const SizedBox(height: 30.0),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HeartDataPage()), // Removed const
-                );
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                    const Color.fromRGBO(247, 169, 186, 1.0)),
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            const SizedBox(height: 80.0),
+
+            //TILE 1
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: GestureDetector(
+                onTap: () {
+                  // Navigate to a different page when the tile is tapped
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HeartDataPage()),
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: const GFListTile(
+                    avatar: GFAvatar(),
+                    titleText: 'Heart ID',
+                    // subTitleText: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
+                    // icon: Icon(Icons.favorite),
+                  ),
+                ),
               ),
-              child: const Text('Heart ID'),
             ),
-            const SizedBox(height: 30.0),
-            ElevatedButton(
-              onPressed: () {
-                _logout(context);
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                    Color.fromARGB(255, 247, 169, 186)),
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            const SizedBox(height: 20.0),
+            //TILE 2
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: GestureDetector(
+                onTap: () {
+                  // Navigate to a different page when the tile is tapped
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const HeartDataPage()),
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: const GFListTile(
+                    avatar: GFAvatar(),
+                    titleText: 'Title',
+                    // subTitleText: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
+                    //icon: Icon(Icons.favorite),
+                  ),
+                ),
               ),
-              child: const Text('Logout'),
             ),
+            const SizedBox(height: 20.0),
+
+            //TILE 3
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: GestureDetector(
+                onTap: () {
+                  // Navigate to a different page when the tile is tapped
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: const GFListTile(
+                    avatar: GFAvatar(),
+                    titleText: 'Logout',
+                  ),
+                ),
+              ),
+            ),
+            //COMMENTED OUT CODE FOR RATING BAR
+            // const Text(
+            //   'Rate Us',
+            //   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            // ),
+            // CustomRatingBar(
+            //   initialRating: _userRating,
+            //   onRatingUpdate: (rating) {
+            //     setState(() {
+            //       _userRating = rating;
+            //     });
+            //   },
+            // ),
+
+            //OLD LOGOUT BUTTON
+            // ElevatedButton(
+            //   onPressed: () {
+            //     _logout(context);
+            //   },
+            //   style: ButtonStyle(
+            //     backgroundColor: MaterialStateProperty.all<Color>(
+            //         Color.fromARGB(255, 247, 169, 186)),
+            //     foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            //   ),
+            //   child: const Text('Logout'),
+            // ),
           ],
         ),
       ),
