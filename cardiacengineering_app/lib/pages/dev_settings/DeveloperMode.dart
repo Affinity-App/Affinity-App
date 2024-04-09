@@ -1,3 +1,5 @@
+//This page is now the 'Export Data' page
+import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
@@ -128,23 +130,18 @@ class _DeveloperModeState extends State<DeveloperMode> {
       resizeToAvoidBottomInset: false, // Prevents bottom overflow
       extendBodyBehindAppBar: true, // Extend the body behind the app bar
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent, // Make app bar transparent
         elevation: 0, // Remove app bar elevation
         title: Center(
           // Center the title
           child: Text(
-            'Developer Mode',
+            'Export Data',
             style: TextStyle(
               fontSize: 30.0,
             ),
             textAlign: TextAlign.center, // Center the text horizontally
           ),
-        ),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop(); // Navigate back when arrow is pressed
-          },
         ),
       ),
       body: BackgroundGradientContainer(

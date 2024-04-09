@@ -105,22 +105,6 @@ class _SettingsPageState extends State<SettingsPage> {
             const SizedBox(height: 30.0),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => DeveloperMode()), // Removed const
-                );
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                    const Color.fromRGBO(247, 169, 186, 1.0)),
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-              ),
-              child: const Text('Developer Mode'),
-            ),
-            const SizedBox(height: 30.0),
-            ElevatedButton(
-              onPressed: () {
                 _logout(context);
               },
               style: ButtonStyle(
