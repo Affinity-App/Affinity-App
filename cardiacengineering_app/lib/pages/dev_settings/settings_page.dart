@@ -140,24 +140,6 @@ class _SettingsPageState extends State<SettingsPage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.transparent, // Make bottom navigation bar transparent
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              color: Colors
-                  .transparent, // Set the color of the container to transparent
-              child: Text(
-                'App Version 1.2.0',
-                style: TextStyle(
-                  fontSize: 15.0,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 
