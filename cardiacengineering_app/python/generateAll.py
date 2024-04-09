@@ -87,6 +87,8 @@ def upload_data(duration_seconds):
             "data": ([{ "x-value": str(x_value), "y_value": data["pressure"] }])
         })
 
+        
+
         # update live data for bpm
         db.collection("sensor_data").document("bpm").update({
             "data": {
@@ -122,7 +124,21 @@ def upload_data(duration_seconds):
         db.collection("large_heart_data").document("power consumption").collection("live session").document("data").update({
             "data": ([{ "x_value": str(x_value), "y_value": data["power_consumption"] }])
         })
-        
+
+        # Assuming 'data' is a dictionary containing the new data
+        #this adds data to export_heart_data collection
+        new_data_map = {
+            "blood pressure": data['pressure'],
+            "heart rate": data["bpm"],
+            "flow rate": data["flow_rate"],
+            "power consumption": data["power_consumption"]
+        }
+
+        # Update the document to append the new data map to the "data" array
+        db.collection("export_heart_data").document("Session 2").update({
+            "data": firestore.ArrayUnion([new_data_map])
+        })
+
         print("Data uploaded successfully.")
         
         # Increment x_value
@@ -131,6 +147,6 @@ def upload_data(duration_seconds):
         time.sleep(1)  # Adjust the time interval as needed
 
 if __name__ == "__main__":
-    duration_seconds = 60  # Specify the desired duration in seconds
+    duration_seconds = 75  # Specify the desired duration in seconds
     x_value = 0  # Reset x_value
     upload_data(duration_seconds)
