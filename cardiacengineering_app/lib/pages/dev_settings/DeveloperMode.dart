@@ -185,7 +185,7 @@ class _DeveloperModeState extends State<DeveloperMode> {
                     onPressed: generatePDF,
                     child: Text('Generate PDF'),
                   ),
-                  const SizedBox(width: 10.0), // Spacing between buttons
+                  const SizedBox(width: 15.0), // Spacing between buttons
                   ElevatedButton(
                     onPressed: generateCSV,
                     child: Text('Generate CSV'),

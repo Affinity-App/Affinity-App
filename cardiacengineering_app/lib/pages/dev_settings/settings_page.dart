@@ -54,26 +54,6 @@ class _SettingsPageState extends State<SettingsPage> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent, // Make app bar transparent
         elevation: 0, // Remove app bar elevation
-        title: const Text(
-          'Settings',
-          style: TextStyle(
-            fontSize: 30.0,
-          ),
-        ),
-        centerTitle: true, // Center align the title
-
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 30.0),
-            child: IconButton(
-              icon: const Icon(Icons.account_circle),
-              iconSize: 50.0,
-              onPressed: () {
-                _pickImage();
-              },
-            ),
-          ),
-        ],
       ),
       body: BackgroundGradientContainer(
         child: Column(
@@ -83,7 +63,14 @@ class _SettingsPageState extends State<SettingsPage> {
             Image.asset(
               width: double.infinity,
               'assets/images/logo.png',
-              height: 100.0,
+              height: 0.0,
+            ),
+            IconButton(
+              icon: const Icon(Icons.account_circle),
+              iconSize: 70.0,
+              onPressed: () {
+                _pickImage();
+              },
             ),
             const SizedBox(height: 100.0),
             const SizedBox(height: 30.0),

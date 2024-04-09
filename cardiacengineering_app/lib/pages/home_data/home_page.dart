@@ -76,7 +76,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 padding: const EdgeInsets.only(top: 10.0),
                 child: Column(
                   children: [
-// Header Row with Logo and Settings Icon
                     Positioned(
                       top: 0,
                       left: 0,
@@ -85,7 +84,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         mainAxisAlignment: MainAxisAlignment
                             .center, // This centers the Row content
                         children: [
-                          // Expanded widget to ensure the text and logo take up all available space
                           Row(
                             mainAxisAlignment: MainAxisAlignment
                                 .center, // Centers the text and logo within the Expanded widget
@@ -97,19 +95,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   style: TextStyle(fontSize: 30.0)),
                             ],
                           ),
-
-                          //IconButton is outside the Expanded widget, so it aligns to the right
-                          // IconButton(
-                          //   icon: const Icon(Icons.account_circle),
-                          //   iconSize: 50.0,
-                          //   onPressed: () {
-                          //     Navigator.push(
-                          //       context,
-                          //       MaterialPageRoute(
-                          //           builder: (context) => const SettingsPage()),
-                          //     );
-                          //   },
-                          // ),
                         ],
                       ),
                     ),
@@ -171,8 +156,8 @@ class _HomePageState extends State<HomePage> {
   int pageIndex = 0;
   final pages = [
     const HomePageWidget(),
-    const SettingsPage(),
-    const DeveloperMode()
+    const DeveloperMode(),
+    const SettingsPage()
   ];
 
   @override
@@ -187,9 +172,9 @@ class _HomePageState extends State<HomePage> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: "Settings"),
+              icon: Icon(Icons.upload_file), label: "Export Data"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.developer_mode), label: "Developer Mode"),
+              icon: Icon(Icons.account_circle), label: "Profile"),
         ],
       ),
     );
