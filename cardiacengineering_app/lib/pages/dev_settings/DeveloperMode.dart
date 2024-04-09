@@ -5,8 +5,6 @@ import 'package:open_file/open_file.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import '../../../components/background_gradient_container.dart';
-
-import 'package:open_file/open_file.dart';
 import 'package:csv/csv.dart';
 import 'dart:convert';
 import 'package:share/share.dart'; // Import the share package
