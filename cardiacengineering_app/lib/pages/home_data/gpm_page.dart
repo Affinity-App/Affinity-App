@@ -22,7 +22,8 @@ class _GPMpageState extends State<GPMpage> {
     "session 03-28-24 13:01",
     "session 03-28-24 13:05",
     "session 03-28-24 13:07",
-    "session 03-28-24 13:09"
+    "session 03-28-24 13:09",
+    "live session"
   ];
   String _selectedOption = 'Flow Rate GPM';
 
