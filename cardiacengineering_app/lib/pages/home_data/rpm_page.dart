@@ -188,32 +188,68 @@ class _RPMpageState extends State<RPMpage> {
                       gridData: FlGridData(
                         show: true,
                         drawVerticalLine: true,
-                        horizontalInterval: 1,
-                        verticalInterval: 1,
+                        horizontalInterval: 10,
+                        verticalInterval: 5,
                         getDrawingHorizontalLine: (value) {
                           return const FlLine(
-                            color: Color.fromRGBO(202, 55, 158, 1),
+                            color: Color.fromARGB(255, 29, 35, 53),
                             strokeWidth: 1,
                           );
                         },
                         getDrawingVerticalLine: (value) {
                           return const FlLine(
-                            color: Color.fromRGBO(199, 53, 192, 1),
+                            color: Color.fromARGB(255, 29, 35, 53),
                             strokeWidth: 1,
                           );
                         },
                       ),
-                      titlesData: FlTitlesData(show: false),
-                      borderData: FlBorderData(show: false),
+                      titlesData: FlTitlesData(
+                        show: true,
+                        rightTitles: const AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
+                        topTitles: const AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
+                        bottomTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            reservedSize: 30, // space for the bottom titles
+                            interval: 1, // interval between each title
+                            getTitlesWidget: bottomTitleWidgets,
+                          ),
+                        ),
+                        leftTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            interval: 1,
+                            getTitlesWidget: leftTitleWidgets,
+                            reservedSize: 42,
+                          ),
+                        ),
+                      ),
+                      borderData: FlBorderData(
+                        show: true,
+                        border: Border.all(
+                            color: const Color.fromARGB(
+                                255, 77, 55, 73)), // chart border outline color
+                      ),
+                      minX: 0,
+                      maxX: 30,
+                      minY: 0,
+                      maxY: 100,
                       lineBarsData: [
                         LineChartBarData(
                           spots: spots,
                           isCurved: true,
-                          color: Theme.of(context).primaryColor,
-                          barWidth: 5,
+                          color: Colors.red[400]!,
+                          barWidth: 4,
                           isStrokeCapRound: true,
-                          dotData: FlDotData(show: false),
-                          belowBarData: BarAreaData(show: false),
+                          dotData: const FlDotData(show: false),
+                          belowBarData: BarAreaData(
+                            show: true,
+                            color: const Color.fromARGB(151, 239, 154, 154)!,
+                          ),
                         ),
                       ],
                     ),
@@ -221,6 +257,7 @@ class _RPMpageState extends State<RPMpage> {
                 },
               ),
             ),
+
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -271,9 +308,9 @@ class _RPMpageState extends State<RPMpage> {
                               color: Colors.black,
                               fontWeight: FontWeight
                                   .bold), // Set the text style of the header row
-                          columns: [
-                            const DataColumn(label: Text('Time(s)')),
-                            const DataColumn(label: Text('Value (bpm)')),
+                          columns: const [
+                            DataColumn(label: Text('Time(s)')),
+                            DataColumn(label: Text('Value (bpm)')),
                           ],
                           rows: List<DataRow>.generate(
                             yValues.length,
@@ -295,5 +332,72 @@ class _RPMpageState extends State<RPMpage> {
         ),
       ),
     );
+  }
+
+  Widget bottomTitleWidgets(double value, TitleMeta meta) {
+    // initializes font/text
+    const style = TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 14,
+    );
+    Widget text;
+
+    switch (value.toInt()) {
+      case 0:
+        text = const Text('0', style: style);
+        break;
+      case 10:
+        text = const Text('10', style: style);
+        break;
+      case 20:
+        text = const Text('20', style: style);
+        break;
+      case 30:
+        text = const Text('30', style: style);
+      default:
+        text = const Text('', style: style);
+        break;
+    }
+
+    return SideTitleWidget(
+      axisSide: meta.axisSide,
+      child: text,
+    );
+  }
+
+  Widget leftTitleWidgets(double value, TitleMeta meta) {
+    // initializes font/text
+    const style = TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 15,
+    );
+    String text;
+
+    switch (value.toInt()) {
+      case 0:
+        text = '0';
+        break;
+      case 20:
+        text = '20';
+        break;
+      case 40:
+        text = '40';
+        break;
+      case 60:
+        text = '60';
+        break;
+      case 80:
+        text = '80';
+        break;
+      case 100:
+        text = '100';
+        break;
+      case 120:
+        text = '120';
+        break;
+      default:
+        return Container();
+    }
+    return Text(text, style: style, textAlign: TextAlign.center);
   }
 }

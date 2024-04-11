@@ -7,7 +7,7 @@ import '../../services/firebase_data.dart';
 class lineChart extends StatelessWidget {
   final darkBlueColor = const Color.fromARGB(255, 29, 35, 53);
 
-  const lineChart({super.key}); 
+  const lineChart({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +23,6 @@ class lineChart extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 250.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(18.0),
-                  color: darkBlueColor,
-                ),
-                child: const LineChartSample2(),
-              ),
             ),
           ],
         ),
@@ -61,7 +54,8 @@ class _LineChartSample2State extends State<LineChartSample2> {
   }
 
   Future<void> fetchData() async {
-    final data = await fetchDataFromFirebaseOld(); // Call your Firebase fetching method
+    final data =
+        await fetchDataFromFirebaseOld(); // Call your Firebase fetching method
     setState(() {
       chartData = convertDataToFlSpots();
     });
@@ -81,22 +75,23 @@ class _LineChartSample2State extends State<LineChartSample2> {
               bottom: 12,
             ),
             child: chartData == null
-              ? const Center(child: CircularProgressIndicator())
-              : FutureBuilder<List<FlSpot>>(
-                  future: chartData!,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return const Center(child: Text('Error fetching data'));
-                    }
+                ? const Center(child: CircularProgressIndicator())
+                : FutureBuilder<List<FlSpot>>(
+                    future: chartData!,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return const Center(child: Text('Error fetching data'));
+                      }
 
-                    if (snapshot.hasData) {
-                      final data = snapshot.data!;
-                      return LineChart(showAvg ? avgData(data) : mainData(data));
-                    }
+                      if (snapshot.hasData) {
+                        final data = snapshot.data!;
+                        return LineChart(
+                            showAvg ? avgData(data) : mainData(data));
+                      }
 
-                    return const Center(child: CircularProgressIndicator());
-                  },
-                ),
+                      return const Center(child: CircularProgressIndicator());
+                    },
+                  ),
           ),
         ),
         SizedBox(
@@ -235,7 +230,9 @@ class _LineChartSample2State extends State<LineChartSample2> {
       ),
       borderData: FlBorderData(
         show: true,
-        border: Border.all(color: const Color.fromARGB(255, 77, 55, 73)), // chart border outline color
+        border: Border.all(
+            color: const Color.fromARGB(
+                255, 77, 55, 73)), // chart border outline color
       ),
       minX: 0,
       maxX: 30,
@@ -254,15 +251,17 @@ class _LineChartSample2State extends State<LineChartSample2> {
           //   FlSpot(60, 45),
           // ],
           isCurved: true,
-          gradient: LinearGradient( 
-            colors: gradientColors, 
+          gradient: LinearGradient(
+            colors: gradientColors,
           ),
           barWidth: 4, // width of the line, 4 default
           isStrokeCapRound: true,
-          dotData: const FlDotData( // show the dot of each point
+          dotData: const FlDotData(
+            // show the dot of each point
             show: true,
           ),
-          belowBarData: BarAreaData( // area below the line gradient
+          belowBarData: BarAreaData(
+            // area below the line gradient
             show: true,
             gradient: LinearGradient(
               colors: gradientColors
@@ -366,16 +365,20 @@ class _LineChartSample2State extends State<LineChartSample2> {
 }
 
 Future<List<FlSpot>> fetchDataFromFirebaseOld() async {
-  final collectionRef = FirebaseFirestore.instance.collection('data_1'); // collection name
-  final querySnapshot = await collectionRef.get(); // getting all documents from the collection
+  final collectionRef =
+      FirebaseFirestore.instance.collection('data_1'); // collection name
+  final querySnapshot =
+      await collectionRef.get(); // getting all documents from the collection
 
-  final data = querySnapshot.docs.map((doc) => doc.data()).toList(); // converting documents to list of maps
+  final data = querySnapshot.docs
+      .map((doc) => doc.data())
+      .toList(); // converting documents to list of maps
 
   // Sort data based on xField in ascending order
   data.sort((a, b) => a['xField'].compareTo(b['xField']));
 
   // Parse data into FlSpot format
-    final flSpots = data.map((item) {
+  final flSpots = data.map((item) {
     final xValue = item['xField'].toDouble();
     final yValue = item['yField'].toDouble();
     return FlSpot(xValue, yValue);
