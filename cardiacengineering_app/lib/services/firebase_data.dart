@@ -1,20 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class FirebaseDataFetcher extends StatelessWidget {
+class FirebaseDataFetcher {
   final List<String> sessionNames = [
     "session 03-28-24 12:04",
     "session 03-28-24 12:13",
   ];
 
-  FirebaseDataFetcher({Key? key}) : super(key: key);
-
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: Implement build method
-    throw UnimplementedError();
-  }
+  FirebaseDataFetcher();
 
   // Separate methods for fetching xValues and yValues
   Future<List<String>> fetchXValues(int selectedSessionIndex) async {

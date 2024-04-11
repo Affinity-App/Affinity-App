@@ -57,7 +57,8 @@ class _LineChartSample2State extends State<LineChartSample2> {
   @override
   void initState() {
     super.initState();
-    fetchData(); // Call data fetching method on initialization
+    WidgetsBinding.instance!.addPostFrameCallback((_) =>  fetchData()); // wait until build then exec
+    // fetchData(); // Call data fetching method on initialization
   }
 
   Future<void> fetchData() async {
@@ -383,6 +384,18 @@ Future<List<FlSpot>> fetchDataFromFirebaseOld() async {
 
   return flSpots;
 }
+
+
+// move network calls to repository file to call firestore and get data
+// method of separation to separate networking logic from UI logic
+// call function from controller to pull proper data
+// set listener to stream controller
+// UI listening to stream controller to set the data
+// data is passed as param to chart widget and list under
+
+// data should be separate from UI so it isn't lost when rebuilt
+// 
+
 
 Future<List<FlSpot>> convertDataToFlSpots() async {
   List<FlSpot> data = [];
