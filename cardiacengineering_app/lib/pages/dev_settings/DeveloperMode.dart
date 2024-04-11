@@ -21,7 +21,13 @@ class DeveloperMode extends StatefulWidget {
 
 class _DeveloperModeState extends State<DeveloperMode> {
   late int selectedOption = 0;
-  final List<String> options = ['Session 1', 'Session 2'];
+  final List<String> options = [
+    'Session 1',
+    'Session 2',
+    'Session 3',
+    'Session 4',
+    'Session 5'
+  ];
   List<DataRow> dataRows = []; // State variable to hold data rows
 
   @override
