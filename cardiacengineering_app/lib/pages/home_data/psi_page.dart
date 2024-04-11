@@ -151,37 +151,27 @@ class _PSIpageState extends State<PSIpage> {
                   const EdgeInsets.all(8.0), // Padding inside the container
               margin: const EdgeInsets.symmetric(
                   horizontal: 16.0), // Margin around the container
-              child: StreamBuilder<QuerySnapshot>(
+              child: StreamBuilder<DocumentSnapshot>(
                 stream: FirebaseFirestore.instance
                     .collection('large_heart_data')
                     .doc('blood pressure')
                     .collection(sessionNames[selectedSessionIndex])
+                    .doc('data')
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return const Center(child: CircularProgressIndicator());
                   }
 
-                  final documents = snapshot.data!.docs;
-                  List<FlSpot> systolicSpots = [];
-                  List<FlSpot> diastolicSpots = [];
+                  final Map<String, dynamic> data =
+                      snapshot.data!.data() as Map<String, dynamic>;
+                  final List<dynamic> dataArray = data['data'] as List<dynamic>;
 
-                  for (var document in documents) {
-                    final data = document.data() as Map<String, dynamic>;
-                    final xValueString = data['x_value'] as String? ?? '0';
-                    final yValueString = data['y_value'] as String? ?? '0/0';
-
-                    final xValue = double.tryParse(xValueString) ?? 0.0;
-                    final bloodPressureValues = yValueString.split('/');
-                    if (bloodPressureValues.length == 2) {
-                      final systolicValue =
-                          double.tryParse(bloodPressureValues[0]) ?? 0.0;
-                      final diastolicValue =
-                          double.tryParse(bloodPressureValues[1]) ?? 0.0;
-
-                      systolicSpots.add(FlSpot(xValue, systolicValue));
-                      diastolicSpots.add(FlSpot(xValue, diastolicValue));
-                    }
+                  // Convert your data to spots for the FlChart
+                  List<FlSpot> spots = [];
+                  for (var i = 0; i < dataArray.length; i++) {
+                    spots.add(FlSpot(double.parse(dataArray[i]['x_value']),
+                        double.parse(dataArray[i]['y_value'])));
                   }
 
                   return LineChart(
@@ -241,29 +231,15 @@ class _PSIpageState extends State<PSIpage> {
                       maxY: 100,
                       lineBarsData: [
                         LineChartBarData(
-                          spots: systolicSpots,
+                          spots: spots,
                           isCurved: true,
-                          color: Colors.red[400]!, // Systolic color
+                          color: Colors.red[400]!,
                           barWidth: 4,
                           isStrokeCapRound: true,
                           dotData: const FlDotData(show: false),
                           belowBarData: BarAreaData(
                             show: true,
-                            color: const Color.fromARGB(
-                                151, 239, 154, 154), // Systolic area color
-                          ),
-                        ),
-                        LineChartBarData(
-                          spots: diastolicSpots,
-                          isCurved: true,
-                          color: Colors.blue[400]!, // Diastolic color
-                          barWidth: 4,
-                          isStrokeCapRound: true,
-                          dotData: const FlDotData(show: false),
-                          belowBarData: BarAreaData(
-                            show: true,
-                            color: const Color.fromARGB(
-                                151, 154, 183, 239), // Diastolic area color
+                            color: const Color.fromARGB(151, 239, 154, 154)!,
                           ),
                         ),
                       ],
