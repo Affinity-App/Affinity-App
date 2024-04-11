@@ -107,7 +107,8 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                   child: const GFListTile(
                     avatar: GFAvatar(
-                      child: Icon(Icons.favorite),
+                      backgroundColor: Colors.black,
+                      child: Icon(Icons.favorite, color: Colors.white),
                     ),
                     titleText: 'Heart ID',
                     // subTitleText: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
@@ -144,7 +145,8 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                   child: const GFListTile(
                     avatar: GFAvatar(
-                      child: Icon(Icons.notifications),
+                      backgroundColor: Colors.black,
+                      child: Icon(Icons.notifications, color: Colors.white),
                     ),
                     titleText: 'Notifications',
                     // subTitleText: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
@@ -181,7 +183,8 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                   child: const GFListTile(
                     avatar: GFAvatar(
-                      child: Icon(Icons.logout),
+                      backgroundColor: Colors.black,
+                      child: Icon(Icons.logout, color: Colors.white),
                     ),
                     titleText: 'Logout',
                   ),
