@@ -1,4 +1,5 @@
 //This page is now the 'Export Data' page
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -20,18 +21,48 @@ class DeveloperMode extends StatefulWidget {
 
 class _DeveloperModeState extends State<DeveloperMode> {
   late int selectedOption = 0;
-  final List<String> options = [
-    'Session 1',
-    'Session 2',
-    'Session 3',
-    'Session 4',
-    'Session 5',
-  ]; // Define custom dropdown options
+  final List<String> options = ['Session 1', 'Session 2'];
+  List<DataRow> dataRows = []; // State variable to hold data rows
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData(); // Fetch data when the widget is first created
+  }
+
+  Future<void> fetchData() async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    DocumentSnapshot documentSnapshot = await firestore
+        .collection('export_heart_data')
+        .doc(options[selectedOption]) // Use selected session
+        .get();
+
+    var data =
+        documentSnapshot.get('data') as List; // Cast the data field to a List
+
+    List<DataRow> newRows = data.map((item) {
+      return DataRow(
+        cells: <DataCell>[
+          DataCell(Text((data.indexOf(item) + 1)
+              .toString())), // Create an index number for 'Seconds'
+          DataCell(Text('${item['blood pressure']}')), // 'Blood Pressure' value
+          DataCell(Text('${item['heart rate']}')), // 'BPM' value
+          DataCell(Text('${item['flow rate']}')), // 'Flow Rate' value
+          DataCell(Text('${item['power consumption']}')), // 'Power Use' value
+        ],
+      );
+    }).toList();
+
+    setState(() {
+      dataRows = newRows; // Update the state with the new rows
+    });
+  }
 
   void changeSession(int index) {
     setState(() {
       selectedOption = index;
     });
+    fetchData(); // Fetch new data when session changes
   }
 
   Future<void> generatePDF() async {
@@ -229,20 +260,7 @@ class _DeveloperModeState extends State<DeveloperMode> {
                       ),
                     ),
                   ],
-                  rows: List<DataRow>.generate(
-                    30,
-                    (index) => DataRow(
-                      cells: <DataCell>[
-                        DataCell(Text('${index + 1}')), // 'Seconds' column
-                        DataCell(Text(
-                            '${index + 1} mmHg')), // 'Blood Pressure' column
-                        DataCell(Text('${index + 2} BPM')), // 'BPM' column
-                        DataCell(
-                            Text('${index + 3} L/min')), // 'Flow Rate' column
-                        DataCell(Text('${index + 4} W')), // 'Power Use' column
-                      ],
-                    ),
-                  ),
+                  rows: dataRows,
                 ),
               ),
             ],
