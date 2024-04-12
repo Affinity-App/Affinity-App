@@ -24,7 +24,7 @@ class _BatterypageState extends State<Batterypage> {
     "session 03-28-24 14:03",
     "live session"
   ];
-  String _selectedOption = 'Power Consumption';
+  String? selectedOption = 'Power Consumption';  // Default value
 
   void changeSession(int index) {
     setState(() {
@@ -41,36 +41,36 @@ class _BatterypageState extends State<Batterypage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: DropdownButton<String>(
-          value: _selectedOption,
-          icon: Text('\u25BC',
-              style: TextStyle(color: Colors.grey[800], fontSize: 25.0)),
+          value: selectedOption,
+          icon: const Text('\u25BC',
+              style: TextStyle(color: Colors.grey, fontSize: 25.0)),
           underline: Container(height: 0),
           onChanged: (String? newValue) {
             setState(() {
-              _selectedOption = newValue!;
+              selectedOption = newValue;
+              switch (newValue) {
+                case 'Blood Pressure':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PSIpage()),
+                  );
+                  break;
+                case 'Flow Rate GPM':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => GPMpage()),
+                  );
+                  break;
+                case 'RPM Data':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RPMpage()),
+                  );
+                  break;
+                default:
+                  break;
+              }
             });
-            switch (newValue) {
-              case 'Blood Pressure':
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PSIpage()),
-                );
-                break;
-              case 'Flow Rate GPM':
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => GPMpage()),
-                );
-                break;
-              case 'RPM Data':
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RPMpage()),
-                );
-                break;
-              default:
-                break;
-            }
           },
           items: <String>[
             'Blood Pressure',
@@ -80,15 +80,17 @@ class _BatterypageState extends State<Batterypage> {
           ].map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text(value,
-                  style: const TextStyle(color: Colors.black, fontSize: 22.0)),
+              child: Text(
+                value,
+                style: TextStyle(color: value == selectedOption ? Colors.red : Colors.black, fontSize: 22.0),
+              ),
             );
           }).toList(),
           dropdownColor: Colors.white,
           borderRadius: BorderRadius.circular(12.0),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.push(
               context,
@@ -104,9 +106,6 @@ class _BatterypageState extends State<Batterypage> {
           children: [
             const SizedBox(height: 100.0),
             Container(
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-              ),
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: DropdownButton<int>(
                 value: selectedSessionIndex,
@@ -121,7 +120,7 @@ class _BatterypageState extends State<Batterypage> {
                     value: index,
                     child: Text(
                       sessionNames[index],
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   );
                 }),
@@ -131,10 +130,7 @@ class _BatterypageState extends State<Batterypage> {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18.0),
-                border: Border.all(
-                  width: 2.0,
-                  color: Colors.black,
-                ),
+                border: Border.all(width: 2.0, color: Colors.black),
                 color: Colors.white,
               ),
               child: const LineChartSample2(),
@@ -149,18 +145,15 @@ class _BatterypageState extends State<Batterypage> {
                       .collection(sessionNames[selectedSessionIndex])
                       .doc('data')
                       .snapshots(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<DocumentSnapshot> snapshot) {
+                  builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
                     }
                     if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
                     }
-                    final Map<String, dynamic> data =
-                        snapshot.data!.data() as Map<String, dynamic>;
-                    final List<dynamic> dataArray =
-                        data['data'] as List<dynamic>;
+                    final Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+                    final List<dynamic> dataArray = data['data'] as List<dynamic>;
 
                     List<String> yValues = [];
                     List<String> xValues = [];
@@ -171,17 +164,15 @@ class _BatterypageState extends State<Batterypage> {
 
                     return SingleChildScrollView(
                       child: Container(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.white, width: 2.0),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: DataTable(
-                          headingRowColor: MaterialStateColor.resolveWith(
-                              (states) => Colors.white),
-                          headingTextStyle: TextStyle(
-                              color: Colors.black, fontWeight: FontWeight.bold),
-                          columns: [
+                          headingRowColor: MaterialStateColor.resolveWith((states) => Colors.white),
+                          headingTextStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                          columns: const [
                             DataColumn(label: Text('Time(s)')),
                             DataColumn(label: Text('Value (watts)')),
                           ],

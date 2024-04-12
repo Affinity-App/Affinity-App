@@ -25,7 +25,7 @@ class _GPMpageState extends State<GPMpage> {
     "session 03-28-24 13:09",
     "live session"
   ];
-  String _selectedOption = 'Flow Rate GPM';
+  String? selectedOption = 'Flow Rate GPM';  // Default value
 
   void changeSession(int index) {
     setState(() {
@@ -36,45 +36,42 @@ class _GPMpageState extends State<GPMpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false, // Prevents bottom overflow
+      resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.transparent, // Make app bar transparent
-        elevation: 0, // Remove app bar elevation
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         title: DropdownButton<String>(
-          value: _selectedOption,
-          icon: Text('\u25BC',
-              style: TextStyle(color: Colors.grey[800], fontSize: 25.0)),
+          value: selectedOption,
+          icon: const Text('\u25BC',
+              style: TextStyle(color: Colors.grey, fontSize: 25.0)),
           underline: Container(height: 0),
           onChanged: (String? newValue) {
             setState(() {
-              _selectedOption = newValue!;
+              selectedOption = newValue;
+              switch (newValue) {
+                case 'Blood Pressure':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PSIpage()),
+                  );
+                  break;
+                case 'RPM Data':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RPMpage()),
+                  );
+                  break;
+                case 'Power Consumption':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Batterypage()),
+                  );
+                  break;
+                default:
+                  break;
+              }
             });
-            // Navigate based on the selected option
-            switch (newValue) {
-              case 'Blood Pressure':
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PSIpage()),
-                );
-                break;
-              case 'RPM Data':
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RPMpage()),
-                );
-                break;
-              case 'Power Consumption':
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Batterypage()),
-                );
-                break;
-              // Add more cases for other options as needed
-              // Default case for 'Blood Pressure' is to do nothing
-              default:
-                break;
-            }
           },
           items: <String>[
             'Blood Pressure',
@@ -84,15 +81,17 @@ class _GPMpageState extends State<GPMpage> {
           ].map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text(value,
-                  style: const TextStyle(color: Colors.black, fontSize: 22.0)),
+              child: Text(
+                value,
+                style: TextStyle(color: value == selectedOption ? Colors.red : Colors.black, fontSize: 22.0),
+              ),
             );
           }).toList(),
           dropdownColor: Colors.white,
           borderRadius: BorderRadius.circular(12.0),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.push(
               context,
@@ -106,14 +105,10 @@ class _GPMpageState extends State<GPMpage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 100.0), // Added space below the title
+            const SizedBox(height: 100.0),
             Container(
-              decoration: BoxDecoration(
-                // borderRadius: BorderRadius.circular(10.0),
-                // border: Border.all(
-                //     color: Colors.black, width: 5.0), // Set border thickness
-                color: Colors
-                    .transparent, // Set the container background to transparent
+              decoration: const BoxDecoration(
+                color: Colors.transparent,
               ),
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: DropdownButton<int>(
@@ -123,28 +118,23 @@ class _GPMpageState extends State<GPMpage> {
                     changeSession(newIndex);
                   }
                 },
-                dropdownColor:
-                    Colors.white, // Set dropdown box background to transparent
+                dropdownColor: Colors.white,
                 items: List.generate(sessionNames.length, (index) {
                   return DropdownMenuItem<int>(
                     value: index,
                     child: Text(
                       sessionNames[index],
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold), // Make text bold
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   );
                 }),
               ),
             ),
-            const SizedBox(height: 16.0), // Added spacing below the dropdown
+            const SizedBox(height: 16.0),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18.0),
-                border: Border.all(
-                  width: 2.0,
-                  color: Colors.black,
-                ),
+                border: Border.all(width: 2.0, color: Colors.black),
                 color: Colors.white,
               ),
               child: const LineChartSample2(),
@@ -172,7 +162,6 @@ class _GPMpageState extends State<GPMpage> {
                     final List<dynamic> dataArray =
                         data['data'] as List<dynamic>;
 
-                    // Prepare lists for Y and X values
                     List<String> yValues = [];
                     List<String> xValues = [];
                     dataArray.forEach((map) {
@@ -182,24 +171,17 @@ class _GPMpageState extends State<GPMpage> {
 
                     return SingleChildScrollView(
                       child: Container(
-                        padding: EdgeInsets.all(
-                            8.0), // Adjust the padding to include the border width
+                        padding: const EdgeInsets.all(8.0),
                         decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Colors.white,
-                              width: 2.0), // Adjust the border thickness
-                          borderRadius:
-                              BorderRadius.circular(10.0), // Set border radius
+                          border: Border.all(color: Colors.white, width: 2.0),
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: DataTable(
                           headingRowColor: MaterialStateColor.resolveWith(
-                              (states) => Colors
-                                  .white), // Set the background color of the header row
-                          headingTextStyle: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight
-                                  .bold), // Set the text style of the header row
-                          columns: [
+                              (states) => Colors.white),
+                          headingTextStyle: const TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                          columns: const [
                             DataColumn(label: Text('Time(s)')),
                             DataColumn(label: Text('Value (L/min)')),
                           ],

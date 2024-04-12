@@ -17,6 +17,7 @@ class PSIpage extends StatefulWidget {
 
 class _PSIpageState extends State<PSIpage> {
   late int selectedSessionIndex = 0;
+  String? selectedOption = 'Blood Pressure';  // Default value
   final List<String> sessionNames = [
     "session 04-04-24 07:06",
     "session 04-04-24 07:10",
@@ -41,13 +42,13 @@ class _PSIpageState extends State<PSIpage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: DropdownButton<String>(
-          value: 'Blood Pressure', // Default value is 'RPM Data'
-          icon: Text('\u25BC',
-              style: TextStyle(color: Colors.grey[800], fontSize: 25.0)),
+          value: selectedOption,
+          icon: const Text('\u25BC',
+              style: TextStyle(color: Colors.grey, fontSize: 25.0)),
           underline: Container(height: 0),
           onChanged: (String? newValue) {
             setState(() {
-              // Navigate based on the selected option
+              selectedOption = newValue;
               switch (newValue) {
                 case 'RPM Data':
                   Navigator.push(
@@ -67,8 +68,6 @@ class _PSIpageState extends State<PSIpage> {
                     MaterialPageRoute(builder: (context) => Batterypage()),
                   );
                   break;
-                // Add more cases for other options as needed
-                // Default case for 'Blood Pressure' is to do nothing
                 default:
                   break;
               }
@@ -82,15 +81,17 @@ class _PSIpageState extends State<PSIpage> {
           ].map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text(value,
-                  style: const TextStyle(color: Colors.black, fontSize: 22.0)),
+              child: Text(
+                value,
+                style: TextStyle(color: value == selectedOption ? Colors.red[400] : Colors.black, fontSize: 22.0),
+              ),
             );
           }).toList(),
           dropdownColor: Colors.white,
           borderRadius: BorderRadius.circular(12.0),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.push(
               context,
@@ -104,11 +105,10 @@ class _PSIpageState extends State<PSIpage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 100.0), // Added space below the title
+            const SizedBox(height: 100.0),
             Container(
-              decoration: BoxDecoration(
-                color: Colors
-                    .transparent, // Set the container background to transparent
+              decoration: const BoxDecoration(
+                color: Colors.transparent,
               ),
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: DropdownButton<int>(
@@ -118,21 +118,19 @@ class _PSIpageState extends State<PSIpage> {
                     changeSession(newIndex);
                   }
                 },
-                dropdownColor:
-                    Colors.white, // Set dropdown box background to transparent
+                dropdownColor: Colors.white,
                 items: List.generate(sessionNames.length, (index) {
                   return DropdownMenuItem<int>(
                     value: index,
                     child: Text(
                       sessionNames[index],
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold), // Make text bold
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   );
                 }),
               ),
             ),
-            const SizedBox(height: 16.0), // Added spacing below the dropdown
+            const SizedBox(height: 16.0),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18.0),
@@ -164,7 +162,6 @@ class _PSIpageState extends State<PSIpage> {
                     final List<dynamic> dataArray =
                         data['data'] as List<dynamic>;
 
-                    // Prepare lists for Y and X values
                     List<String> yValues = [];
                     List<String> xValues = [];
                     dataArray.forEach((map) {
@@ -174,7 +171,7 @@ class _PSIpageState extends State<PSIpage> {
 
                     return SingleChildScrollView(
                       child: Container(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.white, width: 2.0),
                           borderRadius: BorderRadius.circular(10.0),
@@ -182,9 +179,9 @@ class _PSIpageState extends State<PSIpage> {
                         child: DataTable(
                           headingRowColor: MaterialStateColor.resolveWith(
                               (states) => Colors.white),
-                          headingTextStyle: TextStyle(
+                          headingTextStyle: const TextStyle(
                               color: Colors.black, fontWeight: FontWeight.bold),
-                          columns: [
+                          columns: const [
                             DataColumn(label: Text('Time(s)')),
                             DataColumn(label: Text('Value (mmHg)')),
                           ],
