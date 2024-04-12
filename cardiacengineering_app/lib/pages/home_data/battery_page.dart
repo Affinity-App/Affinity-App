@@ -25,7 +25,7 @@ class _BatterypageState extends State<Batterypage> {
     "session 03-28-24 14:03",
     "live session"
   ];
-  String? selectedOption = 'Power Consumption';  // Default value
+  String? selectedOption = 'Power Consumption'; // Default value
 
   void changeSession(int index) {
     setState(() {
@@ -83,7 +83,9 @@ class _BatterypageState extends State<Batterypage> {
               value: value,
               child: Text(
                 value,
-                style: TextStyle(color: value == selectedOption ? Colors.red : Colors.black, fontSize: 22.0),
+                style: TextStyle(
+                    color: value == selectedOption ? Colors.red : Colors.black,
+                    fontSize: 22.0),
               ),
             );
           }).toList(),
@@ -217,8 +219,8 @@ class _BatterypageState extends State<Batterypage> {
                       ),
                       minX: 0,
                       maxX: 30,
-                      minY: 0,
-                      maxY: 100,
+                      minY: 15,
+                      maxY: 25,
                       lineBarsData: [
                         LineChartBarData(
                           spots: spots,
@@ -249,15 +251,18 @@ class _BatterypageState extends State<Batterypage> {
                       .collection(sessionNames[selectedSessionIndex])
                       .doc('data')
                       .snapshots(),
-                  builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                  builder: (BuildContext context,
+                      AsyncSnapshot<DocumentSnapshot> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
                     }
                     if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
                     }
-                    final Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                    final List<dynamic> dataArray = data['data'] as List<dynamic>;
+                    final Map<String, dynamic> data =
+                        snapshot.data!.data() as Map<String, dynamic>;
+                    final List<dynamic> dataArray =
+                        data['data'] as List<dynamic>;
 
                     List<String> yValues = [];
                     List<String> xValues = [];
@@ -274,8 +279,10 @@ class _BatterypageState extends State<Batterypage> {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: DataTable(
-                          headingRowColor: MaterialStateColor.resolveWith((states) => Colors.white),
-                          headingTextStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                          headingRowColor: MaterialStateColor.resolveWith(
+                              (states) => Colors.white),
+                          headingTextStyle: const TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
                           columns: const [
                             DataColumn(label: Text('Time(s)')),
                             DataColumn(label: Text('Value (watts)')),
