@@ -135,9 +135,9 @@ def upload_data(duration_seconds):
         }
 
         # Update the document to append the new data map to the "data" array
-        db.collection("export_heart_data").document("Session 2").update({
-            "data": firestore.ArrayUnion([new_data_map])
-        })
+        # db.collection("export_heart_data").document("Session 2").update({
+            # "data": firestore.ArrayUnion([new_data_map])
+        # })
 
         print("Data uploaded successfully.")
         
