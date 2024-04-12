@@ -231,8 +231,8 @@ class _GPMpageState extends State<GPMpage> {
                       ),
                       minX: 0,
                       maxX: 30,
-                      minY: 0,
-                      maxY: 100,
+                      minY: 3,
+                      maxY: 6,
                       lineBarsData: [
                         LineChartBarData(
                           spots: spots,

@@ -221,8 +221,8 @@ class _BatterypageState extends State<Batterypage> {
                       ),
                       minX: 0,
                       maxX: 30,
-                      minY: 0,
-                      maxY: 100,
+                      minY: 15,
+                      maxY: 25,
                       lineBarsData: [
                         LineChartBarData(
                           spots: spots,

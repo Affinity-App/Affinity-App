@@ -236,7 +236,7 @@ class _RPMpageState extends State<RPMpage> {
                       ),
                       minX: 0,
                       maxX: 30,
-                      minY: 0,
+                      minY: 50,
                       maxY: 100,
                       lineBarsData: [
                         LineChartBarData(
