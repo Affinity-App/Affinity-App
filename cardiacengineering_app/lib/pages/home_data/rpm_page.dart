@@ -91,7 +91,11 @@ class _RPMpageState extends State<RPMpage> {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(value,
-                  style: const TextStyle(color: Colors.black, fontSize: 22.0)),
+                  style: TextStyle(
+                      color: value == _selectedOption
+                          ? Colors.red
+                          : Colors.black, // Set selected option to red
+                      fontSize: 22.0)),
             );
           }).toList(),
           dropdownColor: Colors.white,
@@ -115,9 +119,6 @@ class _RPMpageState extends State<RPMpage> {
             const SizedBox(height: 100.0), // Added space below the title
             Container(
               decoration: const BoxDecoration(
-                // borderRadius: BorderRadius.circular(10.0),
-                // border: Border.all(
-                //     color: Colors.black, width: 5.0), // Set border thickness
                 color: Colors
                     .transparent, // Set the container background to transparent
               ),
