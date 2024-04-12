@@ -1,13 +1,12 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:jr_design_app/components/background_gradient_container.dart';
 import 'package:jr_design_app/pages/dev_settings/test_chart.dart';
 import 'package:jr_design_app/pages/home_data/battery_page.dart';
 import 'package:jr_design_app/pages/home_data/gpm_page.dart';
 import 'package:jr_design_app/pages/home_data/home_page.dart';
-import 'package:jr_design_app/pages/home_data/psi_page.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:jr_design_app/pages/home_data/rpm_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PSIpage extends StatefulWidget {
   const PSIpage({Key? key}) : super(key: key);
@@ -18,7 +17,6 @@ class PSIpage extends StatefulWidget {
 
 class _PSIpageState extends State<PSIpage> {
   late int selectedSessionIndex = 0;
-  String? selectedOption = 'Blood Pressure';  // Default value
   final List<String> sessionNames = [
     "session 04-04-24 07:06",
     "session 04-04-24 07:10",
@@ -43,13 +41,13 @@ class _PSIpageState extends State<PSIpage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: DropdownButton<String>(
-          value: selectedOption,
-          icon: const Text('\u25BC',
-              style: TextStyle(color: Colors.grey, fontSize: 25.0)),
+          value: 'Blood Pressure', // Default value is 'RPM Data'
+          icon: Text('\u25BC',
+              style: TextStyle(color: Colors.grey[800], fontSize: 25.0)),
           underline: Container(height: 0),
           onChanged: (String? newValue) {
             setState(() {
-              selectedOption = newValue;
+              // Navigate based on the selected option
               switch (newValue) {
                 case 'RPM Data':
                   Navigator.push(
@@ -70,6 +68,8 @@ class _PSIpageState extends State<PSIpage> {
                         builder: (context) => const Batterypage()),
                   );
                   break;
+                // Add more cases for other options as needed
+                // Default case for 'Blood Pressure' is to do nothing
                 default:
                   break;
               }
@@ -83,10 +83,12 @@ class _PSIpageState extends State<PSIpage> {
           ].map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text(
-                value,
-                style: TextStyle(color: value == selectedOption ? Colors.red[400] : Colors.black, fontSize: 22.0),
-              ),
+              child: Text(value,
+                  style: TextStyle(
+                      color: value == 'Blood Pressure'
+                          ? Colors.red
+                          : Colors.black, // Set selected option to red
+                      fontSize: 22.0)),
             );
           }).toList(),
           dropdownColor: Colors.white,
@@ -107,7 +109,7 @@ class _PSIpageState extends State<PSIpage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 100.0),
+            const SizedBox(height: 100.0), // Added space below the title
             Container(
               decoration: const BoxDecoration(
                 color: Colors
@@ -121,7 +123,8 @@ class _PSIpageState extends State<PSIpage> {
                     changeSession(newIndex);
                   }
                 },
-                dropdownColor: Colors.white,
+                dropdownColor:
+                    Colors.white, // Set dropdown box background to transparent
                 items: List.generate(sessionNames.length, (index) {
                   return DropdownMenuItem<int>(
                     value: index,
@@ -151,27 +154,37 @@ class _PSIpageState extends State<PSIpage> {
                   const EdgeInsets.all(8.0), // Padding inside the container
               margin: const EdgeInsets.symmetric(
                   horizontal: 16.0), // Margin around the container
-              child: StreamBuilder<DocumentSnapshot>(
+              child: StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
                     .collection('large_heart_data')
                     .doc('blood pressure')
                     .collection(sessionNames[selectedSessionIndex])
-                    .doc('data')
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return const Center(child: CircularProgressIndicator());
                   }
 
-                  final Map<String, dynamic> data =
-                      snapshot.data!.data() as Map<String, dynamic>;
-                  final List<dynamic> dataArray = data['data'] as List<dynamic>;
+                  final documents = snapshot.data!.docs;
+                  List<FlSpot> systolicSpots = [];
+                  List<FlSpot> diastolicSpots = [];
 
-                  // Convert your data to spots for the FlChart
-                  List<FlSpot> spots = [];
-                  for (var i = 0; i < dataArray.length; i++) {
-                    spots.add(FlSpot(double.parse(dataArray[i]['x_value']),
-                        double.parse(dataArray[i]['y_value'])));
+                  for (var document in documents) {
+                    final data = document.data() as Map<String, dynamic>;
+                    final xValueString = data['x_value'] as String? ?? '0';
+                    final yValueString = data['y_value'] as String? ?? '0/0';
+
+                    final xValue = double.tryParse(xValueString) ?? 0.0;
+                    final bloodPressureValues = yValueString.split('/');
+                    if (bloodPressureValues.length == 2) {
+                      final systolicValue =
+                          double.tryParse(bloodPressureValues[0]) ?? 0.0;
+                      final diastolicValue =
+                          double.tryParse(bloodPressureValues[1]) ?? 0.0;
+
+                      systolicSpots.add(FlSpot(xValue, systolicValue));
+                      diastolicSpots.add(FlSpot(xValue, diastolicValue));
+                    }
                   }
 
                   return LineChart(
@@ -231,15 +244,29 @@ class _PSIpageState extends State<PSIpage> {
                       maxY: 100,
                       lineBarsData: [
                         LineChartBarData(
-                          spots: spots,
+                          spots: systolicSpots,
                           isCurved: true,
-                          color: Colors.red[400]!,
+                          color: Colors.red[400]!, // Systolic color
                           barWidth: 4,
                           isStrokeCapRound: true,
                           dotData: const FlDotData(show: false),
                           belowBarData: BarAreaData(
                             show: true,
-                            color: const Color.fromARGB(151, 239, 154, 154)!,
+                            color: const Color.fromARGB(
+                                151, 239, 154, 154), // Systolic area color
+                          ),
+                        ),
+                        LineChartBarData(
+                          spots: diastolicSpots,
+                          isCurved: true,
+                          color: Colors.blue[400]!, // Diastolic color
+                          barWidth: 4,
+                          isStrokeCapRound: true,
+                          dotData: const FlDotData(show: false),
+                          belowBarData: BarAreaData(
+                            show: true,
+                            color: const Color.fromARGB(
+                                151, 154, 183, 239), // Diastolic area color
                           ),
                         ),
                       ],
@@ -272,6 +299,7 @@ class _PSIpageState extends State<PSIpage> {
                     final List<dynamic> dataArray =
                         data['data'] as List<dynamic>;
 
+                    // Prepare lists for Y and X values
                     List<String> yValues = [];
                     List<String> xValues = [];
                     dataArray.forEach((map) {
