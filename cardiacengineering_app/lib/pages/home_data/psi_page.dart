@@ -240,8 +240,8 @@ class _PSIpageState extends State<PSIpage> {
                       ),
                       minX: 0,
                       maxX: 30,
-                      minY: 0,
-                      maxY: 100,
+                      minY: 60,
+                      maxY: 140,
                       lineBarsData: [
                         LineChartBarData(
                           spots: systolicSpots,
