@@ -26,7 +26,7 @@ class _GPMpageState extends State<GPMpage> {
     "session 03-28-24 13:09",
     "live session"
   ];
-  String? selectedOption = 'Flow Rate GPM';  // Default value
+  String? selectedOption = 'Flow Rate GPM'; // Default value
 
   void changeSession(int index) {
     setState(() {
@@ -84,7 +84,9 @@ class _GPMpageState extends State<GPMpage> {
               value: value,
               child: Text(
                 value,
-                style: TextStyle(color: value == selectedOption ? Colors.red : Colors.black, fontSize: 22.0),
+                style: TextStyle(
+                    color: value == selectedOption ? Colors.red : Colors.black,
+                    fontSize: 22.0),
               ),
             );
           }).toList(),
@@ -219,8 +221,8 @@ class _GPMpageState extends State<GPMpage> {
                       ),
                       minX: 0,
                       maxX: 30,
-                      minY: 0,
-                      maxY: 100,
+                      minY: 3,
+                      maxY: 7,
                       lineBarsData: [
                         LineChartBarData(
                           spots: spots,
@@ -240,7 +242,6 @@ class _GPMpageState extends State<GPMpage> {
                 },
               ),
             ),
-
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
