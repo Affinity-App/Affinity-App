@@ -122,14 +122,14 @@ class _SettingsPageState extends State<SettingsPage> {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.8,
               child: GestureDetector(
-                onTap: () {
-                  // Navigate to a different page when the tile is tapped
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const HeartDataPage()),
-                  );
-                },
+                // onTap: () {
+                //   // Navigate to a different page when the tile is tapped
+                //   Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => const HeartDataPage()),
+                //   );
+                // },
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
