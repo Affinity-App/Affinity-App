@@ -9,9 +9,9 @@ class HeartDataPage extends StatefulWidget {
 
 class _HeartDataPageState extends State<HeartDataPage> {
   final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _heartIdController = TextEditingController();
   final UserRepository _userRepository = UserRepository();
   String _email = '';
-  String _password = '';
 
   @override
   void initState() {
@@ -24,16 +24,16 @@ class _HeartDataPageState extends State<HeartDataPage> {
     if (userData != null) {
       setState(() {
         _usernameController.text = userData['username'] ?? '';
+        _heartIdController.text = userData['heartId'] ?? '';
         _email = userData['email'] ?? '';
-        _password = userData['password'] ?? '';
       });
     }
   }
 
-  Future<void> _saveUsername() async {
-    await _userRepository.updateUsername(_usernameController.text);
+  Future<void> _saveChanges() async {
+    await _userRepository.updateUserData(_usernameController.text, _heartIdController.text);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Username updated successfully!')),
+      SnackBar(content: Text('Updates saved successfully!')),
     );
   }
 
@@ -51,14 +51,16 @@ class _HeartDataPageState extends State<HeartDataPage> {
               controller: _usernameController,
               decoration: InputDecoration(labelText: 'Username'),
             ),
+            TextField(
+              controller: _heartIdController,
+              decoration: InputDecoration(labelText: 'Heart ID'),
+            ),
             SizedBox(height: 20),
             Text("Email: $_email"),
-            // SizedBox(height: 10),
-            // Text("Password: $_password"),  // Consider removing this for security reasons
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _saveUsername,
-              child: Text('Save Username'),
+              onPressed: _saveChanges,
+              child: Text('Save Changes'),
             ),
           ],
         ),
@@ -79,11 +81,12 @@ class UserRepository {
     return null;
   }
 
-  Future<void> updateUsername(String username) async {
+  Future<void> updateUserData(String username, String heartId) async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       await _firestore.collection('users').doc(user.uid).update({
-        'username': username
+        'username': username,
+        'heartId': heartId
       });
     }
   }
