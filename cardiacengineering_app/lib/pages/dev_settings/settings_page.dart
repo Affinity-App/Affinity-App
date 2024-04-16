@@ -127,7 +127,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const HeartDataPage()),
+                        builder: (context) =>  HeartDataPage()),
                   );
                 },
                 child: Container(

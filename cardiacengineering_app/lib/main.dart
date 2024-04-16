@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
         '/DeveloperMode': (context) => const DeveloperMode(),
         '/home_page': (context) => const HomePage(),
         'settings_page': (context) => const SettingsPage(),
-        'heart_data_page': (context) => const HeartDataPage(),
+        'heart_data_page': (context) => HeartDataPage(),
         'login_page': (context) => const LoginPage(),
       },
       debugShowCheckedModeBanner: false,
