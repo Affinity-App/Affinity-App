@@ -74,29 +74,31 @@ class _DeveloperModeState extends State<DeveloperMode> {
   Future<void> generatePDF() async {
     try {
       final pdf = pw.Document();
-      // Generate PDF content
+
+      // Convert DataRow to List<List<String>> for PDF generation
+      List<List<String>> pdfData = [
+        <String>[
+          'Seconds',
+          'Blood Pressure',
+          'BPM',
+          'Flow Rate',
+          'Power Use'
+        ], // headers
+      ];
+
+      // Add data from dataRows to pdfData
+      for (DataRow row in dataRows) {
+        List<String> rowData =
+            row.cells.map((cell) => (cell.child as Text).data!).toList();
+        pdfData.add(rowData);
+      }
+
+      // Generate PDF content using the dynamic data
       pdf.addPage(
         pw.Page(
           build: (context) => pw.TableHelper.fromTextArray(
-            data: <List<String>>[
-              <String>[
-                'Seconds',
-                'Blood Pressure',
-                'BPM',
-                'Flow Rate',
-                'Power Use'
-              ],
-              ...List.generate(
-                30,
-                (index) => <String>[
-                  '${index + 1}',
-                  '${index + 1} mmHg',
-                  '${index + 2} BPM',
-                  '${index + 3} L/min',
-                  '${index + 4} W',
-                ],
-              ),
-            ],
+            context: context,
+            data: pdfData,
           ),
         ),
       );
@@ -108,7 +110,7 @@ class _DeveloperModeState extends State<DeveloperMode> {
         final file = File(filePath);
         await file.writeAsBytes(await pdf.save());
 
-        // Open the PDF file (supported only on platforms with file opening capability)
+        // Open the PDF file
         if (Platform.isAndroid ||
             Platform.isIOS ||
             Platform.isMacOS ||
@@ -122,26 +124,22 @@ class _DeveloperModeState extends State<DeveloperMode> {
       }
     } catch (e) {
       print('Error generating PDF: $e');
-      // Handle the error
     }
   }
 
   Future<void> generateCSV() async {
     try {
-      // Prepare the data for CSV
-      final List<List<String>> rows = <List<String>>[
-        ['Seconds', 'Blood Pressure', 'BPM', 'Flow Rate', 'Power Use'],
-        ...List.generate(
-          30,
-          (index) => [
-            '${index + 1}',
-            '${index + 1} mmHg',
-            '${index + 2} BPM',
-            '${index + 3} L/min',
-            '${index + 4} W',
-          ],
-        ),
+      // Prepare headers for CSV
+      final List<List<String>> rows = [
+        ['Seconds', 'Blood Pressure', 'BPM', 'Flow Rate', 'Power Use']
       ];
+
+      // Convert DataRow to List<List<String>> for CSV generation
+      for (DataRow row in dataRows) {
+        List<String> rowData =
+            row.cells.map((cell) => (cell.child as Text).data!).toList();
+        rows.add(rowData);
+      }
 
       // Convert data to CSV string
       String csv = const ListToCsvConverter().convert(rows);
